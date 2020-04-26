@@ -65,7 +65,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import { bugs, website, server } from "variables/general.js";
 import { idText } from "typescript";
 
-
+import TestReview from '../Modals/TestReview'
 // import {
 //   dailySalesChart,
 //   emailsSubscriptionChart,
@@ -81,7 +81,6 @@ import { idText } from "typescript";
 //   onChange: PropTypes.func
 // };
 
-import ConfirmationDialoge from './ConfirmationDialoge' ;
 
 class UpCommingRequests extends React.Component {
 
@@ -204,8 +203,7 @@ class UpCommingRequests extends React.Component {
 
   handleClose = () => {
     // setOpen(false);
-    this.state.open = false
-    this.forceUpdate()
+    // this.state.open = false
     this.setState({open: false})
 
   };
@@ -214,7 +212,7 @@ class UpCommingRequests extends React.Component {
 
     return (
 <div>
-  <AlertDialog open={this.state.open} handleClose={this.handleClose}></AlertDialog>
+  <TestReview open={this.state.open} handleClose={this.handleClose}></TestReview>
       <GridContainer>
 
         <GridItem xs={12} sm={12} md={6}>
