@@ -15,12 +15,12 @@ import CardFooter from "components/Card/CardFooter.js";
 
 import avatar from "assets/img/faces/marc.jpg";
 
-import ConfirmTestRequest from "views/Modals/ConfirmTestRequest"
+// import ConfirmTestRequest from "views/Modals/ConfirmTestRequest"
 import TestReview from "views/Modals/TestReview"
-import AcceptedRequest from "views/Modals/AcceptedRequest"
-import RefusedRequest from "views/Modals/RefusedRequest"
+// import AcceptedRequest from "views/Modals/AcceptedRequest"
+// import RefusedRequest from "views/Modals/RefusedRequest"
 
-import { Modal } from 'react-bootstrap';
+// import { Modal } from 'react-bootstrap';
 
 const styles = {
   cardCategoryWhite: {
@@ -157,7 +157,7 @@ export default function UserProfile() {
               {/* <ConfirmTestRequest></ConfirmTestRequest> */}
               {/* <AcceptedRequest></AcceptedRequest> */}
               {/* <RefusedRequest></RefusedRequest> */}
-              {/* <TestReview></TestReview> */}
+              <TestReview></TestReview>
               <Button color="primary">Update Profile</Button>
             </CardFooter>
           </Card>
