@@ -1,4 +1,8 @@
 import React from "react";
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
+import Snackbar from "components/Snackbar/Snackbar.js";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 // @material-ui/core components
 import CreateEmployeeDesign from "views/CreateNewEmployee/CreateEmployeeDesign"
 // const styles = {
@@ -23,8 +27,40 @@ import CreateEmployeeDesign from "views/CreateNewEmployee/CreateEmployeeDesign"
 // const useStyles = makeStyles(styles);
 
 export default function CreateNewEmployee() {
-    
+  const [tc, setTC] = React.useState(false);
+  const [alertMsg, setAlertMsg] = React.useState(false);
+        React.useEffect(() => {
+            // Specify how to clean up after this effect:
+            return function cleanup() {
+              // to stop the warning of calling setState of unmounted component
+              var id = window.setTimeout(null, 0);
+              while (id--) {
+                window.clearTimeout(id);
+              }
+            };
+          });
+          const showNotification = msg => {
+            setAlertMsg(msg)
+            setTC(true);
+            setTimeout(function() {
+              setTC(false);
+            }, 6000);
+            
+          };
+        debugger
+
     return (
-        <CreateEmployeeDesign></CreateEmployeeDesign>
+        <div>
+        <Snackbar
+                  place="tc"
+                  color={alertMsg=="Employee saved successfully" ? "success":"danger"}
+                  icon={alertMsg=="Employee saved successfully" ? CheckCircleIcon:CancelIcon}
+                  message={alertMsg}
+                  open={tc}
+                  closeNotification={() => setTC(false)}
+                  close
+                />
+        <CreateEmployeeDesign showNotification={showNotification}></CreateEmployeeDesign>
+        </div>
     );
 }
