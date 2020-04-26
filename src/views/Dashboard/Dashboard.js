@@ -1,5 +1,5 @@
 import React from "react";
-import UpCommingRequests from "./UpCommingRequests.js";
+import UpCommingRequests from "../UpCommingRequests/UpCommingRequests.js";
 
 
 export default function Dashboard() {
