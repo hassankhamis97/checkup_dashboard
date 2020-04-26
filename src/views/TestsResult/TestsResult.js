@@ -62,8 +62,7 @@ export default function TableList() {
                   ["1", "Mohamed", "22/4/2020"],
                   ["1", "Mohamed", "22/4/2020"],
                   ["1", "Mohamed", "22/4/2020"],
-                  ["1", "Mohamed", "22/4/2020"],
-                  ["1", "Mohamed", "22/4/2020"],
+                
                 ]}
             />
           </CardBody>
