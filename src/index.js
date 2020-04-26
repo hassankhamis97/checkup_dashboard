@@ -26,6 +26,8 @@ import RTL from "layouts/RTL.js";
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const hist = createBrowserHistory();
 
 ReactDOM.render(

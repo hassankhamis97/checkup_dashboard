@@ -24,6 +24,7 @@ import CreateEmployeeDesign from "views/CreateNewEmployee/CreateEmployeeDesign"
 
 export default function CreateNewEmployee() {
     
+    //new CreateEmployeeDesign()
     return (
         <CreateEmployeeDesign></CreateEmployeeDesign>
     );
