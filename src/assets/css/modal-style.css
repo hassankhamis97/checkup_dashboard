@@ -1,0 +1,70 @@
+* {box-sizing: border-box;}
+.TestData{
+    display: inline-block;
+    width: 50%;
+}
+
+.TestPic{
+    display: inline-block;
+    vertical-align: top;
+    align-self: flex-end; 
+    width: 50%;
+}
+
+.ImgTestPic {
+    width: 100%;
+}
+
+.TestDataObject{
+    display: inline-block; 
+align-items: flex-end;
+}
+
+.TestReviewModal{
+    height: 100%;
+    background-color: blueviolet;
+    width: 100%;
+}
+
+.img-zoom-container {
+    position: relative;
+  }
+  
+  .img-zoom-lens {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    /*set the size of the lens:*/
+    width: 40px;
+    height: 40px;
+  }
+  
+  .img-zoom-result {
+    border: 1px solid #d4d4d4;
+    /*set the size of the result div:*/
+    width: 300px;
+    height: 300px;
+  }
+
+  .Confirmation .modal-content{
+    font-size: 15px;
+    color: white;
+    background-color: #450850;
+    height: 50%;
+  }
+
+  .MyBody .modal-content {
+    background-color: #450850;
+    height: 100%;
+    color: white;
+    font-size: 25px;
+  }
+
+  .AllBtns .btn-primary{
+    background-color: #6a6a6a;
+    border-color:white;
+  }
+
+  .AcceptBtn .btn {
+    margin: 0 auto;
+    width: 150px;
+  }
