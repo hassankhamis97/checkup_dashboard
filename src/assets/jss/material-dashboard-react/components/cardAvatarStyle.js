@@ -3,8 +3,10 @@ import { hexToRgb, blackColor } from "assets/jss/material-dashboard-react.js";
 const cardAvatarStyle = {
   cardAvatar: {
     "&$cardAvatarProfile img": {
-      width: "100%",
-      height: "auto"
+      // width: "100%",
+      // height: "auto"
+      width: "130px",
+      height: "130px"
     }
   },
   cardAvatarProfile: {
@@ -14,6 +16,7 @@ const cardAvatarStyle = {
     borderRadius: "50%",
     overflow: "hidden",
     padding: "0",
+    zIndex: 4,
     boxShadow:
       "0 16px 38px -12px rgba(" +
       hexToRgb(blackColor) +

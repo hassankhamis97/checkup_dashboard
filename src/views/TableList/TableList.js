@@ -60,7 +60,10 @@ export default function TableList() {
               tableHead={["ID", "Patient Name", "Date"]}
                 tableData={[
                   ["1", "Mohamed", "22/4/2020"],
-                  ["1", "Mohamed", "22/4/2020"],["1", "Mohamed", "22/4/2020"],["1", "Mohamed", "22/4/2020"],["1", "Mohamed", "22/4/2020"],
+                  ["1", "Mohamed", "22/4/2020"],
+                  ["1", "Mohamed", "22/4/2020"],
+                  ["1", "Mohamed", "22/4/2020"],
+                  ["1", "Mohamed", "22/4/2020"],
                 ]}
             />
           </CardBody>
@@ -82,7 +85,7 @@ export default function TableList() {
               tableHead={["ID", "Patient Name", "Date"]}
                 tableData={[
                   ["1", "Mohamed", "22/4/2020"],
-                  ["1", "Mohamed", "22/4/2020"],["1", "Mohamed", "22/4/2020"],["1", "Mohamed", "22/4/2020"],["1", "Mohamed", "22/4/2020"],
+                
                 ]}
             />
           </CardBody>

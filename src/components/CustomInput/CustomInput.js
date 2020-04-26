@@ -25,6 +25,7 @@ export default function CustomInput(props) {
     onChange,
     inputProps,
     error,
+    type,
     success
   } = props;
 
@@ -62,7 +63,8 @@ export default function CustomInput(props) {
         }}
         id={id}
         value={value} ///////// Fixed ////////
-          onChange={onChange}
+        onChange={onChange}
+        type={type}
         {...inputProps}
       />
       {error ? (
