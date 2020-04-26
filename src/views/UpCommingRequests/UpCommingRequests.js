@@ -54,6 +54,7 @@ import Cloud from "@material-ui/icons/Cloud";
 // core components
 
 import Table from "components/Table/Table.js";
+import AlertDialog from '../AlertDialoge/AlertDialogSlide';
 import Tasks from "components/Tasks/Tasks.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import Danger from "components/Typography/Danger.js";
@@ -91,6 +92,7 @@ class UpCommingRequests extends React.Component {
 
 
     this.state = {
+      open: false,
       dataShowList: [],
       requests: [],
       tableBodyData: '',
@@ -126,19 +128,19 @@ class UpCommingRequests extends React.Component {
 
   handleStatus(itemId) {
     debugger;
-   
+    this.setState({open: true})
 
  //  change status of SampleObject to Done leave it in the same table
  // in the result pages get all  tests which have status == Done only
-    console.log(itemId)
-    var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-    ref.child(itemId).update({'status': 'Done'}) 
+    // console.log(itemId)
+    // var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+    // ref.child(itemId).update({'status': 'Done'}) 
 
 
-    this.setState({ sampleStatus: 'DONE' })
+    // this.setState({ sampleStatus: 'DONE' })
    
 
-    this.forceUpdate()
+    // this.forceUpdate()
   }
 
 
@@ -196,12 +198,23 @@ class UpCommingRequests extends React.Component {
 
   }
 
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
+  handleClose = () => {
+    // setOpen(false);
+    this.state.open = false
+    this.forceUpdate()
+    this.setState({open: false})
+
+  };
   render() {
     debugger;
 
     return (
-
+<div>
+  <AlertDialog open={this.state.open} handleClose={this.handleClose}></AlertDialog>
       <GridContainer>
 
         <GridItem xs={12} sm={12} md={6}>
@@ -226,7 +239,7 @@ class UpCommingRequests extends React.Component {
   
 
       </GridContainer>
-
+      </div>
     );
   }
 }
