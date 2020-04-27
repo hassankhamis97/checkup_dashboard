@@ -9,7 +9,12 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import 'react-awesome-slider/dist/styles.css';
+// check box
 import Checkbox from '@material-ui/core/Checkbox';
+// text Area
+import GridItem from "components/Grid/GridItem.js";
+import InputLabel from "@material-ui/core/InputLabel";
+import CustomInput from "components/CustomInput/CustomInput.js";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +56,9 @@ export default function RefuseRequest(props) {
             width: '150px',
             marginLeft: '80px'
         },
+        checkboxStyle: {
+            borderColor: 'white',
+        }
     }
 
     return (
@@ -72,18 +80,57 @@ export default function RefuseRequest(props) {
                 </AppBar>
 
                 <div style={styleTestReview.TestReviewModal} >
-                    <input type="checkbox" name="" value="" />
+                    {/* <input type="checkbox" name="" value="" /> */}
+                    <Checkbox
+                        // checked={cryon}
+                        // onChange={this.handleChange('cryon')}
+                        // value="cryon"
+                        style={{
+                            color: "#00e676",
+                        }}
+                    />
                     <span style={styleTestReview.textStyle}> Not Available</span>
                     <br></br>
-                    <input type="checkbox" name="" value="" />
+                    <Checkbox
+                        // checked={cryon}
+                        // onChange={this.handleChange('cryon')}
+                        // value="cryon"
+                        style={{
+                            color: "#00e676",
+                        }}
+                    />
                     <span style={styleTestReview.textStyle}> Another Time</span>
                     <br></br>
-                    <input type="checkbox" name="" value="" />
+                    <Checkbox
+                        // checked={cryon}
+                        // onChange={this.handleChange('cryon')}
+                        // value="cryon"
+                        style={{
+                            color: "#00e676",
+                        }}
+                    />
                     <span style={styleTestReview.textStyle}> you need to apply precaustion </span>
                     <br></br>
                     <br></br>
-                    <h2 style={styleTestReview.textStyle}>Refuse Reson : </h2>
-                    <textarea id="w3mission" rows="4" cols="50"></textarea>
+
+                    <GridItem xs={12} sm={12} md={12}>
+                        {/* <InputLabel style={{ color: "#AAAAAA" }}></InputLabel> */}
+                        <CustomInput
+                            labelText="Refuse Reson"
+                            id="about-me"
+                            formControlProps={{
+                                fullWidth: true
+                            }}
+                            inputProps={{
+                                multiline: true,
+                                rows: 5
+                            }}
+                        />
+                    </GridItem>
+
+
+                    {/* <h2 style={styleTestReview.textStyle}>Refuse Reson : </h2>
+                    <textarea id="w3mission" rows="4" cols="50"></textarea> */}
                 </div>
             </Dialog>
         </div>

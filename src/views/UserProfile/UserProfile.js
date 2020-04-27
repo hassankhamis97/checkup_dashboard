@@ -17,7 +17,8 @@ import avatar from "assets/img/faces/marc.jpg";
 
 // import TestReview from '../Modals/TestReview'
 // import RefusedRequest from '../Modals/RefusedRequest'
-import AcceptedRequest from '../Modals/AcceptedRequest'
+// import AcceptedRequest from '../Modals/AcceptedRequest'
+// import ConfirmTestRequest from '../Modals/ConfirmTestRequest'
 
 const styles = {
   cardCategoryWhite: {
@@ -151,13 +152,10 @@ export default function UserProfile() {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              {/* <ConfirmTestRequest></ConfirmTestRequest> */}
-              {/* <AcceptedRequest></AcceptedRequest> */}
-              {/* <RefusedRequest></RefusedRequest> */}
-              {/* <TestReview></TestReview> */}
               {/* <TestReview open={true} handleClose={this.handleClose}></TestReview> */}
-              {/* <RefusedRequest open={true} handleClose={this.handleClose}></RefusedRequest> */}
-              <AcceptedRequest open={true} /*handleClose={this.handleClose}*/></AcceptedRequest>
+              {/* <RefusedRequest open={true}></RefusedRequest> */}
+              {/* <AcceptedRequest open={true} handleClose={this.handleClose}></AcceptedRequest> */}
+              {/* <ConfirmTestRequest open={true} handleClose={this.handleClose}></ConfirmTestRequest> */}
               <Button color="primary">Update Profile</Button>
             </CardFooter>
           </Card>

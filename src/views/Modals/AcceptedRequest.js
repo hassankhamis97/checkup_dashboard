@@ -71,6 +71,14 @@ import Slide from '@material-ui/core/Slide';
 import 'react-awesome-slider/dist/styles.css';
 import CustomInput from "components/CustomInput/CustomInput.js";
 
+// text Area
+import GridItem from "components/Grid/GridItem.js";
+import InputLabel from "@material-ui/core/InputLabel";
+
+//dropdown
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -139,16 +147,53 @@ export default function AcceptedRequest(props) {
                             fullWidth: false
                         }}
                     />
-                    <h2 style={styleTestReview.textStyle}>Precautions : </h2>
-                    <textarea id="w3mission" rows="4" cols="50"></textarea>
+
+                    <GridItem xs={12} sm={12} md={12} style={{
+                                color: 'white',
+                            }}>
+                        {/* <InputLabel style={{ color: "White" }}></InputLabel> */}
+                        <CustomInput
+                            labelText="precastions "
+                            id="about-me"
+                            formControlProps={{
+                                fullWidth: true,
+                                color: 'white',
+                            }}
+                            inputProps={{
+                                multiline: true,
+                                rows: 5,
+                                color: 'white',
+                            }}
+                            style={{
+                                color: 'white',
+                            }}
+                        />
+                    </GridItem>
+
                     <div>
-                        <label for="refuse" style={styleTestReview.textStyle}> Choose Employee</label>
-                        <select id="refuse">
-                            <option value="Ali">Ali</option>
-                            <option value="Muhamed">Muhamed</option>
-                            <option value="sara">sara</option>
-                            <option value="alia">alia</option>
-                        </select>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="grouped-native-select" 
+                                style={{
+                                    color: 'white',
+                                    width: '150px',
+                                    margin: "10px"
+                                }} 
+                            >Choose Employee</InputLabel>
+                            <Select native defaultValue="" id="grouped-native-select"  style={{
+                                    color: '#00e676',
+                                    width: '150px',
+                                    margin: "10px",
+                                    padding: '10px',
+                                    borderColor: 'white'
+                                }} >
+                                <option aria-label="None" value="" />
+                                <optgroup label="Category 1">
+                                    <option value={1}>Option 1</option>
+                                    <option value={2}>Option 2</option>
+                                </optgroup>
+                            </Select>
+                        </FormControl>
+
                     </div>
                 </div>
             </Dialog>

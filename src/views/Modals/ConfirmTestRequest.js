@@ -36,3 +36,84 @@
 //         );
 //     }
 // }
+
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+const useStyles = makeStyles((theme) => ({
+    appBar: {
+        position: 'relative',
+    },
+    title: {
+        marginLeft: theme.spacing(2),
+        flex: 1,
+    },
+}));
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function ConfirmTestRequest(props) {
+    const classes = useStyles();
+
+    const [checked, setChecked] = React.useState(true);
+
+    const handleChange = (event) => {
+        setChecked(event.target.checked);
+    };
+
+    const styleTestReview = {
+        TestReviewModal: {
+            backgroundColor: "#111946",
+            color: 'white',
+        },
+        textStyle: {
+            fontSize: '17px',
+            color: 'white',
+            margin: '10px',
+        },
+        btnAction: {
+            margin: '0 auto',
+            width: '150px',
+            marginLeft: '80px',
+            color: 'white',
+        },
+    }
+
+    return (
+        <div >
+            <Dialog
+                open={props.open}
+                /*onClose={props.handleClose}*/
+                TransitionComponent={Transition}
+                keepMounted
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle id="alert-dialog-slide-title" style={styleTestReview.TestReviewModal} >{"Confirmation"}</DialogTitle>
+                <DialogContent style={styleTestReview.TestReviewModal}>
+                    <DialogContentText id="alert-dialog-slide-description" style={styleTestReview.textStyle}>
+                        Are you sure to take a sample from patient ?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions style={styleTestReview.TestReviewModal}>
+                    <Button color="primary" style={styleTestReview.btnAction} /*onClick={props.handleClose}*/>
+                        Disagree
+                    </Button>
+                    <Button color="primary" style={styleTestReview.btnAction}>
+                        Agree
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
+}
