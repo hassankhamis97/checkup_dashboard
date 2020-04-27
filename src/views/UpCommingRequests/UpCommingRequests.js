@@ -1,87 +1,25 @@
 import React from "react";
 
-
-import styles from "../../assets/jss/material-dashboard-react/views/dashboardStyle.js";
-
-
-// @material-ui/core components
-// core components
 import GridItem from "components/Grid/GridItem.js";
 import Button from "../../components/CustomButtons/Button.js";
 
 import firebase from 'firebase';
-// import 'firebase/database';
+
 import database from '../../firebase';
-// import storage from '../../firebase';
-
-
-// @material-ui/core components
-
-
-import InputLabel from "@material-ui/core/InputLabel";
-// core components
 
 
 import GridContainer from "components/Grid/GridContainer.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
+
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardAvatar from "components/Card/CardAvatar.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-// import firebase from 'firebase';
-// import 'firebase/database';
-// import config from '../../config';
-import avatar from "assets/img/faces/marc.jpg";
-import PropTypes from "prop-types";
-// react plugin for creating charts
 
-import ChartistGraph from "react-chartist";
-// @material-ui/core
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
-import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
-import Accessibility from "@material-ui/icons/Accessibility";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
-import Cloud from "@material-ui/icons/Cloud";
-// core components
+import CardBody from "components/Card/CardBody.js";
+
 
 import Table from "components/Table/Table.js";
 
-import Tasks from "components/Tasks/Tasks.js";
-import CustomTabs from "components/CustomTabs/CustomTabs.js";
-import Danger from "components/Typography/Danger.js";
-
-import CardIcon from "components/Card/CardIcon.js";
-
-
-import { bugs, website, server } from "variables/general.js";
-import { idText } from "typescript";
 import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 import TestReview from '../Modals/TestReview'
-
-// import {
-//   dailySalesChart,
-//   emailsSubscriptionChart,
-//   completedTasksChart
-// } from "variables/charts.js";
-
-
-// const useStyles = makeStyles(styles);
-
-
-// const propTypes = {
-//   state: PropTypes.string,
-//   onChange: PropTypes.func
-// };
-
 
 class UpCommingRequests extends React.Component {
 
@@ -96,17 +34,26 @@ class UpCommingRequests extends React.Component {
     //        'imgUrl': 'https://www.bipmedia.com/uploads/media/2015/05/Samantha-Ruthford_avatar.jpg' ,
     //        'address' : 'Alex/smoha'
     //       })
-
+    this.handleStatus = this.handleStatus.bind(this)
     this.state = {
+      resID: '',
       open: false,
-      openAlert : false ,
+      openAlert: false,
       dataShowList: [],
+      fullDataList: [],
       requests: [],
       tableBodyData: '',
-      sampleStatus: ''
+      sampleStatus: '',
+
+      transferedObj: {
+        userName: '',
+        id: '',
+        dateOfBirth: '',
+        gender: '',
+        phone: ''
+      },
+
     }
-
-
 
 
   }
@@ -119,7 +66,7 @@ class UpCommingRequests extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     this.writeUserData();
-    if (prevState != this.state) {
+    if (prevState !== this.state) {
       // this.writeUserData();
     }
   }
@@ -133,15 +80,29 @@ class UpCommingRequests extends React.Component {
   ///****************   Changing Sample status ********************/
   debugger;
 
-  handleStatus(itemStatus) {
+  handleStatus(obj) {
+    debugger;
+    // prompt(obj)
+
+
+
+     this.state.transferedObj =  this.state.fullDataList.filter(item => item.id != obj.id);
+  
+
+
+    var id = obj.id;
+    this.setState({ resID: obj.id })
+    //  this.setState({transferedObj : obj})
     // debugger; 
-    if (itemStatus == "PendingLabForConfirmation") {
+    if (obj.status === "PendingForLabConfirmation") {
 
 
       this.setState({ open: true })
+
     } else {
+      debugger;
       this.setState({ openAlert: true })
- 
+
     }
 
     //  change status of SampleObject to Done leave it in the same table
@@ -165,7 +126,7 @@ class UpCommingRequests extends React.Component {
     // debugger;
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
-    ref.orderByChild("status").equalTo("PendingLabForConfirmation").on('value', snapshot => {
+    ref.orderByChild("status").equalTo("PendingForLabConfirmation").on('value', snapshot => {
       this.state.dataShowList = []
 
       snapshot.forEach(function (item) {
@@ -179,14 +140,24 @@ class UpCommingRequests extends React.Component {
             debugger;
             user = snap.val();
             console.log(user)
-            this.setState({ sampleStatus: obj.status });
+            // this.setState({ sampleStatus: obj.status });
+            this.state.sampleStatus = obj.status;
+
+            debugger
             var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
-            user.name
-              , <Button key={obj.id} onClick={() => this.handleStatus(obj.status)} color="primary" >{this.state.sampleStatus}</Button>
+            user.name, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
             ]
 
 
+            var fullObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
+              user.name, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+                ,obj.id , user.dateOfBirth , user.gender,user.phone
+              ]
+            // this.state.transferedObj.testName = 
 
+         
+      
+            this.state.fullDataList.push(fullObj);
             console.log(reqObj)
 
             this.state.dataShowList.push(reqObj)
@@ -197,7 +168,47 @@ class UpCommingRequests extends React.Component {
         //this.state.tableBodyData = 
 
       }.bind(this));
+      ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
+        //  this.state.dataShowList = []
 
+        snapshot.forEach(function (item) {
+          debugger;
+          var obj = item.val();
+          console.log(obj)
+          let user;
+          // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
+          firebase.database().ref('/').child('Users').child(obj.userId)
+            .on("value", snap => {
+              debugger;
+              user = snap.val();
+              console.log(user)
+              this.state.sampleStatus = obj.status;
+              this.setState({ sampleStatus: obj.status });
+              var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
+              user.name
+                , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+              ]
+
+
+
+              console.log(reqObj)
+
+              this.state.dataShowList.push(reqObj)
+              this.forceUpdate()
+            });
+          // keys.push(itemVal);
+
+          //this.state.tableBodyData = 
+
+        }.bind(this));
+
+        // data.map((obj,index)=>{
+        //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
+        //    this.state.dataShowList.push(reqObj)
+        //    //this.state.tableBodyData = 
+        //    this.forceUpdate()
+        // })
+      });
       // data.map((obj,index)=>{
       //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
       //    this.state.dataShowList.push(reqObj)
@@ -208,46 +219,7 @@ class UpCommingRequests extends React.Component {
 
 
 
-    ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
-      this.state.dataShowList = []
 
-      snapshot.forEach(function (item) {
-        debugger;
-        var obj = item.val();
-        console.log(obj)
-        let user;
-        // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
-        firebase.database().ref('/').child('Users').child(obj.userId)
-          .on("value", snap => {
-            debugger;
-            user = snap.val();
-            console.log(user)
-            this.setState({ sampleStatus: obj.status });
-            var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
-            user.name
-              , <Button key={obj.id} onClick={() => this.handleStatus(obj.status)} color="primary" >{this.state.sampleStatus}</Button>
-            ]
-
-
-
-            console.log(reqObj)
-
-            this.state.dataShowList.push(reqObj)
-            this.forceUpdate()
-          });
-        // keys.push(itemVal);
-
-        //this.state.tableBodyData = 
-
-      }.bind(this));
-
-      // data.map((obj,index)=>{
-      //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
-      //    this.state.dataShowList.push(reqObj)
-      //    //this.state.tableBodyData = 
-      //    this.forceUpdate()
-      // })
-    });
 
 
 
@@ -280,17 +252,46 @@ class UpCommingRequests extends React.Component {
   };
 
 
-  handleAlertClose  = () => {
+  handleAlertClose = () => {
     // setOpen(false);
     // this.state.open = false
     this.setState({ openAlert: false })
 
   };
 
-  handleAlertOpen  = () => {
+  handleAlertOpen = () => {
     // setOpen(false);
     // this.state.open = false
-    this.setState({ openAlert: true })
+    // this.setState({ openAlert: true })
+    debugger
+    //  prompt(this.state.transferedObj.name)
+
+
+    //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
+
+    var id = this.state.resID
+    var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+    ref.child(id).update({ 'status': 'PendingForResult' })
+
+
+    this.setState({ sampleStatus: "PendingForResult" })
+    this.setState({ openAlert: false })
+
+    this.forceUpdate()
+
+    //  change status of SampleObject to Done leave it in the same table
+    // in the result pages get all  tests which have status == Done only
+    // console.log(itemId)
+    // var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+    // ref.child(itemId).update({'status': 'Done'}) 
+
+
+    // this.setState({ sampleStatus: 'Pending For Result' })
+
+
+    // this.forceUpdate()
+
+
 
   };
 
@@ -302,32 +303,30 @@ class UpCommingRequests extends React.Component {
 
     return (
       <div>
-        <AlertDialogSlide  open={this.state.open} handleAlertOpen={this.handleAlertOpen}  handleAlertClose={this.handleAlertClose}  />
+        <AlertDialogSlide text="  Did You Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
 
-        <TestReview open={this.state.open} handleClose={this.handleClose}></TestReview>
-         
+        <TestReview recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview>
+
         <GridContainer>
 
           <GridItem xs={12} sm={12} md={12}>
             <Card>
-              <CardHeader color="warning">
+              <CardHeader color="primary">
                 <h4>Employees Stats</h4>
                 <p>
                   Up Comminng Patient requests
-       </p>
+                 </p>
               </CardHeader>
               <CardBody>
                 <Table
-                  tableHeaderColor="warning"
+                  tableHeaderColor="primary"
                   tableHead={["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]}
-                  tableData={this.state.dataShowList.length == 0 ? [["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]] : this.state.dataShowList}
+                  tableData={this.state.dataShowList.length === 0 ? [["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]] : this.state.dataShowList}
                 //tableData={ [["Patient Name", "Date", "Time","FromHome","Action"]]}
                 />
               </CardBody>
             </Card>
           </GridItem>
-
-
 
         </GridContainer>
       </div>
