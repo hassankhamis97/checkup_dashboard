@@ -27,8 +27,8 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+            <Link color="inherit" href="#">
+                AHMY
       </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -84,15 +84,24 @@ const authentication = new Authentication();
 //     return () => setValue(value => ++value); // update the state to force render
 // }
 export default function Login() {
-    const [email, setEmail] = React.useState();
-    const [password, setPassword] = React.useState();
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const [errMsg, setErrMsg] = React.useState('');
-    debugger
+    const [value, setValue] = React.useState(0); 
+    const [isLogin, setIsLogin] = React.useState(true);
+    // debugger
+
+    // function useForceUpdate(){
+    //     const [value, setValue] = React.useState(0); // integer state
+    //     return () => setValue(value => ++value); // update the state to force render
+    // }
     // const forceUpdate = useForceUpdate();
-    // authentication.getUser(()=> {forceUpdate})
+    authentication.getUser(() => {
+        return () => setValue(value => ++value); // update the state to force render
+    })
     const classes = useStyles();
     const hist = createBrowserHistory();
-    const loginStyle={
+    const loginStyle = {
         disN: {
             display: 'none'
         },
@@ -104,14 +113,23 @@ export default function Login() {
     }
     function login() {
         debugger
-
-        authentication.checkUser(email, password, (msg) => { setErrMsg(msg) })
-        // auth.signInWithEmailAndPassword("pp@pp.com", "123456789Iti")
-        // auth.onAuthStateChanged(firebaseUser => {
-        //     console.log(firebaseUser)
-        //     console.log(firebase.auth().currentUser)
-
-        // })
+        if (email.trim() != '' && password.trim() != '') {
+            authentication.checkUser(email, password, (msg) => { setErrMsg(msg) })
+        }
+        else {
+            setErrMsg('email and password are required')
+        }
+    }
+    function forgetPassword() {
+        debugger
+        firebase.auth().sendPasswordResetEmail(email)
+            .then(function() {
+              alert('checkmail')
+            })
+            .catch(function(error) {
+                alert(error)
+              // Error occurred. Inspect error.code.
+            });
     }
     return (
         <div>
@@ -133,18 +151,18 @@ export default function Login() {
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Sign in
-          </Typography>
-          <br></br>
-                        <GridItem style={loginStyle.w100,errMsg !== ''?loginStyle.disB:loginStyle.disN}>
+                        </Typography>
+                        <br></br>
+                        <GridItem style={loginStyle.w100, errMsg !== '' ? loginStyle.disB : loginStyle.disN}>
                             <SnackbarContent
                                 message={
                                     errMsg
                                 }
-                                
+
                                 color="danger"
                             />
                         </GridItem>
-                        <form className={classes.form} noValidate>
+                        {isLogin ? <form className={classes.form} noValidate>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -176,10 +194,10 @@ export default function Login() {
                                 }}
 
                             />
-                            <FormControlLabel
+                            {/* <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
                                 label="Remember me"
-                            />
+                            /> */}
                             <Button
 
                                 fullWidth
@@ -192,20 +210,69 @@ export default function Login() {
             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" variant="body2">
+                                    <Link onClick={()=>{setIsLogin(false)}} variant="body2">
                                         Forgot password?
                 </Link>
                                 </Grid>
-                                <Grid item>
+                                {/* <Grid item>
                                     <Link href="#" variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                             <Box mt={5}>
                                 <Copyright />
                             </Box>
                         </form>
+                            :
+                            <form className={classes.form} noValidate>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    value={email}
+                                    onChange={e => {
+                                        setEmail(e.target.value)
+                                    }}
+                                />
+                                
+                                {/* <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            /> */}
+                                <Button
+
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                    onClick={forgetPassword}
+                                >
+                                    Confirm
+            </Button>
+                                <Grid container>
+                                    <Grid item xs>
+                                        <Link  onClick={()=>{setIsLogin(true)}} variant="body2">
+                                            Back
+                </Link>
+                                    </Grid>
+                                    {/* <Grid item>
+                                    <Link href="#" variant="body2">
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid> */}
+                                </Grid>
+                                <Box mt={5}>
+                                    <Copyright />
+                                </Box>
+                            </form>
+                        }
                     </div>
                 </Grid>
             </Grid>

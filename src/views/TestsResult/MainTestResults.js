@@ -12,6 +12,7 @@ import CardBody from "components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
 import firebase from 'firebase';
 import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
+import SendResult from "views/Modals/SendResult/SendResult.js";
 
 
 
@@ -61,7 +62,7 @@ class MainTestResults extends React.Component {
             requests: [],
             tableBodyData: '',
             sampleStatus: '',
-            objId : '' ,
+            objId: '',
 
         }
         this.setState({ ...this.state.dataShowList })
@@ -91,9 +92,9 @@ class MainTestResults extends React.Component {
     handleStatus(obj) {
 
         // prompt(obj.id)
-        
-        
-        this.setState({objId : obj.id})
+
+
+        this.setState({ objId: obj.id })
 
         this.setState({ openAlert: true })
 
@@ -129,11 +130,11 @@ class MainTestResults extends React.Component {
                         debugger;
                         user = snap.val();
                         console.log(user)
- 
+
                         this.state.sampleStatus = obj.status;
 
                         debugger
-                        var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,user.name,
+                        var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome, user.name,
                         <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
                         ]
 
@@ -151,49 +152,49 @@ class MainTestResults extends React.Component {
 
     }
 
-///****************************************************************************** */
- 
-handleClose = () => {
-    // setOpen(false);
-    // this.state.open = false
-    this.setState({ openAlert: false })
+    ///****************************************************************************** */
 
-  };
+    handleClose = () => {
+        // setOpen(false);
+        // this.state.open = false
+        this.setState({ openAlert: false })
 
-
-  handleAlertClose  = () => {
-    // setOpen(false);
-    // this.state.open = false
-    this.setState({ openAlert: false })
-
-  };
-
-  handleAlertOpen  = () => {
-    // setOpen(false);
-    // this.state.open = false
-    // this.setState({ openAlert: true })
-    debugger
-    //  prompt("ffsfsfsfsf")
+    };
 
 
-     //  change status of SampleObject to Done leave it in the same table
-    // in the result pages get all  tests which have status == Done only
-    // console.log(itemId)
+    handleAlertClose = () => {
+        // setOpen(false);
+        // this.state.open = false
+        this.setState({ openAlert: false })
+
+    };
+
+    handleAlertOpen = () => {
+        // setOpen(false);
+        // this.state.open = false
+        // this.setState({ openAlert: true })
+        debugger
+        //  prompt("ffsfsfsfsf")
+        this.setState({ openAlert: true })
+
+        //  change status of SampleObject to Done leave it in the same table
+        // in the result pages get all  tests which have status == Done only
+        // console.log(itemId)
 
 
-    
-    var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-    ref.child(this.state.objId).update({'status': 'Done'}) 
+
+        // var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+        // ref.child(this.state.objId).update({ 'status': 'Done' })
 
 
-    this.setState({ sampleStatus: 'Done' })
-    this.setState({ openAlert: false })
+        // this.setState({ sampleStatus: 'Done' })
+        // this.setState({ openAlert: false })
 
-    this.forceUpdate()
-    
+        // this.forceUpdate()
 
 
-  };
+
+    };
 
 
 
@@ -208,8 +209,11 @@ handleClose = () => {
 
         return (
             <div>
-        <AlertDialogSlide text="  Did you want to send Result to the Patient ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen}  handleAlertClose={this.handleAlertClose}  />
-
+                {/* <AlertDialogSlide text="  Did you want to send Result to the Patient ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen}  handleAlertClose={this.handleAlertClose}  /> */}
+                {this.state.openAlert ?
+                    <SendResult testId={this.state.objId} open={this.state.openAlert} handleClose={this.handleAlertClose}></SendResult>
+                    : ''
+                }
                 <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
                         <Card>

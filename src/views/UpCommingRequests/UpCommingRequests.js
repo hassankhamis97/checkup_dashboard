@@ -86,8 +86,8 @@ class UpCommingRequests extends React.Component {
 
 
 
-     this.state.transferedObj =  this.state.fullDataList.filter(item => item.id != obj.id);
-  
+    this.state.transferedObj = this.state.fullDataList.filter(item => item.id != obj.id);
+
 
 
     var id = obj.id;
@@ -150,13 +150,13 @@ class UpCommingRequests extends React.Component {
 
 
             var fullObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
-              user.name, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-                ,obj.id , user.dateOfBirth , user.gender,user.phone
-              ]
+            user.name, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+              , obj.id, user.dateOfBirth, user.gender, user.phone
+            ]
             // this.state.transferedObj.testName = 
 
-         
-      
+
+
             this.state.fullDataList.push(fullObj);
             console.log(reqObj)
 

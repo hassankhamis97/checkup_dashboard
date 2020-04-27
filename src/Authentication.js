@@ -2,10 +2,10 @@ import firebase from 'firebase';
 import database from './firebase';
 
 export default class Authentication {
-    static loggedUser = null;
+    static loggedUser = "wait";
     constructor() {
         debugger
-        Authentication.loggedUser = firebase.auth().currentUser
+        Authentication.loggedUser = firebase.auth().currentUser == null ? "wait" : firebase.auth().currentUser
         // firebase.auth().signOut().then(function() {
         //     Authentication.userId = firebase.auth().currentUser
         //   }).catch(function(error) {
@@ -66,6 +66,7 @@ export default class Authentication {
                 // }
             } else {
                 Authentication.loggedUser = null
+                if(response) response()
             }
           });
     }

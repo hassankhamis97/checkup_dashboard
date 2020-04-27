@@ -45,16 +45,27 @@ super()
         return (
             // <span>dfs</span>
             <div>
-                {Authentication.loggedUser != null ?
+                {
+                    Authentication.loggedUser === "wait" ? '' : Authentication.loggedUser == null ?
+                    <Login></Login> : 
                     <Router history={hist}>
                         <Switch>
                             <Route path="/admin" component={Admin} />
                             <Route path="/rtl" component={RTL} />
                             <Redirect from="/" to="/admin/dashboard" />
                         </Switch>
-                    </Router> :
-                    <Login></Login>
+                    </Router>
                 }
+                {/* {Authentication.loggedUser != null ?
+                    <Router history={hist}>
+                        <Switch>
+                            <Route path="/admin" component={Admin} />
+                            <Route path="/rtl" component={RTL} />
+                            <Redirect from="/" to="/admin/dashboard" />
+                        </Switch>
+                    </Router> : Authentication.loggedUser === "wait" ?
+                     '': <Login></Login>
+                } */}
             </div>
         );
     }

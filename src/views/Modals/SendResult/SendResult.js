@@ -18,7 +18,7 @@ import database from '../../../firebase';
 import ResultFiles from './ResultFiles'
 import firebase from 'firebase';
 import SendResultConfirmationAlert from './SendResultConfirmationAlert';
-
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -26,11 +26,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default class SendResult extends React.Component {
     constructor(){
         super()
-        var uploadedFiles = [];
+        // var uploadedFiles = [];
     }
         state = {
             open: false,
             resultFilespaths : [],
+            uploadedFiles: [],
             // Employee: {
             //     name: '',
             //     address: ''
@@ -44,6 +45,7 @@ export default class SendResult extends React.Component {
             //     imagePath: '',
             //     phones: ['']
             // },
+            errMsg: '',
             test:{
                 date: '',
                 description: '',
@@ -55,7 +57,8 @@ export default class SendResult extends React.Component {
                 testName: '',
                 time: '',
                 userId: '',
-                description: ''
+                description: '',
+                hba1c: ''
             }
 
         }
@@ -81,17 +84,17 @@ export default class SendResult extends React.Component {
     }
     deleteFile = (index) =>{
         this.state.test.resultFilespaths.splice(index,1);
-        this.uploadedFiles.splice(index,1);
+        this.state.uploadedFiles.splice(index,1);
         this.forceUpdate()
     }
     onImageChange = (event) => {
         debugger
         if (event.target.files) {
-            // this.uploadedFiles = event.target.files;
+            // this.state.uploadedFiles = event.target.files;
             this.state.test.resultFilespaths = []
-            this.uploadedFiles = []
+            this.state.uploadedFiles = []
             for (let i = 0; i < event.target.files.length; i++) {
-                this.uploadedFiles.push(event.target.files[i])
+                this.state.uploadedFiles.push(event.target.files[i])
                 this.state.test.resultFilespaths.push('/TestResults/'+ this.props.testId + '/'+ event.target.files[i].name) ;
             }
             // this.state.test.resultFilespaths = this.state.resultFilespaths;
@@ -120,7 +123,10 @@ export default class SendResult extends React.Component {
     }
     handleOpenAlert = ()=> {
         debugger
-        this.setState({open: true})
+        if(this.state.uploadedFiles.length > 0)
+            this.setState({open: true})
+        else
+            this.setState({errMsg: "Please inseart at least 1 file"})
         
     }
     updateData = () =>{
@@ -132,18 +138,24 @@ export default class SendResult extends React.Component {
         //   };
 
             // Upload the file and metadata
-        for (let i = 0; i < this.uploadedFiles.length; i++) {
-            var uploadTask = storageRef.child(this.uploadedFiles[i].name).put(this.uploadedFiles[i]);
+        for (let i = 0; i < this.state.uploadedFiles.length; i++) {
+            var uploadTask = storageRef.child(this.state.uploadedFiles[i].name).put(this.state.uploadedFiles[i]);
         }
         this.state.test.status = 'Done'
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
+        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
+        // .update({ 'status': this.state.test.status,
+        //             'description': this.state.test.description,
+        //             'hba1c': this.state.test.hba1c,
+        //             'resultFilespaths': this.state.test.resultFilespaths,
+        //              })
         this.props.handleClose();
     }
 
     // const classes = useStyles();
 render(){
     
-    const styleTestReview = {
+    const styleSendResult = {
         appBar: {
             position: 'relative',
         },
@@ -170,7 +182,10 @@ render(){
             display: 'inline-block',
             verticalAlign: 'top',
             alignSelf: 'flex-end',
-            width: '50%'
+            width: '45%',
+            border: '1px solid rgb(178, 201, 233)',
+            float: 'right',
+            padding: '20px'
         },
         btnAction:{
             margin: '0 auto',
@@ -180,42 +195,63 @@ render(){
         refuseBtn: {
             width: '150px',
             color : '#ff0000'
-        }
-        // TestReviewModal:{
-        //     height: "100%",
-        //     // backgroundColor: "blueviolet",
-        //     width: "100%",
-        // }
+        },
+        TestReviewModal:{
+            // height: "100%",
+            // // backgroundColor: "blueviolet",
+            // width: "100%",
+            padding: '20px'
+        },
+        chooser:{
+            border: '2px dashed #0087F7',
+            width: '82%',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            padding: '54px',
+            textAlign: 'center'
+        },
+        inputImage: {
+            display: 'none'
+        },
     }
     
     return (
         <div>
             {this.state.open?<SendResultConfirmationAlert open={this.state.open} handleConfirm={this.handleConfirm.bind(this)}  handleClose={this.handleClose.bind(this)}></SendResultConfirmationAlert>:''}
             <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={Transition}>
-                <AppBar style={styleTestReview.appBar}>
+                <AppBar style={styleSendResult.appBar}>
                     <Toolbar>
                         <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
-                        <Typography variant="h6" style={styleTestReview.title}>
-                            Test Review
+                        <Typography variant="h6" style={styleSendResult.title}>
+                            Send Result
 
                             
             </Typography>
             
-            <Button autoFocus style={styleTestReview.btnAction} color="inherit" 
+            <Button autoFocus style={styleSendResult.btnAction} color="inherit" 
                 onClick={this.handleOpenAlert.bind(this)}>
                         Accept
             </Button>
                     </Toolbar>
                 </AppBar>
-                <div style={styleTestReview.TestReviewModal}>
-                    <div style={styleTestReview.TestData}>
+                <div style={styleSendResult.TestReviewModal}>
+                    <div style={styleSendResult.TestData}>
                         <br></br>
 
                     <GridContainer>
                         <GridItem xs={12} sm={12} md={12}>
                         <InputLabel style={{ color: "#AAAAAA" }}>Some Info About Result</InputLabel>
+                        {this.state.errMsg !== '' ? <GridItem>
+                            <SnackbarContent
+                                message={
+                                    this.state.errMsg
+                                }
+
+                                color="danger"
+                            />
+                        </GridItem> : '' }
                         <CustomInput
                             labelText="Enter Description About Test Result For User"
                             id="about-me"
@@ -241,16 +277,40 @@ render(){
                         </GridItem>
                     </GridContainer>
                     <div>
-                        <input onChange={this.onImageChange.bind(this)} accept="application/pdf,application/vnd.ms-excel,image/*" id="icon-button-file" type="file" multiple/>
-                                        
+                        <input style={styleSendResult.inputImage} onChange={this.onImageChange.bind(this)} accept="application/pdf,application/vnd.ms-excel,image/*" id="icon-button-file" type="file" multiple/>
+                        <label htmlFor="icon-button-file">
+                                            <div style={styleSendResult.chooser}>
+                                                Choose results files
+                                            </div>
+                                        </label>
                                     </div>
-                    {this.state.test.resultFilespaths? this.state.test.resultFilespaths.map((textValue,index)=> (
+                    {(this.state.test.resultFilespaths && this.state.uploadedFiles.length) ? this.state.test.resultFilespaths.map((textValue,index)=> (
                                             
                         <ResultFiles key={index} index={index} count={this.state.test.resultFilespaths.length} textValue={textValue} deleteFile={this.deleteFile} changeText={this.changeText}></ResultFiles>
                     )): ''}
                     </div>
-                    <div style={styleTestReview.TestPic}>
-                        
+            <div style={styleSendResult.TestPic}>
+            <InputLabel style={{ color: "#AAAAAA" }}>Some Info About Result</InputLabel>
+
+                        <GridItem xs={12} sm={12} md={12}>
+                                            <CustomInput
+                                                type="text"
+                                                value={this.state.test.hba1c}
+                                                onChange={e => {
+                                                    this.setState({
+                                                        test: {
+                                                            ...this.state.test,
+                                                            hba1c: e.target.value
+                                                        }
+                                                    })
+                                                }}
+                                            labelText="HBA1C Test Result"
+                                                id="username"
+                                                formControlProps={{
+                                                    fullWidth: true
+                                                }}
+                                            />
+                                        </GridItem>
                     </div>
                 </div>
             </Dialog>

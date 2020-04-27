@@ -32,8 +32,9 @@ export default class ResultFiles extends React.Component {
         return(
             // <span>sdsd</span>
             <GridContainer md={12} key={this.props.key}>
-                    <GridItem xs={12} sm={12} md={9}>
+                    <GridItem xs={12} sm={12} md={11}>
                         <CustomInput
+                            
                             type="name"
                             value={this.props.textValue}
                             onChange={this.changeText.bind(this)}
@@ -43,12 +44,15 @@ export default class ResultFiles extends React.Component {
                             formControlProps={{
                                 fullWidth: true
                             }}
+                            inputProps={{
+                                disabled: true
+                              }}
                         />
                     </GridItem>
                     
                     { this.props.count > 1?
                         
-                            <GridItem style={{marginTop: "38px"}} xs={12} sm={12} md={3}>
+                            <GridItem style={{marginTop: "38px"}} xs={12} sm={12} md={1}>
                             <IconButton style={{color: "red"}} onClick={this.deleteFile} aria-label="upload picture" component="span">
                                 <DeleteIcon />
                             </IconButton>

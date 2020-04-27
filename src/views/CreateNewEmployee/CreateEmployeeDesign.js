@@ -21,6 +21,9 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import PhoneNumber from './PhoneNumber'
 import PropTypes from "prop-types";
+// import * as admin from 'firebase-admin';
+// var serviceAccount = require("../../../checkup-23ffe-firebase-adminsdk-7pwms-f7d9cf5cfa.json");
+
 // import firebase from 'firebase';
 // const defaultProps = {
 //   state: "",
@@ -59,7 +62,27 @@ class CreateEmployeeDesign extends React.Component {
     constructor(props) {
         debugger;
         super(props);
-        
+        // var defaultAppConfig = admin.initializeApp({
+        //     credential: admin.credential.cert(serviceAccount),
+        //     databaseURL: "https://checkup-23ffe.firebaseio.com"
+        //   });
+          
+        //   var defaultApp = admin.initializeApp(defaultAppConfig);
+        //   var defaultAuth = admin.auth();
+        //   var defaultDatabase = admin.database()
+        //   debugger
+        //   admin.auth().getUserByEmail("hassankhamis99@gmail.com")
+        //     .then(function(userRecord) {
+        //         debugger
+        //       // See the UserRecord reference doc for the contents of userRecord.
+        //       console.log('Successfully fetched user data:', userRecord.toJSON());
+        //     })
+        //     .catch(function(error) {
+        //      console.log('Error fetching user data:', error);
+        //     });
+
+
+
         // firebase.initializeApp(config);
         var uploadedFile = null;
         this.state = {
@@ -104,10 +127,10 @@ class CreateEmployeeDesign extends React.Component {
     }
     showNotification = () => {
         this.setTL(true);
-              setTimeout(function() {
-                this.setTL(false);
-              }, 6000);
-      };
+        setTimeout(function () {
+            this.setTL(false);
+        }, 6000);
+    };
     writeUserData = (userId) => {
         // firebase.database().ref('/').set(this.state);
         // var newPostKey = database.ref().push().key;
@@ -165,7 +188,7 @@ class CreateEmployeeDesign extends React.Component {
         debugger
         prompt('dsaf');
     }
-    changeText = (index,newValue) =>{
+    changeText = (index, newValue) => {
         debugger
         this.state.Employee.phones[index] = newValue;
         this.forceUpdate();
@@ -193,8 +216,8 @@ class CreateEmployeeDesign extends React.Component {
         this.state.Employee.phones.push('');
         this.forceUpdate()
     }
-    deletePhone = (index) =>{
-        this.state.Employee.phones.splice(index,1);
+    deletePhone = (index) => {
+        this.state.Employee.phones.splice(index, 1);
         this.forceUpdate()
     }
     handleCreateNewEmployee = () => {
@@ -214,45 +237,57 @@ class CreateEmployeeDesign extends React.Component {
         //     database.ref('/').child('Tests').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").child(newPostKey).set(testObj);
 
         // }
-        
-          debugger
+
+        debugger
         const auth = firebase.auth();
-        auth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password).catch(function(error) {
+        auth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password).catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             // ...
-          });
-          auth.onAuthStateChanged(firebaseUser => {
-              if(firebaseUser)
-              {
-                let userId= firebaseUser.uid;
-                this.setState({
-                    Employee: {
-                        ...this.state.Employee,
-                        imagePath: '/images/' + userId + this.uploadedFile.name
-                    }
-                })
+        });
+        auth.onAuthStateChanged(firebaseUser => {
+            if (firebaseUser) {
+                let userId = firebaseUser.uid;
+                if (this.uploadedFile) {
+                    this.setState({
+                        Employee: {
+                            ...this.state.Employee,
+                            imagePath: '/images/' + userId + this.uploadedFile.name
+                        }
+                    })
+                }
                 for (let i = 0; i < this.state.Employee.phones.length; i++) {
                     // const element = this.state.Employee.phones[i];
-                    if(this.state.Employee.phones[i].trim() == ''){
-                        this.state.Employee.phones.splice(i,1)
+                    if (this.state.Employee.phones[i].trim() == '') {
+                        this.state.Employee.phones.splice(i, 1)
                     }
-                    
+
                 }
                 this.writeUserData(userId);
+                if (this.uploadedFile) {
+                    var storageRef = firebase.storage().ref('/images/' + userId + '/');
 
-                var storageRef = firebase.storage().ref('/images/' + userId + '/');
-                
-                // var metadata = {
-                //     contentType: 'image/jpeg',
-                //   };
+                    // var metadata = {
+                    //     contentType: 'image/jpeg',
+                    //   };
 
                     // Upload the file and metadata
-                var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile);
+                    var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile);
+                }
                 console.log(firebaseUser)
                 this.props.showNotification("Employee saved successfully")
-                // this.state.image = avatar,
+                this.uploadedFile = null;
+                // this.state.Employee
+                this.state.image = avatar;
+                var empObj={
+                    userName: '',
+                email: '',
+                password: '',
+                imagePath: '',
+                phones: ['']
+                }
+                this.state.Employee = empObj;
                 // this.setState({
                 //     Employee: {
                 //         ...this.state.Employee,
@@ -263,9 +298,9 @@ class CreateEmployeeDesign extends React.Component {
                 // phones: ['']
                 //     }
                 // })
-                
-              }
-          })
+
+            }
+        })
     }
     render() {
         debugger;
@@ -363,19 +398,19 @@ class CreateEmployeeDesign extends React.Component {
                                                 }}
                                                 labelText="Password"
                                                 id="email-address"
-                                                 formControlProps={{
+                                                formControlProps={{
                                                     fullWidth: true
                                                 }}
                                             />
                                         </GridItem>
-                                        
-                                        {this.state.Employee.phones.map((textValue,index)=> (
-                                            
+
+                                        {this.state.Employee.phones.map((textValue, index) => (
+
                                             <PhoneNumber key={index} index={index} count={this.state.Employee.phones.length} textValue={textValue} deletePhone={this.deletePhone} changeText={this.changeText}></PhoneNumber>
                                         ))}
-                                        
+
                                         <GridItem xs={12} sm={12} md={12}>
-                                        <Button onClick={this.handleAddNewPhone.bind(this)} color="primary">Add Phone</Button> 
+                                            <Button onClick={this.handleAddNewPhone.bind(this)} color="primary">Add Phone</Button>
                                         </GridItem>
                                     </GridContainer>
                                 </CardBody>
