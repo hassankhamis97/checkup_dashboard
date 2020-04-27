@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,6 +10,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
+
+import RefuseRequest from './RefusedRequest'
+import AcceptedRequest from './AcceptedRequest'
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -27,6 +30,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function TestReview(props) {
     const classes = useStyles();
+
+    let  [refuseDialog,setRefuse]=useState();
+    let  [acceptDialog,setAccept]=useState();
+
+    function handleRefuse() {
+        //passing empty object will re-render the component
+        setRefuse({refuseDialog : true}) 
+    }
+
+    function handleRAccept() {
+        //passing empty object will re-render the component
+        setAccept({acceptDialog : true}) 
+    }
 
     const styleTestReview = {
 
@@ -72,6 +88,8 @@ export default function TestReview(props) {
 
     return (
         <div style={styleTestReview.TestReviewModal}>
+         <RefuseRequest open={refuseDialog} ></RefuseRequest>
+         <AcceptedRequest open={acceptDialog} ></AcceptedRequest>
 
             <Dialog fullScreen open={props.open} /*onClose={props.handleClose}*/ TransitionComponent={Transition}>
                 <AppBar className={classes.appBar}>
@@ -84,14 +102,14 @@ export default function TestReview(props) {
 
                             
             </Typography>
-            <Button autoFocus color="inherit" style={styleTestReview.btnAction,styleTestReview.refuseBtn} /*onClick={props.handleClose}*/>
+            <Button autoFocus color="inherit" style={styleTestReview.btnAction,styleTestReview.refuseBtn} onClick={handleRefuse}>
                             Refuse
             </Button>
               
             <Button autoFocus color="inherit" style={styleTestReview.btnAction} /*onClick={props.handleClose}*/>
                             Chat
             </Button>
-            <Button autoFocus style={styleTestReview.btnAction} color="inherit" /*onClick={props.handleClose}*/>
+            <Button autoFocus style={styleTestReview.btnAction} color="inherit" onClick={handleRAccept}>
                         Accept
             </Button>
                     </Toolbar>
