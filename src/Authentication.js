@@ -49,8 +49,21 @@ export default class Authentication {
             if (user) {
                 // console.log(firebase.auth().currentUser)
                 Authentication.loggedUser = user
-                if(response)
+                if(response){
+                    debugger
+                    // firebase.auth().verifyIdToken(user.uid).then((claims) => {
+                    //     if (claims.admin === true) {
+                    //         
+                    //     }
+                    //   });
                     response()
+                }
+                // else{
+                //     firebase.auth().setCustomUserClaims(user.uid, {admin: true}).then(() => {
+                //         // The new custom claims will propagate to the user's ID token the
+                //         // next time a new one is issued.
+                //       });
+                // }
             } else {
                 Authentication.loggedUser = null
             }

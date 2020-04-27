@@ -68,8 +68,7 @@ class CreateEmployeeDesign extends React.Component {
             //     address: ''
 
             // }
-            phonesDiv: [
-                            ],
+            phonesDiv: [],
             image: avatar,
             // Employee: []
             Employee: {

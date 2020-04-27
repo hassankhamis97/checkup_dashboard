@@ -17,6 +17,7 @@ import avatar from "assets/img/faces/marc.jpg";
 
 // import ConfirmTestRequest from "views/Modals/ConfirmTestRequest"
 import TestReview from "views/Modals/TestReview"
+import SendResult from "views/Modals/SendResult/SendResult";
 // import AcceptedRequest from "views/Modals/AcceptedRequest"
 // import RefusedRequest from "views/Modals/RefusedRequest"
 
@@ -45,8 +46,19 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const classes = useStyles();
+  const [open,setOpen] = React.useState(false)
+  const handleClose = ()=> {
+    setOpen(false)
+  };
+  const handleOpen = ()=> {
+    setOpen(true)
+  };
   return (
     <div>
+      {open ? 
+      <SendResult testId={"-M5j2KVDaR6VnzRFFvgC"} open={open} handleClose={handleClose}></SendResult>
+      : ''
+      }
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>
           <Card>
@@ -157,8 +169,9 @@ export default function UserProfile() {
               {/* <ConfirmTestRequest></ConfirmTestRequest> */}
               {/* <AcceptedRequest></AcceptedRequest> */}
               {/* <RefusedRequest></RefusedRequest> */}
-              <TestReview></TestReview>
-              <Button color="primary">Update Profile</Button>
+              {/* <TestReview></TestReview> */}
+              
+              <Button color="primary" onClick={handleOpen}>Update Profile</Button>
             </CardFooter>
           </Card>
         </GridItem>
