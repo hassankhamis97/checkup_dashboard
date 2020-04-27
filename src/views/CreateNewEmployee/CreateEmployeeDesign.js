@@ -66,7 +66,7 @@ class CreateEmployeeDesign extends React.Component {
         //     credential: admin.credential.cert(serviceAccount),
         //     databaseURL: "https://checkup-23ffe.firebaseio.com"
         //   });
-          
+
         //   var defaultApp = admin.initializeApp(defaultAppConfig);
         //   var defaultAuth = admin.auth();
         //   var defaultDatabase = admin.database()
@@ -239,16 +239,29 @@ class CreateEmployeeDesign extends React.Component {
         // }
 
         debugger
-        const auth = firebase.auth();
-        auth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password).catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-        });
-        auth.onAuthStateChanged(firebaseUser => {
-            if (firebaseUser) {
-                let userId = firebaseUser.uid;
+        // function getFirebaseApp(name, config) {
+        //     let foundApp = firebase.apps.find(app => app.name === name);
+        //     return foundApp ? foundApp : firebase.initializeApp(config || firebase.app().options, 'auth-worker');
+        // }
+        
+        // let authWorkerApp = getFirebaseApp('auth-worker');
+        function getFirebaseApp(name, config) {
+            const auth = firebase.auth();
+
+            let foundApp = firebase.apps.find(app => app.name === name);
+            return foundApp ? foundApp : firebase.initializeApp(config || firebase.app().options, 'auth-worker');
+        }
+        
+        let authWorkerApp = getFirebaseApp('auth-worker');
+        
+        // let authWorkerApp = firebase.initializeApp(firebase.app().options, 'auth-worker');
+        let authWorkerAuth = firebase.auth(authWorkerApp);
+        authWorkerAuth.setPersistence(firebase.auth.Auth.Persistence.NONE); // disables caching of account credentials
+
+        authWorkerAuth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password)
+        .then(function (userCreds) {
+                debugger
+                var userId = userCreds.user.uid;
                 if (this.uploadedFile) {
                     this.setState({
                         Employee: {
@@ -267,18 +280,12 @@ class CreateEmployeeDesign extends React.Component {
                 this.writeUserData(userId);
                 if (this.uploadedFile) {
                     var storageRef = firebase.storage().ref('/images/' + userId + '/');
-
-                    // var metadata = {
-                    //     contentType: 'image/jpeg',
-                    //   };
-
-                    // Upload the file and metadata
                     var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile);
+                    
                 }
-                console.log(firebaseUser)
-                this.props.showNotification("Employee saved successfully")
+                console.log(userCreds)
                 this.uploadedFile = null;
-                // this.state.Employee
+                // // this.state.Employee
                 this.state.image = avatar;
                 var empObj={
                     userName: '',
@@ -288,19 +295,83 @@ class CreateEmployeeDesign extends React.Component {
                 phones: ['']
                 }
                 this.state.Employee = empObj;
-                // this.setState({
-                //     Employee: {
-                //         ...this.state.Employee,
-                //         userName: '',
-                // email: '',
-                // password: '',
-                // imagePath: '',
-                // phones: ['']
-                //     }
-                // })
+                this.props.showNotification("Employee saved successfully");
+                
+            }.bind(this))
+        .catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+        });
 
-            }
-        })
+        // auth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password)
+        // .then(function (userCreds) {
+        //     debugger
+        //     var uid = userCreds.user.uid;
+            
+        // })
+        // .catch(function (error) {
+        //     // Handle Errors here.
+        //     var errorCode = error.code;
+        //     var errorMessage = error.message;
+        //     // ...
+        // });
+        // auth.onAuthStateChanged(firebaseUser => {
+        //     if (firebaseUser) {
+        //         let userId = firebaseUser.uid;
+        //         if (this.uploadedFile) {
+        //             this.setState({
+        //                 Employee: {
+        //                     ...this.state.Employee,
+        //                     imagePath: '/images/' + userId + this.uploadedFile.name
+        //                 }
+        //             })
+        //         }
+        //         for (let i = 0; i < this.state.Employee.phones.length; i++) {
+        //             // const element = this.state.Employee.phones[i];
+        //             if (this.state.Employee.phones[i].trim() == '') {
+        //                 this.state.Employee.phones.splice(i, 1)
+        //             }
+
+        //         }
+        //         this.writeUserData(userId);
+        //         if (this.uploadedFile) {
+        //             var storageRef = firebase.storage().ref('/images/' + userId + '/');
+
+        //             // var metadata = {
+        //             //     contentType: 'image/jpeg',
+        //             //   };
+
+        //             // Upload the file and metadata
+        //             var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile);
+        //         }
+        //         console.log(firebaseUser)
+        //         this.props.showNotification("Employee saved successfully")
+        //         this.uploadedFile = null;
+        //         // this.state.Employee
+        //         this.state.image = avatar;
+        //         var empObj={
+        //             userName: '',
+        //         email: '',
+        //         password: '',
+        //         imagePath: '',
+        //         phones: ['']
+        //         }
+        //         this.state.Employee = empObj;
+        //         // this.setState({
+        //         //     Employee: {
+        //         //         ...this.state.Employee,
+        //         //         userName: '',
+        //         // email: '',
+        //         // password: '',
+        //         // imagePath: '',
+        //         // phones: ['']
+        //         //     }
+        //         // })
+
+        //     }
+        // })
     }
     render() {
         debugger;
