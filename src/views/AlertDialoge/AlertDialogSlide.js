@@ -21,7 +21,7 @@ export default function AlertDialogSlide(props) {
 
   const handleClose = () => {
     // setOpen(false);
-    props.handleClose()
+    props.handleAlertClose()
   };
 
   return (
@@ -38,19 +38,19 @@ export default function AlertDialogSlide(props) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{"Do You Want To Confirme .....................?!!!"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+          
+            {props.text}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={props.handleClose} color="primary">
-            Agree
+          <Button onClick={props.handleAlertClose} color="primary">
+            Cancel
+          </Button> 
+          <Button onClick={props.handleAlertOpen} color="primary">
+            OK
           </Button>
         </DialogActions>
       </Dialog>
