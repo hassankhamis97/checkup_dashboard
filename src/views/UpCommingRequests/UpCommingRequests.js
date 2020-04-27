@@ -127,17 +127,17 @@ class UpCommingRequests extends React.Component {
 
   handleStatus(itemId) {
     debugger;
-    this.setState({open: true})
+    this.setState({ open: true })
 
- //  change status of SampleObject to Done leave it in the same table
- // in the result pages get all  tests which have status == Done only
+    //  change status of SampleObject to Done leave it in the same table
+    // in the result pages get all  tests which have status == Done only
     // console.log(itemId)
     // var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
     // ref.child(itemId).update({'status': 'Done'}) 
 
 
     // this.setState({ sampleStatus: 'DONE' })
-   
+
 
     // this.forceUpdate()
   }
@@ -148,7 +148,7 @@ class UpCommingRequests extends React.Component {
     debugger;
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
- 
+
 
 
     ref.orderByChild("status").equalTo("Pending").on('value', snapshot => {
@@ -204,39 +204,39 @@ class UpCommingRequests extends React.Component {
   handleClose = () => {
     // setOpen(false);
     // this.state.open = false
-    this.setState({open: false})
+    this.setState({ open: false })
 
   };
   render() {
     debugger;
 
     return (
-<div>
-  <TestReview open={this.state.open} handleClose={this.handleClose}></TestReview>
-      <GridContainer>
+      <div>
+        <TestReview open={this.state.open} handleClose={this.handleClose}></TestReview>
+        <GridContainer>
 
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="warning">
-              <h4>Employees Stats</h4>
-              <p>
-                Up Comminng Patient requests
-       </p>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]}
-                tableData={this.state.dataShowList.length == 0 ? [["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]] : this.state.dataShowList}
-              //tableData={ [["Patient Name", "Date", "Time","FromHome","Action"]]}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
+          <GridItem xs={12} sm={12} md={6}>
+            <Card>
+              <CardHeader color="warning">
+                <h4>Employees Stats</h4>
+                <p>
+                  Up Comminng Patient requests
+                </p>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  tableHeaderColor="warning"
+                  tableHead={["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]}
+                  tableData={this.state.dataShowList.length == 0 ? [["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]] : this.state.dataShowList}
+                //tableData={ [["Patient Name", "Date", "Time","FromHome","Action"]]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
 
-  
 
-      </GridContainer>
+
+        </GridContainer>
       </div>
     );
   }
