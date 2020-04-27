@@ -54,7 +54,7 @@ import Cloud from "@material-ui/icons/Cloud";
 // core components
 
 import Table from "components/Table/Table.js";
-import AlertDialog from '../AlertDialoge/AlertDialogSlide';
+
 import Tasks from "components/Tasks/Tasks.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import Danger from "components/Typography/Danger.js";
@@ -64,8 +64,9 @@ import CardIcon from "components/Card/CardIcon.js";
 
 import { bugs, website, server } from "variables/general.js";
 import { idText } from "typescript";
-
+import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 import TestReview from '../Modals/TestReview'
+
 // import {
 //   dailySalesChart,
 //   emailsSubscriptionChart,
@@ -86,16 +87,23 @@ class UpCommingRequests extends React.Component {
 
   //  const classes = useStyles();
   constructor(props) {
-    debugger;
+    // debugger;
     super(props);
-
+    // let userRef =  firebase.database().ref('Users');
+    // userRef.push({'name':"mohamed", 'gender': "male",
+    //        'dateOfBirth': "2/8/2002"  
+    //       , 'phone': '01066558895' ,
+    //        'imgUrl': 'https://www.bipmedia.com/uploads/media/2015/05/Samantha-Ruthford_avatar.jpg' ,
+    //        'address' : 'Alex/smoha'
+    //       })
 
     this.state = {
       open: false,
+      openAlert : false ,
       dataShowList: [],
       requests: [],
       tableBodyData: '',
-      sampleStatus: 'Pending'
+      sampleStatus: ''
     }
 
 
@@ -105,7 +113,7 @@ class UpCommingRequests extends React.Component {
 
 
   componentDidMount() {
-    debugger
+    // debugger
     this.getResquests();
   }
 
@@ -125,55 +133,71 @@ class UpCommingRequests extends React.Component {
   ///****************   Changing Sample status ********************/
   debugger;
 
-  handleStatus(itemId) {
-    debugger;
-    this.setState({open: true})
+  handleStatus(itemStatus) {
+    // debugger; 
+    if (itemStatus == "PendingLabForConfirmation") {
 
- //  change status of SampleObject to Done leave it in the same table
- // in the result pages get all  tests which have status == Done only
+
+      this.setState({ open: true })
+    } else {
+      this.setState({ openAlert: true })
+ 
+    }
+
+    //  change status of SampleObject to Done leave it in the same table
+    // in the result pages get all  tests which have status == Done only
     // console.log(itemId)
     // var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
     // ref.child(itemId).update({'status': 'Done'}) 
 
 
     // this.setState({ sampleStatus: 'DONE' })
-   
+
 
     // this.forceUpdate()
   }
 
 
 
+
   getResquests = () => {
-    debugger;
+
+    // debugger;
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
- 
-
-
-    ref.orderByChild("status").equalTo("Pending").on('value', snapshot => {
-      debugger
-
-      /*var data  = snapshot.val();
-      console.log(data )
-      this.state.requests = data*/
-      //this.setState({requests: data });
+    ref.orderByChild("status").equalTo("PendingLabForConfirmation").on('value', snapshot => {
+      this.state.dataShowList = []
 
       snapshot.forEach(function (item) {
-        debugger
+        debugger;
         var obj = item.val();
         console.log(obj)
-        //keys.push(itemVal);
-        this.setState({ sampleStatus: obj.status });
-        var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome, <Button key={obj.id} onClick={() => this.handleStatus(obj.id)} color="primary" >{this.state.sampleStatus}</Button>
-        ]
-        console.log(reqObj)
+        let user;
+        // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
+        firebase.database().ref('/').child('Users').child(obj.userId)
+          .on("value", snap => {
+            debugger;
+            user = snap.val();
+            console.log(user)
+            this.setState({ sampleStatus: obj.status });
+            var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
+            user.name
+              , <Button key={obj.id} onClick={() => this.handleStatus(obj.status)} color="primary" >{this.state.sampleStatus}</Button>
+            ]
 
-        this.state.dataShowList.push(reqObj)
+
+
+            console.log(reqObj)
+
+            this.state.dataShowList.push(reqObj)
+            this.forceUpdate()
+          });
+        // keys.push(itemVal);
+
         //this.state.tableBodyData = 
 
       }.bind(this));
-      this.forceUpdate()
+
       // data.map((obj,index)=>{
       //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
       //    this.state.dataShowList.push(reqObj)
@@ -181,6 +205,53 @@ class UpCommingRequests extends React.Component {
       //    this.forceUpdate()
       // })
     });
+
+
+
+    ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
+      this.state.dataShowList = []
+
+      snapshot.forEach(function (item) {
+        debugger;
+        var obj = item.val();
+        console.log(obj)
+        let user;
+        // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
+        firebase.database().ref('/').child('Users').child(obj.userId)
+          .on("value", snap => {
+            debugger;
+            user = snap.val();
+            console.log(user)
+            this.setState({ sampleStatus: obj.status });
+            var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
+            user.name
+              , <Button key={obj.id} onClick={() => this.handleStatus(obj.status)} color="primary" >{this.state.sampleStatus}</Button>
+            ]
+
+
+
+            console.log(reqObj)
+
+            this.state.dataShowList.push(reqObj)
+            this.forceUpdate()
+          });
+        // keys.push(itemVal);
+
+        //this.state.tableBodyData = 
+
+      }.bind(this));
+
+      // data.map((obj,index)=>{
+      //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
+      //    this.state.dataShowList.push(reqObj)
+      //    //this.state.tableBodyData = 
+      //    this.forceUpdate()
+      // })
+    });
+
+
+
+
     console.log('DATA RETRIEVED');
   }
 
@@ -204,39 +275,61 @@ class UpCommingRequests extends React.Component {
   handleClose = () => {
     // setOpen(false);
     // this.state.open = false
-    this.setState({open: false})
+    this.setState({ open: false })
 
   };
+
+
+  handleAlertClose  = () => {
+    // setOpen(false);
+    // this.state.open = false
+    this.setState({ openAlert: false })
+
+  };
+
+  handleAlertOpen  = () => {
+    // setOpen(false);
+    // this.state.open = false
+    this.setState({ openAlert: true })
+
+  };
+
+
+
+
   render() {
     debugger;
 
     return (
-<div>
-  <TestReview open={this.state.open} handleClose={this.handleClose}></TestReview>
-      <GridContainer>
+      <div>
+        <AlertDialogSlide  open={this.state.open} handleAlertOpen={this.handleAlertOpen}  handleAlertClose={this.handleAlertClose}  />
 
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="warning">
-              <h4>Employees Stats</h4>
-              <p>
-                Up Comminng Patient requests
+        <TestReview open={this.state.open} handleClose={this.handleClose}></TestReview>
+         
+        <GridContainer>
+
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="warning">
+                <h4>Employees Stats</h4>
+                <p>
+                  Up Comminng Patient requests
        </p>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]}
-                tableData={this.state.dataShowList.length == 0 ? [["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]] : this.state.dataShowList}
-              //tableData={ [["Patient Name", "Date", "Time","FromHome","Action"]]}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  tableHeaderColor="warning"
+                  tableHead={["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]}
+                  tableData={this.state.dataShowList.length == 0 ? [["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]] : this.state.dataShowList}
+                //tableData={ [["Patient Name", "Date", "Time","FromHome","Action"]]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
 
-  
 
-      </GridContainer>
+
+        </GridContainer>
       </div>
     );
   }
