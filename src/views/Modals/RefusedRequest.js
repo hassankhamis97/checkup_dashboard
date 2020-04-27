@@ -63,7 +63,7 @@ export default function RefuseRequest(props) {
 
     return (
         <div>
-            <Dialog fullScreen open={props.open} /*onClose={props.handleClose}*/ TransitionComponent={Transition}>
+            <Dialog fullScreen open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
                 <AppBar className={classes.appBar} >
                     <Toolbar>
                         <IconButton edge="start" color="inherit" onClick={props.handleClose} aria-label="close">
