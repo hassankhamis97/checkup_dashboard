@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),
         flex: 1,
+        backgroundColor:'#ab47bc'
     },
 }));
 
@@ -42,13 +43,13 @@ export default function RefuseRequest(props) {
 
     const styleTestReview = {
         TestReviewModal: {
-            backgroundColor: "#111946",
+            // backgroundColor: "#111946",
             width: '100%',
             height: '100%',
         },
         textStyle: {
             fontSize: '17px',
-            color: 'white',
+            color: 'black',
             margin: '10px',
         },
         btnAction: {
@@ -57,14 +58,18 @@ export default function RefuseRequest(props) {
             marginLeft: '80px'
         },
         checkboxStyle: {
-            borderColor: 'white',
-        }
+            borderColor: 'black',
+        },
+        appBar: {
+            position: 'relative',
+            backgroundColor: '#ab47bc'
+        },
     }
-
+// debugger;
     return (
         <div>
             <Dialog fullScreen open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
-                <AppBar className={classes.appBar} >
+                <AppBar style={styleTestReview.appBar} >
                     <Toolbar>
                         <IconButton edge="start" color="inherit" onClick={props.handleClose} aria-label="close">
                             <CloseIcon />
@@ -86,7 +91,7 @@ export default function RefuseRequest(props) {
                         // onChange={this.handleChange('cryon')}
                         // value="cryon"
                         style={{
-                            color: "#00e676",
+                            color: "#ab47bc",
                         }}
                     />
                     <span style={styleTestReview.textStyle}> Not Available</span>
@@ -96,7 +101,7 @@ export default function RefuseRequest(props) {
                         // onChange={this.handleChange('cryon')}
                         // value="cryon"
                         style={{
-                            color: "#00e676",
+                            color: "#ab47bc",
                         }}
                     />
                     <span style={styleTestReview.textStyle}> Another Time</span>
@@ -106,14 +111,14 @@ export default function RefuseRequest(props) {
                         // onChange={this.handleChange('cryon')}
                         // value="cryon"
                         style={{
-                            color: "#00e676",
+                            color: "#ab47bc",
                         }}
                     />
                     <span style={styleTestReview.textStyle}> you need to apply precaustion </span>
                     <br></br>
                     <br></br>
 
-                    <GridItem xs={12} sm={12} md={12}>
+                    <GridItem xs={12} sm={12} md={4}>
                         {/* <InputLabel style={{ color: "#AAAAAA" }}></InputLabel> */}
                         <CustomInput
                             labelText="Refuse Reson"

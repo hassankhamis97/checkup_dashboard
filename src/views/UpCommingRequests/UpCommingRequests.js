@@ -78,10 +78,10 @@ class UpCommingRequests extends React.Component {
 
 
   ///****************   Changing Sample status ********************/
-  debugger;
+  // debugger;
 
   handleStatus(obj) {
-    debugger;
+    //debugger;
     // prompt(obj)
 
 
@@ -96,11 +96,11 @@ class UpCommingRequests extends React.Component {
     // debugger; 
     if (obj.status === "PendingForLabConfirmation") {
 
-
+  debugger
       this.setState({ open: true })
 
     } else {
-      debugger;
+      //debugger;
       this.setState({ openAlert: true })
 
     }
@@ -130,20 +130,20 @@ class UpCommingRequests extends React.Component {
       this.state.dataShowList = []
 
       snapshot.forEach(function (item) {
-        debugger;
+        // debugger;
         var obj = item.val();
         console.log(obj)
         let user;
         // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
         firebase.database().ref('/').child('Users').child(obj.userId)
           .on("value", snap => {
-            debugger;
+            // debugger;
             user = snap.val();
             console.log(user)
             // this.setState({ sampleStatus: obj.status });
             this.state.sampleStatus = obj.status;
 
-            debugger
+            // debugger
             var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
             user.name, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
             ]
@@ -172,14 +172,14 @@ class UpCommingRequests extends React.Component {
         //  this.state.dataShowList = []
 
         snapshot.forEach(function (item) {
-          debugger;
+          // debugger;
           var obj = item.val();
           console.log(obj)
           let user;
           // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
           firebase.database().ref('/').child('Users').child(obj.userId)
             .on("value", snap => {
-              debugger;
+              // debugger;
               user = snap.val();
               console.log(user)
               this.state.sampleStatus = obj.status;
@@ -229,7 +229,7 @@ class UpCommingRequests extends React.Component {
 
 
   handleSubmit = (event) => {
-    debugger
+    // debugger
     // var employeeObj = {
     //     name: 'a',
     //     address: 's'
@@ -262,7 +262,7 @@ class UpCommingRequests extends React.Component {
     // setOpen(false);
     // this.state.open = false
     // this.setState({ openAlert: true })
-    debugger
+    // debugger
     //  prompt(this.state.transferedObj.name)
 
 
@@ -298,7 +298,7 @@ class UpCommingRequests extends React.Component {
 
 
   render() {
-    debugger;
+    // debugger;
 
     return (
       <div>
