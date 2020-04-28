@@ -15,10 +15,13 @@ import CardFooter from "components/Card/CardFooter.js";
 
 import avatar from "assets/img/faces/marc.jpg";
 
-// import TestReview from '../Modals/TestReview'
-// import RefusedRequest from '../Modals/RefusedRequest'
-// import AcceptedRequest from '../Modals/AcceptedRequest'
-import ConfirmTestRequest from '../Modals/ConfirmTestRequest'
+// import ConfirmTestRequest from "views/Modals/ConfirmTestRequest"
+import TestReview from "views/Modals/TestReview"
+import SendResult from "views/Modals/SendResult/SendResult";
+// import AcceptedRequest from "views/Modals/AcceptedRequest"
+// import RefusedRequest from "views/Modals/RefusedRequest"
+
+// import { Modal } from 'react-bootstrap';
 
 const styles = {
   cardCategoryWhite: {
@@ -43,8 +46,19 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const classes = useStyles();
+  const [open,setOpen] = React.useState(false)
+  const handleClose = ()=> {
+    setOpen(false)
+  };
+  const handleOpen = ()=> {
+    setOpen(true)
+  };
   return (
     <div>
+      {open ? 
+      <SendResult testId={"-M5j2KVDaR6VnzRFFvgC"} open={open} handleClose={handleClose}></SendResult>
+      : ''
+      }
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>
           <Card>
@@ -155,7 +169,7 @@ export default function UserProfile() {
               {/* <TestReview open={true} handleClose={this.handleClose}></TestReview> */}
               {/* <RefusedRequest open={true}></RefusedRequest> */}
               {/* <AcceptedRequest open={true} handleClose={this.handleClose}></AcceptedRequest> */}
-              <ConfirmTestRequest open={true} /*handleClose={this.handleClose}*/></ConfirmTestRequest>
+              {/* <ConfirmTestRequest open={true} handleClose={this.handleClose}></ConfirmTestRequest> */}
               <Button color="primary">Update Profile</Button>
             </CardFooter>
           </Card>

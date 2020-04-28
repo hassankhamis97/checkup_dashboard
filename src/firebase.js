@@ -18,8 +18,9 @@ firebase.analytics();
 debugger
 const storage = firebase.storage()
 const database = firebase.database()
+const auth = firebase.auth()
 // export default database
 // export default storage
 export  {
-    storage, database as default
+    auth,storage, database as default
   }
