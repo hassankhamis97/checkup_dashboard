@@ -45,13 +45,13 @@ export default function AcceptedRequest(props) {
 
     const styleTestReview = {
         TestReviewModal: {
-            backgroundColor: "#111946",
+            // backgroundColor: "#111946",
             width: '100%',
             height: '100%',
         },
         textStyle: {
             fontSize: '17px',
-            color: 'white',
+            color: 'black',
             margin: '10px',
         },
         btnAction: {
@@ -59,12 +59,16 @@ export default function AcceptedRequest(props) {
             width: '150px',
             marginLeft: '80px'
         },
+        appBar: {
+            position: 'relative',
+            backgroundColor: '#ab47bc'
+        },
     }
 
     return (
         <div>
             <Dialog fullScreen open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
-                <AppBar className={classes.appBar} >
+                <AppBar style={styleTestReview.appBar} >
                     <Toolbar>
                         <IconButton edge="start" color="inherit" onClick={props.handleClose} aria-label="close">
                             <CloseIcon />
@@ -88,8 +92,8 @@ export default function AcceptedRequest(props) {
                         }}
                     />
 
-                    <GridItem xs={12} sm={12} md={12} style={{
-                                color: 'white',
+                    <GridItem xs={12} sm={12} md={4} style={{
+                                color: 'black',
                             }}>
                         {/* <InputLabel style={{ color: "White" }}></InputLabel> */}
                         <CustomInput
@@ -97,15 +101,15 @@ export default function AcceptedRequest(props) {
                             id="about-me"
                             formControlProps={{
                                 fullWidth: true,
-                                color: 'white',
+                                color: 'black',
                             }}
                             inputProps={{
                                 multiline: true,
                                 rows: 5,
-                                color: 'white',
+                                color: 'black',
                             }}
                             style={{
-                                color: 'white',
+                                color: 'black',
                             }}
                         />
                     </GridItem>
@@ -114,17 +118,17 @@ export default function AcceptedRequest(props) {
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="grouped-native-select" 
                                 style={{
-                                    color: 'white',
+                                    color: 'black',
                                     width: '150px',
                                     margin: "10px"
                                 }} 
                             >Choose Employee</InputLabel>
                             <Select native defaultValue="" id="grouped-native-select"  style={{
-                                    color: '#00e676',
+                                    color: '#ab47bc',
                                     width: '150px',
                                     margin: "10px",
                                     padding: '10px',
-                                    borderColor: 'white'
+                                    borderColor: 'black'
                                 }} >
                                 <option aria-label="None" value="" />
                                 <optgroup label="Category 1">

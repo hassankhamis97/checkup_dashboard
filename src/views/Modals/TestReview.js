@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -14,44 +14,76 @@ import 'react-awesome-slider/dist/styles.css';
 import RefuseRequest from './RefusedRequest'
 import AcceptedRequest from './AcceptedRequest'
 
-const useStyles = makeStyles((theme) => ({
-    appBar: {
-        position: 'relative',
-    },
-    title: {
-        marginLeft: theme.spacing(2),
-        flex: 1,
-    },
-}));
+import firebase from 'firebase';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+export default class TestReview extends React.Component {
 
-export default function TestReview(props) {
-    const classes = useStyles();
+    Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
 
-    let  [refuseDialog,setRefuse]=useState();
-    let  [acceptDialog,setAccept]=useState();
-
-    function handleRefuse() {
-        //passing empty object will re-render the component
-        setRefuse({refuseDialog : true}) 
+    state = {
+        refuseDialog: false,
+        acceptDialog: false,
+        recievedObj: {},
+        data: {}
     }
 
-    function handleRAccept() {
-        //passing empty object will re-render the component
-        setAccept({acceptDialog : true}) 
+    constructor(props) {
+        // debugger
+        super(props);
+        this.state.recievedObj = props.recievedObj;
+        this.getData();
     }
 
-    const styleTestReview = {
+    componentDidMount() {
+        // debugger;
+        this.state.recievedObj = this.props.recievedObj;
+        console.log('*********************************************************************************')
+        console.log(this.props.recievedObj)
+        console.log('*********************************************************************************')
+    }
+
+    getData = () => {
+        debugger
+        let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+        ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
+            var obj = snapshot.val();
+            console.log(obj)
+            this.setState({ data: obj });
+        });
+    }
+
+
+    handleRefuse = () => {
+        //passing empty object will re-render the component
+        this.setState({ refuseDialog: true })
+    }
+
+    handleRAccept = () => {
+        //passing empty object will re-render the component
+        this.setState({ acceptDialog: true })
+    }
+
+
+    handleRefuseClose = () => {
+        //passing empty object will re-render the component
+        this.setState({ refuseDialog: false })
+    }
+
+    handleRAcceptClose = () => {
+        //passing empty object will re-render the component
+        this.setState({ acceptDialog: false })
+    }
+
+    styleTestReview = {
 
         TestDataObject: {
 
             display: 'inline-block',
             alignItems: 'flex-end',
             fontSize: '20px',
-            color: 'white',
+            color: 'black',
         },
         TestData: {
             display: 'inline-block',
@@ -60,94 +92,103 @@ export default function TestReview(props) {
         ImgTestPic: {
             width: '100%'
         },
-       
+
         TestPic: {
             display: 'inline-block',
             verticalAlign: 'top',
             alignSelf: 'flex-end',
             width: '50%'
         },
-        
+
         refuseBtn: {
             width: '150px',
-            color : '#ff0000'
+            color: '#ff0000'
         },
-        TestReviewModal:{
-            backgroundColor: "#111946",
+        TestReviewModal: {
+            // backgroundColor: "#111946",
             width: '100%',
             height: '100%',
         },
         textStyle: {
             fontSize: '25px',
-            color: 'white',
+            color: 'black',
             marginRight: '10px',
             marginLeft: '10px',
             marginTop: '10px',
+        },
+        appBar: {
+            position: 'relative',
+            backgroundColor: '#ab47bc'
+        },
+        btn: {
+            margin: '0 auto',
+            width: '150px',
+            marginLeft: '80px'
         }
     }
 
-    return (
-        <div style={styleTestReview.TestReviewModal}>
-         <RefuseRequest open={refuseDialog} ></RefuseRequest>
-         <AcceptedRequest open={acceptDialog} ></AcceptedRequest>
+    render() {
+        return (
+            <div style={this.styleTestReview.TestReviewModal}>
+                <RefuseRequest open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest>
+                <AcceptedRequest open={this.state.acceptDialog} handleClose={this.handleRAcceptClose}></AcceptedRequest>
 
-            <Dialog fullScreen open={props.open} /*onClose={props.handleClose}*/ TransitionComponent={Transition}>
-                <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={props.handleClose} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography variant="h6" className={classes.title}>
-                            Test Review
+                <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
+                    <AppBar style={this.styleTestReview.appBar}>
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+                            <Typography variant="h6" >
+                                Test Review
+                            </Typography>
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRefuse}>
+                                Refuse
+                            </Button>
 
-                            
-            </Typography>
-            <Button autoFocus color="inherit" style={styleTestReview.btnAction,styleTestReview.refuseBtn} onClick={handleRefuse}>
-                            Refuse
-            </Button>
-              
-            <Button autoFocus color="inherit" style={styleTestReview.btnAction} /*onClick={props.handleClose}*/>
-                            Chat
-            </Button>
-            <Button autoFocus style={styleTestReview.btnAction} color="inherit" onClick={handleRAccept}>
-                        Accept
-            </Button>
-                    </Toolbar>
-                </AppBar>
-                <div style={styleTestReview.TestReviewModal}>
-                    <div style={styleTestReview.TestData}>
-                        <span style={styleTestReview.textStyle}>Name : </span><p style={styleTestReview.TestDataObject}>Ali</p><br></br>
-                        <span style={styleTestReview.textStyle}>Date : </span><p style={styleTestReview.TestDataObject}>20-20-2020</p><br></br>
-                        <span style={styleTestReview.textStyle}>Time : </span><p style={styleTestReview.TestDataObject}>5:30</p><br></br>
-                        <span style={styleTestReview.textStyle}>From Home : </span><p style={styleTestReview.TestDataObject}>yes</p><br></br>
-                        <span style={styleTestReview.textStyle}>Address : </span><p style={styleTestReview.TestDataObject}>Cairo</p><br></br>
-                        <span style={styleTestReview.textStyle}>Phone : </span><p style={styleTestReview.TestDataObject}>+201023548432</p><br></br>
-                        <span style={styleTestReview.textStyle}>Age : </span><p style={styleTestReview.TestDataObject}>50</p><br></br>
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btn}  /*onClick={props.handleClose}*/>
+                                Chat
+                            </Button>
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRAccept}>
+                                Accept
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+                    <div style={this.styleTestReview.TestReviewModal}>
+                        <div style={this.styleTestReview.TestData}>
+                            <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.state.testName}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Date : </span><p style={this.styleTestReview.TestDataObject}>{this.state.date}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Time : </span><p style={this.styleTestReview.TestDataObject}>{this.state.time}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.state.isFromHome}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Address : </span><p style={this.styleTestReview.TestDataObject}>Cairo</p><br></br>
+                            {/* <span style={this.styleTestReview.textStyle}>Phone : </span><p style={this.styleTestReview.TestDataObject}>+201023548432</p><br></br> */}
+                            {/* <span style={this.styleTestReview.textStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>50</p><br></br> */}
+                        </div>
+                        <div style={this.styleTestReview.TestPic}>
+                            <AwesomeSlider>
+                                <div>
+                                    <img style={this.styleTestReview.ImgTestPic}
+                                        src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+                                        alt="new"
+                                    />
+                                </div>
+                                <div>
+                                    <img style={this.styleTestReview.ImgTestPic}
+                                        src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+                                        alt="new"
+                                    />
+                                </div>
+                                <div>
+                                    <img style={this.styleTestReview.ImgTestPic}
+                                        src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+                                        alt="new"
+                                    />
+                                </div>
+                            </AwesomeSlider>
+                        </div>
                     </div>
-                    <div style={styleTestReview.TestPic}>
-                        <AwesomeSlider>
-                            <div>
-                                <img style={styleTestReview.ImgTestPic}
-                                    src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                                    alt="new"
-                                />
-                            </div>
-                            <div>
-                                <img style={styleTestReview.ImgTestPic}
-                                    src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                                    alt="new"
-                                />
-                            </div>
-                            <div>
-                                <img style={styleTestReview.ImgTestPic}
-                                    src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                                    alt="new"
-                                />
-                            </div>
-                        </AwesomeSlider>
-                    </div>
-                </div>
-            </Dialog>
-        </div>
-    );
+                </Dialog>
+            </div>
+        );
+    }
 }

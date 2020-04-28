@@ -166,12 +166,11 @@ export default function UserProfile() {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              {/* <ConfirmTestRequest></ConfirmTestRequest> */}
-              {/* <AcceptedRequest></AcceptedRequest> */}
-              {/* <RefusedRequest></RefusedRequest> */}
-              {/* <TestReview></TestReview> */}
-              
-              <Button color="primary" onClick={handleOpen}>Update Profile</Button>
+              {/* <TestReview open={true} handleClose={this.handleClose}></TestReview> */}
+              {/* <RefusedRequest open={true}></RefusedRequest> */}
+              {/* <AcceptedRequest open={true} handleClose={this.handleClose}></AcceptedRequest> */}
+              {/* <ConfirmTestRequest open={true} handleClose={this.handleClose}></ConfirmTestRequest> */}
+              <Button color="primary">Update Profile</Button>
             </CardFooter>
           </Card>
         </GridItem>

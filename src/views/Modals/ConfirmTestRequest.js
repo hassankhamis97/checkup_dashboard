@@ -73,19 +73,19 @@ export default function ConfirmTestRequest(props) {
 
     const styleTestReview = {
         TestReviewModal: {
-            backgroundColor: "#111946",
+            backgroundColor: "#ab47bc",
             color: 'white',
         },
         textStyle: {
             fontSize: '17px',
-            color: 'white',
+            color: 'black',
             margin: '10px',
         },
         btnAction: {
             margin: '0 auto',
             width: '150px',
             marginLeft: '80px',
-            color: 'white',
+            color: 'black',
         },
     }
 
@@ -100,12 +100,12 @@ export default function ConfirmTestRequest(props) {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle id="alert-dialog-slide-title" style={styleTestReview.TestReviewModal} >{"Confirmation"}</DialogTitle>
-                <DialogContent style={styleTestReview.TestReviewModal}>
+                <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description" style={styleTestReview.textStyle}>
                         Are you sure to take a sample from patient ?
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions style={styleTestReview.TestReviewModal}>
+                <DialogActions >
                     <Button color="primary" style={styleTestReview.btnAction} /*onClick={props.handleClose}*/>
                         Disagree
                     </Button>
