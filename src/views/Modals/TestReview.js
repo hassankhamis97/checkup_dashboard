@@ -30,10 +30,10 @@ export default class TestReview extends React.Component {
     }
 
     constructor(props) {
-        // debugger
+        debugger
         super(props);
         this.state.recievedObj = props.recievedObj;
-        this.getData();
+       
     }
 
     componentDidMount() {
@@ -42,15 +42,19 @@ export default class TestReview extends React.Component {
         console.log('*********************************************************************************')
         console.log(this.props.recievedObj)
         console.log('*********************************************************************************')
+        this.getData(this);
     }
 
-    getData = () => {
+    getData = (self) => {
         debugger
         let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-        ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
+        // ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
+            // ref.orderByChild("userId").equalTo(self.state.recievedObj[0][6]).on('value', snapshot => {
+                ref.child(self.state.recievedObj[0][6]).on('value', snapshot => {
+                debugger
             var obj = snapshot.val();
             console.log(obj)
-            this.setState({ data: obj });
+            self.setState({ data: obj });
         });
     }
 
@@ -156,10 +160,10 @@ export default class TestReview extends React.Component {
                     </AppBar>
                     <div style={this.styleTestReview.TestReviewModal}>
                         <div style={this.styleTestReview.TestData}>
-                            <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.state.testName}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Date : </span><p style={this.styleTestReview.TestDataObject}>{this.state.date}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Time : </span><p style={this.styleTestReview.TestDataObject}>{this.state.time}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.state.isFromHome}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.state.data.testName}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Date : </span><p style={this.styleTestReview.TestDataObject}>{this.state.data.date}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Time : </span><p style={this.styleTestReview.TestDataObject}>{this.state.data.time}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.state.data.isFromHome}</p><br></br>
                             <span style={this.styleTestReview.textStyle}>Address : </span><p style={this.styleTestReview.TestDataObject}>Cairo</p><br></br>
                             {/* <span style={this.styleTestReview.textStyle}>Phone : </span><p style={this.styleTestReview.TestDataObject}>+201023548432</p><br></br> */}
                             {/* <span style={this.styleTestReview.textStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>50</p><br></br> */}

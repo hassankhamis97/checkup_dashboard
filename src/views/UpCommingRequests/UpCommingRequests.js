@@ -85,7 +85,7 @@ class UpCommingRequests extends React.Component {
     // prompt(obj)
 
 
-
+debugger
     this.state.transferedObj = this.state.fullDataList.filter(item => item.id != obj.id);
 
 
@@ -304,7 +304,7 @@ class UpCommingRequests extends React.Component {
       <div>
         <AlertDialogSlide text="  Did You Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
 
-        <TestReview recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview>
+    {this.state.open ? <TestReview recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview> : ''}
 
         <GridContainer>
 
