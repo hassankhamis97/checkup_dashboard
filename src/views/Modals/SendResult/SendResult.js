@@ -135,7 +135,7 @@ export default class SendResult extends React.Component {
                 
         // var metadata = {
         //     contentType: 'image/jpeg',
-        //   };
+        //   }; 
 
             // Upload the file and metadata
         for (let i = 0; i < this.state.uploadedFiles.length; i++) {

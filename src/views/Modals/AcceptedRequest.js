@@ -20,7 +20,7 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 
 
-const useStyles = makeStyles((theme) => ({
+/*const useStyles = makeStyles((theme) => ({
     appBar: {
         position: 'relative',
     },
@@ -77,7 +77,7 @@ export default function AcceptedRequest(props) {
                             Accept Request
                     </Typography>
 
-                        <Button autoFocus color="inherit" style={styleTestReview.btnAction} /*onClick={props.handleClose}*/>
+                        <Button autoFocus color="inherit" style={styleTestReview.btnAction} onClick={props.handleClose}>
                             Send
                         </Button>
                     </Toolbar>
@@ -95,7 +95,6 @@ export default function AcceptedRequest(props) {
                     <GridItem xs={12} sm={12} md={4} style={{
                                 color: 'black',
                             }}>
-                        {/* <InputLabel style={{ color: "White" }}></InputLabel> */}
                         <CustomInput
                             labelText="precastions "
                             id="about-me"
@@ -143,4 +142,158 @@ export default function AcceptedRequest(props) {
             </Dialog>
         </div>
     );
+}
+*/
+
+export default class AcceptedRequest extends React.Component {
+
+    state = {
+        setChecked: true,
+        inputValue: '',
+    }
+
+    Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
+
+    handleChange = (event) => {
+        // setChecked(event.checked);
+        this.setState({ setChecked: event })
+    };
+
+    styleTestReview = {
+        TestReviewModal: {
+            // backgroundColor: "#111946",
+            width: '100%',
+            height: '100%',
+        },
+        textStyle: {
+            fontSize: '17px',
+            color: 'black',
+            margin: '10px',
+        },
+        btnAction: {
+            margin: '0 auto',
+            width: '150px',
+            marginLeft: '80px'
+        },
+        appBar: {
+            position: 'relative',
+            backgroundColor: '#ab47bc'
+        },
+    }
+    /*
+        updateData = () =>{
+            debugger
+            var storageRef = firebase.storage().ref('/TestResults/' + this.props.testId + '/');
+                    
+            // var metadata = {
+            //     contentType: 'image/jpeg',
+            //   };
+    
+                // Upload the file and metadata
+            for (let i = 0; i < this.state.uploadedFiles.length; i++) {
+                var uploadTask = storageRef.child(this.state.uploadedFiles[i].name).put(this.state.uploadedFiles[i]);
+            }
+            this.state.test.status = 'Done'
+            database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
+            // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
+            // .update({ 'status': this.state.test.status,
+            //             'description': this.state.test.description,
+            //             'hba1c': this.state.test.hba1c,
+            //             'resultFilespaths': this.state.test.resultFilespaths,
+            //              })
+            this.props.handleClose();
+        }*/
+
+    updateInputValue(evt) {
+        this.setState({
+            inputValue: evt.target.value
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
+                    <AppBar style={this.styleTestReview.appBar} >
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+                            <Typography variant="h6" >
+                                Accept Request
+                        </Typography>
+
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} onClick={this.props.handleClose}>
+                                Send
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+
+                    <div style={this.styleTestReview.TestReviewModal} >
+                        <span style={this.styleTestReview.textStyle}>Enter Total Price : </span> <CustomInput
+                            labelText="Test Cost"
+                            id="username"
+                            formControlProps={{
+                                fullWidth: false
+                            }}
+                        />
+
+                        <GridItem xs={12} sm={12} md={4} style={{
+                            color: 'black',
+                        }}>
+                            <CustomInput
+                                labelText="precastions "
+                                id="about-me"
+                                value={this.state.inputValue}
+                                onChange={evt => this.updateInputValue(evt)}
+                                formControlProps={{
+                                    fullWidth: true,
+                                    color: 'black',
+                                }}
+                                inputProps={{
+                                    multiline: true,
+                                    rows: 5,
+                                    color: 'black',
+                                }}
+                                style={{
+                                    color: 'black',
+                                }}
+                            />
+                        </GridItem>
+
+                        <div>
+                            <FormControl>
+                                <InputLabel htmlFor="grouped-native-select"
+                                    style={{
+                                        color: 'black',
+                                        width: '150px',
+                                        margin: "10px"
+                                    }}
+                                >Choose Employee</InputLabel>
+                                <Select native defaultValue="" id="grouped-native-select" style={{
+                                    color: '#ab47bc',
+                                    width: '150px',
+                                    margin: "10px",
+                                    padding: '10px',
+                                    borderColor: 'black'
+                                }} >
+                                    <option aria-label="None" value="" />
+                                    <optgroup label="Category 1">
+                                        <option value={1}>Option 1</option>
+                                        <option value={2}>Option 2</option>
+                                        <option value={3}>Option 3</option>
+                                        <option value={4}>Option 4</option>
+                                    </optgroup>
+                                </Select>
+                            </FormControl>
+
+                        </div>
+                    </div>
+                </Dialog>
+            </div>
+        );
+    }
+
 }
