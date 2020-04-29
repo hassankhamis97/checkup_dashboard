@@ -34,6 +34,8 @@ class UpCommingRequests extends React.Component {
     //        'imgUrl': 'https://www.bipmedia.com/uploads/media/2015/05/Samantha-Ruthford_avatar.jpg' ,
     //        'address' : 'Alex/smoha'
     //       })
+
+
     this.handleStatus = this.handleStatus.bind(this)
     this.state = {
       resID: '',
@@ -44,7 +46,8 @@ class UpCommingRequests extends React.Component {
       requests: [],
       tableBodyData: '',
       sampleStatus: '',
-
+       
+      sendObj : [],
       transferedObj: {
         userName: '',
         id: '',
@@ -78,29 +81,41 @@ class UpCommingRequests extends React.Component {
 
 
   ///****************   Changing Sample status ********************/
-  // debugger;
+  debugger;
 
   handleStatus(obj) {
-    //debugger;
+    debugger;
     // prompt(obj)
+  
+     let temp = this.state.fullDataList.filter(item => item.id != obj.id);
+    
+ 
+    // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
+    //    gender:temp.gender,phone :temp.phone})
 
+    //    var tttt =viewObj ;
+    debugger;
 
-debugger
-    this.state.transferedObj = this.state.fullDataList.filter(item => item.id != obj.id);
+     this.state.transferedObj.userName  = temp[0][0]
+     this.state.transferedObj.id   = temp[0][7]
+     this.state.transferedObj.dateOfBirth   = temp[0][8] 
+     this.state.transferedObj.gender    = temp[0][9]
+     this.state.transferedObj.phone    = temp[0][10]
+   
+    //  var yyy = this.state.transferedObj.userName
+    //  debugger;
 
-
-
-    var id = obj.id;
+    // var id = obj.id;
     this.setState({ resID: obj.id })
     //  this.setState({transferedObj : obj})
     // debugger; 
     if (obj.status === "PendingForLabConfirmation") {
 
-  debugger
+
       this.setState({ open: true })
 
     } else {
-      //debugger;
+      debugger;
       this.setState({ openAlert: true })
 
     }
@@ -130,33 +145,36 @@ debugger
       this.state.dataShowList = []
 
       snapshot.forEach(function (item) {
-        // debugger;
+        debugger;
         var obj = item.val();
         console.log(obj)
         let user;
         // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
         firebase.database().ref('/').child('Users').child(obj.userId)
           .on("value", snap => {
-            // debugger;
+            debugger;
             user = snap.val();
             console.log(user)
             // this.setState({ sampleStatus: obj.status });
             this.state.sampleStatus = obj.status;
+            this.state.sampleStatus = obj.status ==="PendingForLabConfirmation"? "View Request" : "";
 
-            // debugger
-            var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
-            user.name, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+            debugger
+            var reqObj = [ user.name , obj.date, obj.time , obj.isFromHome, obj.testName,
+           
+              obj.status , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
             ]
 
 
-            var fullObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
-            user.name, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-              , obj.id, user.dateOfBirth, user.gender, user.phone
-            ]
+            var fullObj = [   user.name , obj.date, obj.time , obj.isFromHome, obj.testName,
+           
+              obj.status , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+                ,obj.id , user.dateOfBirth , user.gender,user.phone
+              ]
             // this.state.transferedObj.testName = 
 
-
-
+         
+      
             this.state.fullDataList.push(fullObj);
             console.log(reqObj)
 
@@ -168,25 +186,29 @@ debugger
         //this.state.tableBodyData = 
 
       }.bind(this));
+
+
+
       ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
         //  this.state.dataShowList = []
 
         snapshot.forEach(function (item) {
-          // debugger;
+          debugger;
           var obj = item.val();
           console.log(obj)
           let user;
           // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
           firebase.database().ref('/').child('Users').child(obj.userId)
             .on("value", snap => {
-              // debugger;
+              debugger;
               user = snap.val();
               console.log(user)
-              this.state.sampleStatus = obj.status;
-              this.setState({ sampleStatus: obj.status });
-              var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome,
-              user.name
-                , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+              this.state.sampleStatus = obj.status ==="PendingForTakingTheSample"? "Done" : "";
+
+              // this.setState({ sampleStatus: obj.status });
+              
+              var reqObj = [    user.name , obj.date, obj.time , obj.isFromHome, obj.testName, obj.status ,
+ <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
               ]
 
 
@@ -215,39 +237,34 @@ debugger
       //    //this.state.tableBodyData = 
       //    this.forceUpdate()
       // })
+   
     });
-
-
-
-
-
-
-
 
     console.log('DATA RETRIEVED');
   }
 
 
-  handleSubmit = (event) => {
-    // debugger
-    // var employeeObj = {
-    //     name: 'a',
-    //     address: 's'
-    // }
-    const { Requests } = this.state;
-    // Requests.push(employeeObj);
-    this.setState({ Requests });
+  // handleSubmit = (event) => {
+  //   debugger
+  //   // var employeeObj = {
+  //   //     name: 'a',
+  //   //     address: 's'
+  //   // }
+  //   const { Requests } = this.state;
+  //   // Requests.push(employeeObj);
+  //   this.setState({ Requests });
 
-  }
+  // }
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
+  // // const handleClickOpen = () => {
+  // //   setOpen(true);
+  // // };
 
   handleClose = () => {
     // setOpen(false);
     // this.state.open = false
     this.setState({ open: false })
+
   };
 
 
@@ -262,7 +279,7 @@ debugger
     // setOpen(false);
     // this.state.open = false
     // this.setState({ openAlert: true })
-    // debugger
+    debugger
     //  prompt(this.state.transferedObj.name)
 
 
@@ -272,7 +289,7 @@ debugger
     var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
     ref.child(id).update({ 'status': 'PendingForResult' })
 
-
+  //  this.state.sampleStatus = "PendingForResult"
     this.setState({ sampleStatus: "PendingForResult" })
     this.setState({ openAlert: false })
 
@@ -298,13 +315,13 @@ debugger
 
 
   render() {
-    // debugger;
+    debugger;
 
     return (
       <div>
         <AlertDialogSlide text="  Did You Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
 
-    {this.state.open ? <TestReview recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview> : ''}
+        <TestReview recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview>
 
         <GridContainer>
 
@@ -319,8 +336,9 @@ debugger
               <CardBody>
                 <Table
                   tableHeaderColor="primary"
-                  tableHead={["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]}
-                  tableData={this.state.dataShowList.length === 0 ? [["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]] : this.state.dataShowList}
+                  tableHead={["Patient Name", "  Date", " Time", "  From Home", "  Test Name"  ,"   Sample Staus"]}
+                  tableData={this.state.dataShowList.length === 0 ? [] : this.state.dataShowList}
+                  //["Patient Name", "Date", "Time", "FromHome", " tast mame " , "Sample Staus"]
                 //tableData={ [["Patient Name", "Date", "Time","FromHome","Action"]]}
                 />
               </CardBody>
