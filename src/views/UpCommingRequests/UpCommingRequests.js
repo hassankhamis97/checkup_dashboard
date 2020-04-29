@@ -96,11 +96,11 @@ class UpCommingRequests extends React.Component {
     //    var tttt =viewObj ;
     debugger;
 
-     this.state.transferedObj.userName  = temp[0][0]
-     this.state.transferedObj.id   = temp[0][7]
-     this.state.transferedObj.dateOfBirth   = temp[0][8] 
-     this.state.transferedObj.gender    = temp[0][9]
-     this.state.transferedObj.phone    = temp[0][10]
+     this.state.transferedObj.userName     = temp[0][0]
+     this.state.transferedObj.id           = temp[0][7]
+     this.state.transferedObj.dateOfBirth  = temp[0][8] 
+     this.state.transferedObj.gender       = temp[0][9]
+     this.state.transferedObj.phone        = temp[0][10]
    
     //  var yyy = this.state.transferedObj.userName
     //  debugger;
@@ -320,9 +320,10 @@ class UpCommingRequests extends React.Component {
     return (
       <div>
         <AlertDialogSlide text="  Did You Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
-
-        <TestReview recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview>
-
+ 
+        { this.state.open ?   
+        <TestReview  recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview>
+                 :''  }
         <GridContainer>
 
           <GridItem xs={12} sm={12} md={12}>
