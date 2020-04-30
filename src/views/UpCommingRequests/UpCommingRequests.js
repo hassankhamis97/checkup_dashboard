@@ -35,10 +35,11 @@ class UpCommingRequests extends React.Component {
     //        'address' : 'Alex/smoha'
     //       })
 
-
     this.handleStatus = this.handleStatus.bind(this)
+    this.handleAlertOpen = this.handleAlertOpen.bind(this)
     this.state = {
       resID: '',
+      OBJ : '',
       open: false,
       openAlert: false,
       dataShowList: [],
@@ -86,7 +87,7 @@ class UpCommingRequests extends React.Component {
   handleStatus(obj) {
     debugger;
     // prompt(obj)
-  
+       this.state.OBJ = obj ;
      let temp = this.state.fullDataList.filter(item => item.id != obj.id);
     
  
@@ -156,11 +157,11 @@ class UpCommingRequests extends React.Component {
             user = snap.val();
             console.log(user)
             // this.setState({ sampleStatus: obj.status });
-            this.state.sampleStatus = obj.status;
+        
             this.state.sampleStatus = obj.status ==="PendingForLabConfirmation"? "View Request" : "";
 
             debugger
-            var reqObj = [ user.name , obj.date, obj.time , obj.isFromHome, obj.testName,
+            var reqObj = [obj.id, user.name , obj.date, obj.time , obj.isFromHome, obj.testName,
            
               obj.status , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
             ]
@@ -207,7 +208,7 @@ class UpCommingRequests extends React.Component {
 
               // this.setState({ sampleStatus: obj.status });
               
-              var reqObj = [    user.name , obj.date, obj.time , obj.isFromHome, obj.testName, obj.status ,
+              var reqObj = [ obj.id ,   user.name , obj.date, obj.time , obj.isFromHome, obj.testName, obj.status ,
  <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
               ]
 
@@ -281,11 +282,15 @@ class UpCommingRequests extends React.Component {
     // this.setState({ openAlert: true })
     debugger
     //  prompt(this.state.transferedObj.name)
-
+       
 
     //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
 
     var id = this.state.resID
+
+    this.state.dataShowList =  this.state.dataShowList.filter(item => !item.includes(id))
+  
+
     var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
     ref.child(id).update({ 'status': 'PendingForResult' })
 
@@ -337,7 +342,7 @@ class UpCommingRequests extends React.Component {
               <CardBody>
                 <Table
                   tableHeaderColor="primary"
-                  tableHead={["Patient Name", "  Date", " Time", "  From Home", "  Test Name"  ,"   Sample Staus"]}
+                  tableHead={[ "Test Code" , "Patient Name", "  Date", " Time", "  From Home", "  Test Name"  ,"   Sample Staus"]}
                   tableData={this.state.dataShowList.length === 0 ? [] : this.state.dataShowList}
                   //["Patient Name", "Date", "Time", "FromHome", " tast mame " , "Sample Staus"]
                 //tableData={ [["Patient Name", "Date", "Time","FromHome","Action"]]}

@@ -229,7 +229,7 @@ class MainTestResults extends React.Component {
                                     tableHeaderColor="primary"
                                     tableHeaderColor="primary"
                                     tableHead={["Patient Name", "      Date", "       Time", "         From Home", "       Test Name"  ,"         Sample Staus"]}
-                                    tableData={this.state.dataShowList.length === 0 ? [["Patient Name", "Date", "Time", "FromHome", " tast mame " , "Sample Staus"]] : this.state.dataShowList}
+                                    tableData={this.state.dataShowList.length === 0 ? [] : this.state.dataShowList}
                                 
                                 />
                             </CardBody>
