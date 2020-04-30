@@ -17,7 +17,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
 
-const useStyles = makeStyles((theme) => ({
+/*const useStyles = makeStyles((theme) => ({
     appBar: {
         position: 'relative',
     },
@@ -78,14 +78,13 @@ export default function RefuseRequest(props) {
                             Refused Request
                     </Typography>
 
-                        <Button autoFocus color="inherit" style={styleTestReview.btnAction} /*onClick={props.handleClose}*/>
+                        <Button autoFocus color="inherit" style={styleTestReview.btnAction} onClick={props.handleClose}>
                             Done
                         </Button>
                     </Toolbar>
                 </AppBar>
 
                 <div style={styleTestReview.TestReviewModal} >
-                    {/* <input type="checkbox" name="" value="" /> */}
                     <Checkbox
                         // checked={cryon}
                         // onChange={this.handleChange('cryon')}
@@ -119,7 +118,6 @@ export default function RefuseRequest(props) {
                     <br></br>
 
                     <GridItem xs={12} sm={12} md={4}>
-                        {/* <InputLabel style={{ color: "#AAAAAA" }}></InputLabel> */}
                         <CustomInput
                             labelText="Refuse Reson"
                             id="about-me"
@@ -132,12 +130,119 @@ export default function RefuseRequest(props) {
                             }}
                         />
                     </GridItem>
-
-
-                    {/* <h2 style={styleTestReview.textStyle}>Refuse Reson : </h2>
-                    <textarea id="w3mission" rows="4" cols="50"></textarea> */}
                 </div>
             </Dialog>
         </div>
     );
+}
+*/
+
+export default class RefuseRequest extends React.Component {
+
+    Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
+    state = {
+        setChecked: true,
+    }
+
+    handleChange = (event) => {
+        // setChecked(event.checked);
+        this.setState({ setChecked: event })
+    };
+
+    styleTestReview = {
+        TestReviewModal: {
+            // backgroundColor: "#111946",
+            width: '100%',
+            height: '100%',
+        },
+        textStyle: {
+            fontSize: '17px',
+            color: 'black',
+            margin: '10px',
+        },
+        btnAction: {
+            margin: '0 auto',
+            width: '150px',
+            marginLeft: '80px'
+        },
+        checkboxStyle: {
+            borderColor: 'black',
+        },
+        appBar: {
+            position: 'relative',
+            backgroundColor: '#ab47bc'
+        },
+    }
+    render() {
+        return (
+            <div>
+                <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
+                    <AppBar style={this.styleTestReview.appBar} >
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+                            <Typography variant="h6"/* className={classes.title}*/>
+                                Refused Request
+                        </Typography>
+
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} onClick={this.props.handleClose}>
+                                Done
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+
+                    <div style={this.styleTestReview.TestReviewModal} >
+                        <Checkbox
+                            // checked={cryon}
+                            // onChange={this.handleChange('cryon')}
+                            // value="cryon"
+                            style={{
+                                color: "#ab47bc",
+                            }}
+                        />
+                        <span style={this.styleTestReview.textStyle}> Not Available</span>
+                        <br></br>
+                        <Checkbox
+                            // checked={cryon}
+                            // onChange={this.handleChange('cryon')}
+                            // value="cryon"
+                            style={{
+                                color: "#ab47bc",
+                            }}
+                        />
+                        <span style={this.styleTestReview.textStyle}> Another Time</span>
+                        <br></br>
+                        <Checkbox
+                            // checked={cryon}
+                            // onChange={this.handleChange('cryon')}
+                            // value="cryon"
+                            style={{
+                                color: "#ab47bc",
+                            }}
+                        />
+                        <span style={this.styleTestReview.textStyle}> you need to apply precaustion </span>
+                        <br></br>
+                        <br></br>
+
+                        <GridItem xs={12} sm={12} md={4}>
+                            <CustomInput
+                                labelText="Refuse Reson"
+                                id="about-me"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    multiline: true,
+                                    rows: 5
+                                }}
+                            />
+                        </GridItem>
+                    </div>
+                </Dialog>
+            </div>
+        );
+    }
 }

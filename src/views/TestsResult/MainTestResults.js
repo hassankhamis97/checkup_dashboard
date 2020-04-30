@@ -131,13 +131,12 @@ class MainTestResults extends React.Component {
                         user = snap.val();
                         console.log(user)
 
-                        this.state.sampleStatus = obj.status ==="PendingForResult"? "Send Result" : "";
+                        this.state.sampleStatus = obj.status;
 
                         debugger
-                        var reqObj = [    user.name , obj.date, obj.time , obj.isFromHome, obj.testName,
-           
-                            obj.status , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-                          ]
+                        var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome, user.name,
+                        <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+                        ]
 
                         console.log(reqObj)
 

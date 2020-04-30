@@ -29,12 +29,6 @@ export default class TestReview extends React.Component {
         data: {}
     }
 
-    constructor(props) {
-        debugger
-        super(props);
-        this.state.recievedObj = props.recievedObj;
-       
-    }
 
     componentDidMount() {
         // debugger;
@@ -49,11 +43,8 @@ export default class TestReview extends React.Component {
         debugger
         let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
         // ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
-            
-        // ref.orderByChild("userId").equalTo(self.state.recievedObj[0][6]).on('value', snapshot => {
-                
-     
-        ref.child(self.state.recievedObj.id).on('value', snapshot => {
+            // ref.orderByChild("userId").equalTo(self.state.recievedObj[0][6]).on('value', snapshot => {
+                ref.child(self.state.recievedObj[0][6]).on('value', snapshot => {
                 debugger
             var obj = snapshot.val();
             console.log(obj)
@@ -137,8 +128,8 @@ export default class TestReview extends React.Component {
     render() {
         return (
             <div style={this.styleTestReview.TestReviewModal}>
-                <RefuseRequest open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest>
-                <AcceptedRequest open={this.state.acceptDialog} handleClose={this.handleRAcceptClose}></AcceptedRequest>
+                <RefuseRequest testId ={this.props.recievedObj.id} open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest>
+                <AcceptedRequest  open={this.state.acceptDialog} handleClose={this.handleRAcceptClose}></AcceptedRequest>
 
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar}>

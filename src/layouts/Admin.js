@@ -68,7 +68,19 @@ export default function Admin({ ...rest }) {
     setMobileOpen(!mobileOpen);
   };
   const getRoute = () => {
-    return window.location.pathname !== "/admin/maps";
+    if(window.location.pathname !== "/admin/maps")
+    {
+      return false
+    }
+    else if(window.location.pathname !== "/admin/chat")
+    {
+      return false
+
+    }
+    else{
+      return true
+    }
+    // return window.location.pathname !== "/admin/maps" || window.location.pathname !== "/admin/chat";
   };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -82,8 +94,18 @@ export default function Admin({ ...rest }) {
         suppressScrollX: true,
         suppressScrollY: false
       });
-      document.body.style.overflow = "hidden";
+    //   debugger
+    
+      if(getRoute()){
+        document.body.style.overflow = "hidden";
+      
     }
+    // else{
+    //   document.body.style.overflow = "auto";
+    // }
+
+    }
+
     window.addEventListener("resize", resizeFunction);
     // Specify how to clean up after this effect:
     return function cleanup() {
@@ -119,7 +141,7 @@ export default function Admin({ ...rest }) {
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
         )}
-        {getRoute() ? <Footer /> : null}
+        {getRoute() ?  <Footer /> : null}
         <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}

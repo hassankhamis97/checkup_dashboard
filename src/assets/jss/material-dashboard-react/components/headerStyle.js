@@ -13,21 +13,23 @@ import {
 
 const headerStyle = () => ({
   appBar: {
-    backgroundColor: "transparent",
+    // backgroundColor: "transparent",
     boxShadow: "none",
     borderBottom: "0",
     marginBottom: "0",
-    position: "absolute",
-    width: "100%",
+    position: "fixed",
+    width: 'inherit',
     paddingTop: "10px",
     zIndex: "1029",
-    color: grayColor[7],
+    // color: grayColor[7],
     border: "0",
     borderRadius: "3px",
     padding: "10px 0",
     transition: "all 150ms ease 0s",
     minHeight: "50px",
-    display: "block"
+    display: "block",
+    background: 'linear-gradient(60deg, #ab47bc, #8e24aa)',
+    color: 'white'
   },
   container: {
     ...container,

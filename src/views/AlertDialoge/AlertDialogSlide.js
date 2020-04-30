@@ -38,7 +38,7 @@ export default function AlertDialogSlide(props) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{"Do You Want To Confirme ?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{"Do You Want To Confirme .....................?!!!"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
           

@@ -19,31 +19,31 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 
+import database from '../../firebase';
+import firebase from 'firebase';
 
-const useStyles = makeStyles((theme) => ({
-    appBar: {
-        position: 'relative',
-    },
-    title: {
-        marginLeft: theme.spacing(2),
-        flex: 1,
-    },
-}));
+export default class AcceptedRequest extends React.Component {
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+    state = {
+        setChecked: true,
+        test: {
+            testCost: '',
+            precastions: '',
+            employee: '',
+            status: '',
+        },
+    }
 
-export default function AcceptedRequest(props) {
-    const classes = useStyles();
+    Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
 
-    const [checked, setChecked] = React.useState(true);
-
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
+    handleChange = (event) => {
+        // setChecked(event.checked);
+        this.setState({ setChecked: event })
     };
 
-    const styleTestReview = {
+    styleTestReview = {
         TestReviewModal: {
             // backgroundColor: "#111946",
             width: '100%',
@@ -65,82 +65,141 @@ export default function AcceptedRequest(props) {
         },
     }
 
-    return (
-        <div>
-            <Dialog fullScreen open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
-                <AppBar style={styleTestReview.appBar} >
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={props.handleClose} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography variant="h6" className={classes.title}>
-                            Accept Request
-                    </Typography>
+    /*updateData = () => {
+        debugger
+        
 
-                        <Button autoFocus color="inherit" style={styleTestReview.btnAction} /*onClick={props.handleClose}*/>
-                            Send
-                        </Button>
-                    </Toolbar>
-                </AppBar>
+        this.state.test.status = 'Done'
+        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
+        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
+            .update({
+                'status': this.state.test.status,
+                'precastions': this.state.test.precastions,
+                'employee': this.state.test.employee,
+            })
+    }*/
 
-                <div style={styleTestReview.TestReviewModal} >
-                    <span style={styleTestReview.textStyle}>Enter Total Price : </span> <CustomInput
-                        labelText="Test Cost"
-                        id="username"
-                        formControlProps={{
-                            fullWidth: false
-                        }}
-                    />
+    updateInputValue(evt) {
+        this.setState({
+            inputValue: evt.target.value
+        });
+    }
 
-                    <GridItem xs={12} sm={12} md={4} style={{
-                                color: 'black',
-                            }}>
-                        {/* <InputLabel style={{ color: "White" }}></InputLabel> */}
-                        <CustomInput
-                            labelText="precastions "
-                            id="about-me"
+    render() {
+        return (
+            <div>
+                <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
+                    <AppBar style={this.styleTestReview.appBar} >
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
+                                <CloseIcon />
+                            </IconButton>
+                            <Typography variant="h6" >
+                                Accept Request
+                        </Typography>
+
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} /*onClick={this.updateData()}*/  >
+                                Send
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+
+                    <div style={this.styleTestReview.TestReviewModal} >
+                        <span style={this.styleTestReview.textStyle}>Enter Total Price : </span> <CustomInput
+                            labelText="Test Cost"
+                            id="username"
                             formControlProps={{
-                                fullWidth: true,
-                                color: 'black',
+                                fullWidth: false
                             }}
-                            inputProps={{
-                                multiline: true,
-                                rows: 5,
-                                color: 'black',
-                            }}
-                            style={{
-                                color: 'black',
-                            }}
-                        />
-                    </GridItem>
 
-                    <div>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="grouped-native-select" 
+                            value={this.state.test.testCost}
+                            onChange={e => this.setState({
+                                test: {
+                                    ...this.state.test,
+                                    testCost: e.target.value
+                                }
+                            })}
+                        />
+
+                        <GridItem xs={12} sm={12} md={4} style={{
+                            color: 'black',
+                        }}>
+                            <CustomInput
+                                labelText="precastions "
+                                id="about-me"
+
+                                value={this.state.test.precastions}
+                                onChange={e => {
+                                    debugger
+                                    this.setState({
+
+                                        test: {
+                                            ...this.state.test,
+                                            precastions: e.target.value
+                                        }
+                                    })
+                                }}
+
+                                formControlProps={{
+                                    fullWidth: true,
+                                    color: 'black',
+                                }}
+                                inputProps={{
+                                    multiline: true,
+                                    rows: 5,
+                                    color: 'black',
+                                }}
                                 style={{
                                     color: 'black',
-                                    width: '150px',
-                                    margin: "10px"
-                                }} 
-                            >Choose Employee</InputLabel>
-                            <Select native defaultValue="" id="grouped-native-select"  style={{
-                                    color: '#ab47bc',
+                                }}
+                            />
+                        </GridItem>
+
+                        <div>
+                            <FormControl>
+                                <InputLabel htmlFor="grouped-native-select"
+                                    style={{
+                                        color: 'black',
+                                        width: '150px',
+                                        margin: "10px"
+                                    }}
+                                >Choose Employee</InputLabel>
+                                <Select native defaultValue="" id="grouped-native-select" style={{
+                                    color: 'black',
                                     width: '150px',
                                     margin: "10px",
                                     padding: '10px',
-                                    borderColor: 'black'
-                                }} >
-                                <option aria-label="None" value="" />
-                                <optgroup label="Category 1">
-                                    <option value={1}>Option 1</option>
-                                    <option value={2}>Option 2</option>
-                                </optgroup>
-                            </Select>
-                        </FormControl>
+                                    borderColor: '#ab47bc'
+                                }}
 
+                                    value={this.state.test.employee}
+                                    onChange={e => {
+                                        debugger
+                                        this.setState({
+
+                                            test: {
+                                                ...this.state.test,
+                                                employee: e.target.value
+                                            }
+                                        })
+                                    }}
+
+                                >
+                                    <option aria-label="None" value="" />
+                                    <optgroup label="Employees">
+                                        <option value={1}> Ali </option>
+                                        <option value={2}> Muhamed </option>
+                                        <option value={3}> Mazen </option>
+                                        <option value={4}> yasien </option>
+                                    </optgroup>
+                                </Select>
+                            </FormControl>
+
+                        </div>
                     </div>
-                </div>
-            </Dialog>
-        </div>
-    );
+                </Dialog>
+            </div>
+        );
+    }
+
 }

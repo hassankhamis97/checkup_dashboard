@@ -14,8 +14,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
-import database from '../../../firebase';
+import {database} from '../../../firebase';
 import ResultFiles from './ResultFiles'
+// import database from '../../../firebase';
 import firebase from 'firebase';
 import SendResultConfirmationAlert from './SendResultConfirmationAlert';
 import SnackbarContent from "components/Snackbar/SnackbarContent.js";
@@ -135,7 +136,7 @@ export default class SendResult extends React.Component {
                 
         // var metadata = {
         //     contentType: 'image/jpeg',
-        //   };
+        //   }; 
 
             // Upload the file and metadata
         for (let i = 0; i < this.state.uploadedFiles.length; i++) {
