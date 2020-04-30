@@ -29,12 +29,6 @@ export default class TestReview extends React.Component {
         data: {}
     }
 
-    constructor(props) {
-        debugger
-        super(props);
-        this.state.recievedObj = props.recievedObj;
-       
-    }
 
     componentDidMount() {
         // debugger;
@@ -137,8 +131,8 @@ export default class TestReview extends React.Component {
     render() {
         return (
             <div style={this.styleTestReview.TestReviewModal}>
-                <RefuseRequest open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest>
-                <AcceptedRequest open={this.state.acceptDialog} handleClose={this.handleRAcceptClose}></AcceptedRequest>
+                <RefuseRequest testId ={this.props.recievedObj.id} open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest>
+                <AcceptedRequest  open={this.state.acceptDialog} handleClose={this.handleRAcceptClose}></AcceptedRequest>
 
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar}>
