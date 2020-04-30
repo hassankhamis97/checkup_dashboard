@@ -131,13 +131,12 @@ class MainTestResults extends React.Component {
                         user = snap.val();
                         console.log(user)
 
-                        this.state.sampleStatus = obj.status ==="PendingForResult"? "Send Result" : "";
+                        this.state.sampleStatus = obj.status;
 
                         debugger
-                        var reqObj = [    user.name , obj.date, obj.time , obj.isFromHome, obj.testName,
-           
-                            obj.status , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-                          ]
+                        var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome, user.name,
+                        <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+                        ]
 
                         console.log(reqObj)
 
@@ -228,9 +227,9 @@ class MainTestResults extends React.Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHeaderColor="primary"
-                                    tableHead={["Patient Name", "      Date", "       Time", "         From Home", "       Test Name"  ,"         Sample Staus"]}
-                                    tableData={this.state.dataShowList.length === 0 ? [["Patient Name", "Date", "Time", "FromHome", " tast mame " , "Sample Staus"]] : this.state.dataShowList}
-                                
+                                    tableHead={["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]}
+                                    tableData={this.state.dataShowList.length === 0 ? [["Patient Name", "Date", "Time", "FromHome", "Sample Staus"]] : this.state.dataShowList}
+
                                 />
                             </CardBody>
                         </Card>

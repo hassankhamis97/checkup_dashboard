@@ -14,13 +14,15 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import firebase from 'firebase';
 // import 'firebase/database';
-import database from '../../firebase';
+import { database, firestore } from '../../firebase';
 // import storage from '../../firebase';
 import avatar from "assets/img/noProfilePhoto.png";
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import PhoneNumber from './PhoneNumber'
 import PropTypes from "prop-types";
+import Authentication from "Authentication";
+import { AppString } from '../Chat/Const' 
 // import * as admin from 'firebase-admin';
 // var serviceAccount = require("../../../checkup-23ffe-firebase-adminsdk-7pwms-f7d9cf5cfa.json");
 
@@ -220,6 +222,47 @@ class CreateEmployeeDesign extends React.Component {
         this.state.Employee.phones.splice(index, 1);
         this.forceUpdate()
     }
+    handleSendNewRequest = async (self) => {
+        debugger
+        var chatStatus={
+            lastMsgTimeStamp: 0,
+            noOfUnReadMessage: 0
+        }
+
+        firestore
+            .collection(AppString.NODE_USERCHAT)
+            .doc(Authentication.loggedUser.uid)
+            .collection(Authentication.loggedUser.uid)
+            .doc("IaTcOwrdXhVBa7qx40FOkW5b94J3")
+            .set(chatStatus)
+            .then(() => {
+                //this.setState({ inputValue: '' })
+            })
+            .catch(err => {
+                self.props.showToast(0, err.toString())
+            })
+        firestore
+            .collection(AppString.NODE_USERCHAT)
+            .doc("IaTcOwrdXhVBa7qx40FOkW5b94J3")
+            .collection("IaTcOwrdXhVBa7qx40FOkW5b94J3")
+            .doc(Authentication.loggedUser.uid)
+            .set(chatStatus)
+            .then(() => {
+                //this.setState({ inputValue: '' })
+            })
+            .catch(err => {
+                self.props.showToast(0, err.toString())
+            })
+    }
+    // handleSendNewRequest = () => {
+    //     const result = await firestore.collection(AppString.NODE_USERCHAT).orderBy('nickname').startAfter(self.listUser.length > 0 ? self.listUser[self.listUser.length-1] : 0).limit(2).get()
+    //     if (result.docs.length > 0) {
+    //         self.skip += result.docs.length
+    //         // self.listUser = [...result.docs]
+    //         self.listUser.push(...result.docs)
+    //         self.setState({isLoading: false})
+    //     }
+    // }
     handleCreateNewEmployee = () => {
         // for (let i = 0; i < 10; i++) {
         //     var newPostKey = database.ref().push().key;
@@ -243,7 +286,7 @@ class CreateEmployeeDesign extends React.Component {
         //     let foundApp = firebase.apps.find(app => app.name === name);
         //     return foundApp ? foundApp : firebase.initializeApp(config || firebase.app().options, 'auth-worker');
         // }
-        
+
         // let authWorkerApp = getFirebaseApp('auth-worker');
         function getFirebaseApp(name, config) {
             const auth = firebase.auth();
@@ -251,25 +294,33 @@ class CreateEmployeeDesign extends React.Component {
             let foundApp = firebase.apps.find(app => app.name === name);
             return foundApp ? foundApp : firebase.initializeApp(config || firebase.app().options, 'auth-worker');
         }
-        
+
         let authWorkerApp = getFirebaseApp('auth-worker');
-        
+
         // let authWorkerApp = firebase.initializeApp(firebase.app().options, 'auth-worker');
         let authWorkerAuth = firebase.auth(authWorkerApp);
         authWorkerAuth.setPersistence(firebase.auth.Auth.Persistence.NONE); // disables caching of account credentials
 
         authWorkerAuth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password)
-        .then(function (userCreds) {
+            .then(function (userCreds) {
                 debugger
                 var userId = userCreds.user.uid;
+                // let authentication = new Authentication()
+
+
+
                 if (this.uploadedFile) {
-                    this.setState({
-                        Employee: {
-                            ...this.state.Employee,
-                            imagePath: '/images/' + userId + this.uploadedFile.name
-                        }
-                    })
+                    // this.setState({
+                    //     Employee: {
+                    //         ...this.state.Employee,
+                    //         imagePath: '/images/' + userId + '/' + this.uploadedFile.name
+                    //     }
+                    // })
+                    this.state.Employee.imagePath = '/images/' + userId + '/' + this.uploadedFile.name
+
                 }
+
+
                 for (let i = 0; i < this.state.Employee.phones.length; i++) {
                     // const element = this.state.Employee.phones[i];
                     if (this.state.Employee.phones[i].trim() == '') {
@@ -280,36 +331,73 @@ class CreateEmployeeDesign extends React.Component {
                 this.writeUserData(userId);
                 if (this.uploadedFile) {
                     var storageRef = firebase.storage().ref('/images/' + userId + '/');
-                    var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile);
-                    
-                }
-                console.log(userCreds)
-                this.uploadedFile = null;
-                // // this.state.Employee
-                this.state.image = avatar;
-                var empObj={
-                    userName: '',
-                email: '',
-                password: '',
-                imagePath: '',
-                phones: ['']
-                }
-                this.state.Employee = empObj;
-                this.props.showNotification("Employee saved successfully");
-                
-            }.bind(this))
-        .catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-        });
+                    var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile).then(() => {
+                        debugger
+                        let authentication = new Authentication()
+                        authentication.getImage(this, this.state.Employee.imagePath, (url, self) => {
+                            // self.state.currentUserAvatar = url
+                            // self.setState({currentUserAvatar: url})
+                            // self.forceUpdate()
+                            userCreds.user.updateProfile({
+                                
+                                displayName: this.state.Employee.userName,
+                                photoURL: url
+                            });
+                            firestore
+                                .collection('users')
+                                .doc(userId)
+                                .set({
+                                    id: userId,
+                                    nickname: this.state.Employee.userName,
+                                    photoUrl: url
+                                })
+                            console.log(userCreds)
+                            self.uploadedFile = null;
+                            // // this.state.Employee
+                            self.state.image = avatar;
+                            var empObj = {
+                                userName: '',
+                                email: '',
+                                password: '',
+                                imagePath: '',
+                                phones: ['']
+                            }
+                            self.state.Employee = empObj;
+                            self.props.showNotification("Employee saved successfully");
+                        })
+                    }).catch((error) => {
+                        // Handle any errors
+                    });
 
+
+                }
+                else {
+                    userCreds.user.updateProfile({
+                        displayName: this.state.Employee.userName,
+                    });
+                    firestore
+                        .collection('users')
+                        .doc(userId)
+                        .set({
+                            id: userId,
+                            nickname: this.state.Employee.userName,
+                        })
+                }
+
+
+            }.bind(this))
+            .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ...
+            });
+        
         // auth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password)
         // .then(function (userCreds) {
         //     debugger
         //     var uid = userCreds.user.uid;
-            
+
         // })
         // .catch(function (error) {
         //     // Handle Errors here.
@@ -487,6 +575,8 @@ class CreateEmployeeDesign extends React.Component {
                                 </CardBody>
                                 <CardFooter>
                                     <Button onClick={this.handleCreateNewEmployee.bind(this)} color="primary">Update Profile</Button>
+                                    <Button onClick={this.handleSendNewRequest.bind(this)} color="primary">send New Request</Button>
+
                                     {/* <Button onClick={this.handleUpdate} color="primary">Update Profile</Button>
                                     <Button onClick={this.handleDelete} color="primary">Update Profile</Button> */}
                                 </CardFooter>

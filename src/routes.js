@@ -36,7 +36,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import CreateNewEmployee from "views/CreateNewEmployee/CreateNewEmployee"
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
-
+import Chat from "views/Chat/Chat"
 const dashboardRoutes = [
   {
     path: "/upcomingrequest",
@@ -108,6 +108,14 @@ const dashboardRoutes = [
     rtlName: "التطور للاحترافية",
     icon: Unarchive,
     component: CreateNewEmployee,
+    layout: "/admin"
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    rtlName: "الرسائل",
+    icon: Unarchive,
+    component: Chat,
     layout: "/admin"
   }
   // {

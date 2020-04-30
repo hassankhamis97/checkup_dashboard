@@ -44,6 +44,7 @@ export default function RTLNavbarLinks() {
           formControlProps={{
             className: classes.margin + " " + classes.search
           }}
+          style={{color: 'white !important'}}
           inputProps={{
             placeholder: "جستجو...",
             inputProps: {

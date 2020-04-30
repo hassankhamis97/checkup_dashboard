@@ -9,6 +9,7 @@ import dropdownStyle from "assets/jss/material-dashboard-react/dropdownStyle.js"
 const headerLinksStyle = theme => ({
   ...dropdownStyle(theme),
   search: {
+    color : whiteColor,
     "& > div": {
       marginTop: "0"
     },
@@ -20,6 +21,7 @@ const headerLinksStyle = theme => ({
       padding: "0!important",
       width: "60%",
       marginTop: "40px",
+      color: whiteColor,
       "& input": {
         color: whiteColor
       }

@@ -1,8 +1,10 @@
 import firebase from 'firebase';
-import database from './firebase';
+// import database from './firebase';
+import {storage} from '../src/firebase';
 
 export default class Authentication {
     static loggedUser = "wait";
+    static currentUserImage = ''
     constructor() {
         debugger
         Authentication.loggedUser = firebase.auth().currentUser == null ? "wait" : firebase.auth().currentUser
@@ -77,4 +79,15 @@ export default class Authentication {
             // An error happened.
           });
     }
+    getImage (self,image,respose) {
+        debugger
+        storage.ref().child(image).getDownloadURL().then((url) => {
+            respose(url,self)
+            Authentication.currentUserImage = url
+        //   state[image] = url
+        //   this.setState(state)
+        }).catch((error) => {
+          // Handle any errors
+        })
+      }
 }

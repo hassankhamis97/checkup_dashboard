@@ -16,11 +16,12 @@ firebase.initializeApp(config);
 //analytics is optional for this tutoral 
 firebase.analytics();
 debugger
-const storage = firebase.storage()
-const database = firebase.database()
-const auth = firebase.auth()
-// export default database
-// export default storage
-export  {
-    auth,storage, database as default
-  }
+// const storage = firebase.storage()
+// const database = firebase.database()
+export const auth = firebase.auth()
+export const database = firebase.database()
+export const storage = firebase.storage()
+export const firestore = firebase.firestore()
+// export  {
+//     auth,storage, database as default
+//   }

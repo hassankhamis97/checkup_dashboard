@@ -59,6 +59,7 @@ export default function AdminNavbarLinks() {
           formControlProps={{
             className: classes.margin + " " + classes.search
           }}
+          style={{color: 'white'}}
           inputProps={{
             placeholder: "Search",
             inputProps: {
