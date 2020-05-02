@@ -134,7 +134,7 @@ class MainTestResults extends React.Component {
                         this.state.sampleStatus = obj.status;
 
                         debugger
-                        var reqObj = [obj.testName, obj.date, obj.time, obj.isFromHome, user.name,
+                        var reqObj = [obj.id ,user.name, obj.date, obj.time, obj.isFromHome, obj.testName,
                         <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
                         ]
 
@@ -227,7 +227,7 @@ class MainTestResults extends React.Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHeaderColor="primary"
-                                    tableHead={["Patient Name", "      Date", "       Time", "         From Home", "       Test Name"  ,"         Sample Staus"]}
+                                    tableHead={[ "Test Code" , "Patient Name", "  Date", " Time", "  From Home", "  Test Name"  ,"   Sample Staus"]}
                                     tableData={this.state.dataShowList.length === 0 ? [] : this.state.dataShowList}
                                 
                                 />
