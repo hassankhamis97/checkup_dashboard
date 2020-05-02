@@ -56,7 +56,7 @@ class UpCommingRequests extends React.Component {
         gender: '',
         phone: ''
       },
-
+      isManualEdit: false
     }
 
 
@@ -138,7 +138,8 @@ class UpCommingRequests extends React.Component {
 
 
   getResquests = () => {
-
+   if( this.state.isManualEdit == false)
+   {
     // debugger;
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
@@ -243,6 +244,8 @@ class UpCommingRequests extends React.Component {
 
     console.log('DATA RETRIEVED');
   }
+    this.state.isManualEdit = false
+  }
 
 
   // handleSubmit = (event) => {
@@ -289,15 +292,16 @@ class UpCommingRequests extends React.Component {
     var id = this.state.resID
 
     this.state.dataShowList =  this.state.dataShowList.filter(item => !item.includes(id))
-  
+    this.state.isManualEdit = true;
 
     var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
     ref.child(id).update({ 'status': 'PendingForResult' })
 
   //  this.state.sampleStatus = "PendingForResult"
-    this.setState({ sampleStatus: "PendingForResult" })
-    this.setState({ openAlert: false })
-
+    // this.setState({ sampleStatus: "PendingForResult" })
+    // this.setState({ openAlert: false })
+    this.state.sampleStatus = "PendingForResult"
+    this.state.openAlert = false
     this.forceUpdate()
 
     //  change status of SampleObject to Done leave it in the same table

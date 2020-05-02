@@ -485,21 +485,39 @@ footer ul li a:hover {
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
 }
-.notificationChat {
-  top: -2px;
+span.notificationTotalChat {
+  top: 16px;
   color: #FFF;
-  right: 45px;
+  right: 8px;
   border: 1px solid #FFF;
-  height: 25px;
+  height: 18px;
   display: block;
   position: absolute;
-  font-size: 16px;
-  min-width: 25px;
+  font-size: 14px;
+  width: 18px;
   background: #f44336;
   text-align: center;
-  line-height: 30px;
+  line-height: 20px;
   border-radius: 50%;
   vertical-align: middle;
+  font-family: serif;
+}
+
+.notificationChat {
+  color: #FFF;
+  right: 8px;
+  border: 1px solid #FFF;
+  height: 18px;
+  display: block;
+  position: absolute;
+  font-size: 14px;
+  width: 18px;
+  background: #f44336;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 50%;
+  vertical-align: middle;
+  font-family: serif;
 }
 .fixed-plugin .dropdown.show .dropdown-menu {
   display: block;
