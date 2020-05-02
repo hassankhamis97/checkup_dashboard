@@ -109,6 +109,24 @@ class CreateEmployeeDesign extends React.Component {
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         // console.log(createEmpoStyle);
+
+        
+
+
+        var test= {
+            date: '2/5/2020',
+            id: '-X5j2KVIhI0dhLchYrTe',
+            isFromHome: false,
+            resultFilespaths: [],
+            roushettaPath: [],
+            status: 'PendingForLabConfirmation',
+            testName: 'test13',
+            time: '1:58PM',
+            userId: '-M5t-vpf8Hlb4O4hHbXe',
+            description: '',
+            hba1c: ''
+        }
+        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child('-X5j2KVIhI0dhLchYrTe').set(test)
     }
 
 
@@ -136,7 +154,7 @@ class CreateEmployeeDesign extends React.Component {
     writeUserData = (userId) => {
         // firebase.database().ref('/').set(this.state);
         // var newPostKey = database.ref().push().key;
-        database.ref('/').child('Employees').child(userId).set(this.state.Employee);
+        database.ref('/').child('Employees').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").child(userId).set(this.state.Employee);
         console.log('DATA SAVED');
     }
 

@@ -59,7 +59,7 @@ export default class Employee  extends React.Component{
         super(props);
        
         this.state = {
-         
+          dataShowList: []
     
         }
     
@@ -80,9 +80,9 @@ export default class Employee  extends React.Component{
   getEmployeeList = () => {
 
     debugger;
-    let ref = firebase.database().ref('/').child('Employees');
+    let ref = firebase.database().ref('/').child('Employees').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1");
 
-    ref.Child().on('value', snapshot => {
+    ref.on('value', snapshot => {
       this.state.dataShowList = []
 
       snapshot.forEach(function (item) {
@@ -119,29 +119,9 @@ export default class Employee  extends React.Component{
 
             this.forceUpdate()
           });
-        // keys.push(itemVal);
-
-        //this.state.tableBodyData = 
-
-  
-
-
-      //  this.state.dataShowList = []
-
-
-
-
-
+ 
     });
   }
-
-
-
-
-
-
-
-
     render() {
         debugger;
     
