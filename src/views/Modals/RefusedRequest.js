@@ -145,7 +145,7 @@ export default class RefuseRequest extends React.Component {
         return <Slide direction="up" ref={ref} {...props} />;
     });
     state = {
-        test: {
+        refuse: {
             // setChecked: true,
             refuseReason: '',
             refuseCheckedObj:{
@@ -165,13 +165,13 @@ export default class RefuseRequest extends React.Component {
     /*updateData = () => {
         debugger
 
-        this.state.test.status = 'Done'
+        this.state.refuse.status = 'Done'
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
             .update({
-                'status': this.state.test.status,
-                'refuseReason': this.state.test.refuseReason,
-                'employee': this.state.test.employee,
+                'status': this.state.refuse.status,
+                'refuseReason': this.state.refuse.refuseReason,
+                'employee': this.state.refuse.employee,
             })
     }*/
 
@@ -220,7 +220,7 @@ export default class RefuseRequest extends React.Component {
 
                     <div style={this.styleTestReview.TestReviewModal} >
                         <Checkbox
-                            checked={this.state.test.refuseCheckedObj.notAvailable}
+                            checked={this.state.refuse.refuseCheckedObj.notAvailable}
                             onChange={this.handleChange('Not Available')}
                             value="cryon"
                             // id="notAvailable"
@@ -231,7 +231,7 @@ export default class RefuseRequest extends React.Component {
                         <span style={this.styleTestReview.textStyle}> Not Available</span>
                         <br></br>
                         <Checkbox
-                            checked={this.state.test.refuseCheckedObj.anotherTime}
+                            checked={this.state.refuse.refuseCheckedObj.anotherTime}
                             // checked={ 'Another Time'}
                             // onChange={this.handleChange(' Another Time')}
                             // value=" Another Time"
@@ -242,7 +242,7 @@ export default class RefuseRequest extends React.Component {
                         <span style={this.styleTestReview.textStyle}> Another Time</span>
                         <br></br>
                         <Checkbox
-                            checked={this.state.test.refuseCheckedObj.youNeedToApplyRefuseReason}
+                            checked={this.state.refuse.refuseCheckedObj.youNeedToApplyRefuseReason}
 
                             // checked={'you need to apply precaustion'}
                             // onChange={this.handleChange('you need to apply precaustion')}
@@ -267,7 +267,7 @@ export default class RefuseRequest extends React.Component {
                                     rows: 5
                                 }}
 
-                                value={this.state.test.refuseReason}
+                                value={this.state.refuse.refuseReason}
                                 onChange={e => {
                                     debugger
                                     this.setState({
