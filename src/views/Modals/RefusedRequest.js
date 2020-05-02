@@ -15,6 +15,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import GridItem from "components/Grid/GridItem.js";
 import InputLabel from "@material-ui/core/InputLabel";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import {database} from '../../firebase';
+
 
 
 /*const useStyles = makeStyles((theme) => ({
@@ -143,13 +145,28 @@ export default class RefuseRequest extends React.Component {
         return <Slide direction="up" ref={ref} {...props} />;
     });
     state = {
+
         setChecked: true,
+        precastions:'',
     }
 
     handleChange = (event) => {
         // setChecked(event.checked);
         this.setState({ setChecked: event })
     };
+
+    /*updateData = () => {
+        debugger
+
+        this.state.test.status = 'Done'
+        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
+        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
+            .update({
+                'status': this.state.test.status,
+                'precastions': this.state.test.precastions,
+                'employee': this.state.test.employee,
+            })
+    }*/
 
     styleTestReview = {
         TestReviewModal: {
@@ -196,9 +213,9 @@ export default class RefuseRequest extends React.Component {
 
                     <div style={this.styleTestReview.TestReviewModal} >
                         <Checkbox
-                            // checked={cryon}
-                            // onChange={this.handleChange('cryon')}
-                            // value="cryon"
+                            checked={'Not Available'}
+                            onChange={this.handleChange('Not Available')}
+                            value="cryon"
                             style={{
                                 color: "#ab47bc",
                             }}
@@ -206,9 +223,9 @@ export default class RefuseRequest extends React.Component {
                         <span style={this.styleTestReview.textStyle}> Not Available</span>
                         <br></br>
                         <Checkbox
-                            // checked={cryon}
-                            // onChange={this.handleChange('cryon')}
-                            // value="cryon"
+                            // checked={ 'Another Time'}
+                            // onChange={this.handleChange(' Another Time')}
+                            // value=" Another Time"
                             style={{
                                 color: "#ab47bc",
                             }}
@@ -216,9 +233,9 @@ export default class RefuseRequest extends React.Component {
                         <span style={this.styleTestReview.textStyle}> Another Time</span>
                         <br></br>
                         <Checkbox
-                            // checked={cryon}
-                            // onChange={this.handleChange('cryon')}
-                            // value="cryon"
+                            // checked={'you need to apply precaustion'}
+                            // onChange={this.handleChange('you need to apply precaustion')}
+                            // value="you need to apply precaustion"
                             style={{
                                 color: "#ab47bc",
                             }}
@@ -237,6 +254,18 @@ export default class RefuseRequest extends React.Component {
                                 inputProps={{
                                     multiline: true,
                                     rows: 5
+                                }}
+
+                                value={this.state.test.precastions}
+                                onChange={e => {
+                                    debugger
+                                    this.setState({
+
+                                        test: {
+                                            ...this.state.test,
+                                            precastions: e.target.value
+                                        }
+                                    })
                                 }}
                             />
                         </GridItem>

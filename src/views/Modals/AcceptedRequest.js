@@ -19,7 +19,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 
-import database from '../../firebase';
+import {database} from '../../firebase';
+
+// import database from '../../firebase';
 import firebase from 'firebase';
 
 export default class AcceptedRequest extends React.Component {
@@ -65,9 +67,8 @@ export default class AcceptedRequest extends React.Component {
         },
     }
 
-    /*updateData = () => {
+    updateData = () => {
         debugger
-        
 
         this.state.test.status = 'Done'
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
@@ -77,7 +78,7 @@ export default class AcceptedRequest extends React.Component {
                 'precastions': this.state.test.precastions,
                 'employee': this.state.test.employee,
             })
-    }*/
+    }
 
     updateInputValue(evt) {
         this.setState({
@@ -98,7 +99,7 @@ export default class AcceptedRequest extends React.Component {
                                 Accept Request
                         </Typography>
 
-                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} /*onClick={this.updateData()}*/  >
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} onClick={this.updateData()}  >
                                 Send
                             </Button>
                         </Toolbar>
