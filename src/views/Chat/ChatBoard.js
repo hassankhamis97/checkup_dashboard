@@ -36,6 +36,7 @@ export default class ChatBoard extends Component {
         this.groupChatId = null
         this.removeListener = null
         this.currentPhotoFile = null
+        this.onSendMessage = this.onSendMessage.bind(this)
     }
 
     componentDidUpdate() {
@@ -95,7 +96,7 @@ export default class ChatBoard extends Component {
                     this.setState({ isLoading: false })
                 },
                 err => {
-                    this.props.showToast(0, err.toString())
+                    // this.props.showToast(0, err.toString())
                 }
             )
     }
@@ -104,10 +105,10 @@ export default class ChatBoard extends Component {
         this.setState({ isShowSticker: !this.state.isShowSticker })
     }
 
-    onSendMessage = (content, type) => {
+    onSendMessage = async (content, type,self) => {
         debugger
-        if (this.state.isShowSticker && type === 2) {
-            this.setState({ isShowSticker: false })
+        if (self.state.isShowSticker && type === 2) {
+            self.setState({ isShowSticker: false })
         }
 
         if (content.trim() === '') {
@@ -119,8 +120,8 @@ export default class ChatBoard extends Component {
             .toString()
 
         const itemMessage = {
-            idFrom: this.currentUserId,
-            idTo: this.currentPeerUser.id,
+            idFrom: self.currentUserId,
+            idTo: self.currentPeerUser.id,
             timestamp: timestamp,
             content: content.trim(),
             type: type
@@ -128,49 +129,66 @@ export default class ChatBoard extends Component {
         debugger
         firestore
             .collection(AppString.NODE_MESSAGES)
-            .doc(this.groupChatId)
-            .collection(this.groupChatId)
+            .doc(self.groupChatId)
+            .collection(self.groupChatId)
             .doc(timestamp)
             .set(itemMessage)
             .then(() => {
-                this.setState({ inputValue: '' })
+                self.setState({ inputValue: '' })
             })
             .catch(err => {
-                this.props.showToast(0, err.toString())
+                // self.props.showToast(0, err.toString())
             })
-            var senderChatStatus = {
-                lastMsgTimeStamp: timestamp,
-                noOfUnReadMessage: 0
-            }
+        const chatUserResult = await firestore.collection(AppString.NODE_USERCHAT).doc(self.currentPeerUser.id).get()
+        if (chatUserResult.data().currentViewedPerson == Authentication.loggedUser.uid) {
             var pearedChatStatus = {
                 lastMsgTimeStamp: timestamp,
-                noOfUnReadMessage: 0
+                noOfUnReadMessage: 0,
+                // currentViewedPerson: ""
             }
+        }
+        else{
+            debugger;
+             
+            var pearObj = await firestore.collection(AppString.NODE_USERCHAT).doc(self.currentPeerUser.id).collection(self.currentPeerUser.id).doc(Authentication.loggedUser.uid).get()
+            var noOfRM = pearObj.data().noOfUnReadMessage
+            var pearedChatStatus = {
+                lastMsgTimeStamp: timestamp,
+                noOfUnReadMessage: parseInt(noOfRM) + 1,
+                // currentViewedPerson: ""
+            }
+        }
+        var senderChatStatus = {
+            lastMsgTimeStamp: timestamp,
+            noOfUnReadMessage: 0,
+            // currentViewedPerson: ""
+        }
+        
         firestore
             .collection(AppString.NODE_USERCHAT)
             .doc(Authentication.loggedUser.uid)
             .collection(Authentication.loggedUser.uid)
-            .doc(this.currentPeerUser.id)
+            .doc(self.currentPeerUser.id)
             .set(senderChatStatus)
             .then(() => {
-                
+
             })
             .catch(err => {
-                this.props.showToast(0, err.toString())
+                // self.props.showToast(0, err.toString())
             })
         firestore
             .collection(AppString.NODE_USERCHAT)
-            .doc(this.currentPeerUser.id)
-            .collection(this.currentPeerUser.id)
+            .doc(self.currentPeerUser.id)
+            .collection(self.currentPeerUser.id)
             .doc(Authentication.loggedUser.uid)
             .set(pearedChatStatus)
             .then(() => {
-                
+
             })
             .catch(err => {
-                this.props.showToast(0, err.toString())
+                self.props.showToast(0, err.toString())
             })
-            this.props.updateList(this.props.index)
+        // self.props.updateList(self.props.index)
 
     }
 
@@ -226,7 +244,7 @@ export default class ChatBoard extends Component {
 
     onKeyboardPress = event => {
         if (event.key === 'Enter') {
-            this.onSendMessage(this.state.inputValue, 0)
+            this.onSendMessage(this.state.inputValue, 0,this)
         }
     }
 
@@ -547,7 +565,6 @@ export default class ChatBoard extends Component {
     }
 
     isLastMessageLeft(index) {
-        debugger
         if (
             (index + 1 < this.listMessage.length &&
                 this.listMessage[index + 1].idFrom === this.currentUserId) ||

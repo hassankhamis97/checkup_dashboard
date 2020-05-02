@@ -33,24 +33,24 @@ import EntryPoint from "views/Login/EntryPoint";
 
 const hist = createBrowserHistory();
 debugger
-window.addEventListener("beforeunload", (ev) => {
-  debugger
-  localStorage.openpages = Date.now();
-  var onLocalStorageEvent = function(e){
-      if(e.key == "openpages"){
-          // Listen if anybody else opening the same page!
-          localStorage.page_available = Date.now();
-          alert("fdsf");
-          window.addEventListener('storage', onLocalStorageEvent, false);
-  return ev.returnValue = 'Are you sure you want to close?';
-      }
-      if(e.key == "page_available"){
-          alert("One more page already open");
-      }
-  };
-  ev.preventDefault();
+// window.addEventListener("beforeunload", (ev) => {
+//   debugger
+//   localStorage.openpages = Date.now();
+//   var onLocalStorageEvent = function(e){
+//       if(e.key == "openpages"){
+//           // Listen if anybody else opening the same page!
+//           localStorage.page_available = Date.now();
+//           alert("fdsf");
+//           window.addEventListener('storage', onLocalStorageEvent, false);
+//   return ev.returnValue = 'Are you sure you want to close?';
+//       }
+//       if(e.key == "page_available"){
+//           alert("One more page already open");
+//       }
+//   };
+//   ev.preventDefault();
   
-});
+// });
 ReactDOM.render(
   // <Login></Login>,
   <EntryPoint></EntryPoint>,

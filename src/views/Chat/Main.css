@@ -152,6 +152,7 @@
     padding: 10px;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .viewWrapItemFocused {

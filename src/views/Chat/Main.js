@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import ReactLoading from 'react-loading'
-// import {withRouter} from 'react-router-dom'
+// import { withRouter } from 'react-router'
 import { firestore } from '../../firebase';
 import images from 'components/Themes/Images'
 import WelcomeBoard from './WelcomeBoard'
@@ -10,8 +10,34 @@ import { AppString } from './Const'
 import avatar from "assets/img/noProfilePhoto.png";
 import Authentication from 'Authentication';
 import ChatList from './ChatList';
+import ChatOperations from './ChatOperations';
+// window.onbeforeunload = async function () {
 
+//     debugger
+    // if (window.location.href === "http://localhost:3000/admin/chat") {
+    //     var senderChatStatus = {
+    //         currentViewedPerson: ""
+    //     }
 
+    //     await firestore
+    //         .collection(AppString.NODE_USERCHAT)
+    //         .doc(Authentication.loggedUser.uid)
+    //         .set(senderChatStatus)
+    //         .then(() => {
+
+    //         })
+    //         .catch(err => {
+    //             // this.props.showToast(0, err.toString())
+    //         })
+    // }
+// };
+window.addEventListener("beforeunload", (ev) => {
+    debugger
+    var chatOperations = new ChatOperations()
+    chatOperations.clearCurrentViewedPerson(false)
+    ev.preventDefault();
+    
+  });
 export default class Main extends Component {
     constructor(props) {
         super(props)
@@ -28,9 +54,27 @@ export default class Main extends Component {
     }
 
     // componentDidMount() {
+    //     prompt('hello')
+    //     // Note that navigating to child routes won't register as leaving this route. In other words,
+    //     // navigating to any routes described in this.props.route.childRoutes[] won't trigger the callback.
+    //     // this.props.router.setRouteLeaveHook(this.props.route, () => {
+    //     //     debugger
+    //     //   if (this.state.unsaved)
+    //     //     return 'You have unsaved information, are you sure you want to leave this page?'
+    //     // })
+    //   }
+    // componentDidUnmount() {
+    //     prompt('hello')
     //     // this.checkLogin()
-    //     this.getListUser(this)
+    //     // this.getListUser(this)
     // }
+    componentWillUnmount() {
+        var chatOperations = new ChatOperations()
+        chatOperations.clearCurrentViewedPerson(true)
+        // this.checkLogin()
+        // this.getListUser(this)
+    }
+
 
     // checkLogin = () => {
     //     if (!localStorage.getItem(AppString.ID)) {
@@ -57,9 +101,9 @@ export default class Main extends Component {
     //         debugger
     //             console.log(result.docs)
     //             self.listUser.push(result)
-                
+
     //         //if (result.docs.length > 0) {
-                
+
     //             // self.skip += result.docs.length
     //             // // self.listUser = [...result.docs]
     //             // self.listUser.push(...result.docs)
@@ -82,15 +126,15 @@ export default class Main extends Component {
     //         isOpenDialogConfirmLogout: true
     //     })
     // }
-    updateList = (index) => {
-        if(this.state.isNew){
-            this.state.isNew = false
-            this.state.index = 0
-            
-            this.chatListRef.updateList(index)
-        }
-        // this.setState({index: 0})
-    }
+    // updateList = (index) => {
+    //     if (this.state.isNew) {
+    //         this.state.isNew = false
+    //         this.state.index = 0
+
+    //         this.chatListRef.updateList(index)
+    //     }
+    //     // this.setState({index: 0})
+    // }
     // updateIndex = i => {
     //    this.setState({index: i})
     // }
@@ -174,9 +218,44 @@ export default class Main extends Component {
     //         return null
     //     }
     // }
-    handlePearClick = (currentPeerUser,index,self) => {
-        this.setState({currentPeerUser:currentPeerUser,index:index, isNew: true})
+    handlePearClick = async (currentPeerUser, index, self) => {
+        debugger
+        this.setState({ currentPeerUser: currentPeerUser, index: index, isNew: true })
         this.chatListRef = self
+
+        // const chatUserResult = await firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).doc(currentPeerUser.id).get()
+        // if (chatUserResult.data().currentViewedPerson == currentPeerUser.id) {
+        // }
+        var senderChatStatus = {
+            currentViewedPerson: currentPeerUser.id
+        }
+        var pearedChatStatus = {
+            noOfUnReadMessage: 0,
+            // currentViewedPerson: ""
+        }
+
+        firestore
+            .collection(AppString.NODE_USERCHAT)
+            .doc(Authentication.loggedUser.uid)
+            .set(senderChatStatus)
+            .then(() => {
+
+            })
+            .catch(err => {
+                // this.props.showToast(0, err.toString())
+            })
+        firestore
+            .collection(AppString.NODE_USERCHAT)
+            .doc(Authentication.loggedUser.uid)
+            .collection(Authentication.loggedUser.uid)
+            .doc(currentPeerUser.id)
+            .update(pearedChatStatus)
+            .then(() => {
+
+            })
+            .catch(err => {
+                self.props.showToast(0, err.toString())
+            })
     }
     render() {
         return (
@@ -189,9 +268,9 @@ export default class Main extends Component {
                         {this.state.currentPeerUser ? (
                             <ChatBoard
                                 index={this.state.index}
-                                updateList={this.updateList.bind(this)}
+                                // updateList={this.updateList.bind(this)}
                                 currentPeerUser={this.state.currentPeerUser}
-                                // showToast={this.props.showToast}
+                            // showToast={this.props.showToast}
                             />
                         ) : (
                                 <WelcomeBoard

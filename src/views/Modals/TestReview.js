@@ -128,8 +128,10 @@ export default class TestReview extends React.Component {
     render() {
         return (
             <div style={this.styleTestReview.TestReviewModal}>
-                <RefuseRequest testId ={this.props.recievedObj.id} open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest>
-                <AcceptedRequest  open={this.state.acceptDialog} handleClose={this.handleRAcceptClose}></AcceptedRequest>
+                 {this.state.refuseDialog ?
+                <RefuseRequest testId={this.props.recievedObj.id} open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
+                {this.state.acceptDialog ?
+                    <AcceptedRequest open={this.state.acceptDialog} testId={this.props.recievedObj.id} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
 
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar}>
