@@ -25,8 +25,13 @@ class UpCommingRequests extends React.Component {
 
   //  const classes = useStyles();
   constructor(props) {
+
+
+
+
     // debugger;
     super(props);
+    window.$name = this //global variable
     // let userRef =  firebase.database().ref('Users');
     // userRef.push({'name':"mohamed", 'gender': "male",
     //        'dateOfBirth': "2/8/2002"  
@@ -34,11 +39,13 @@ class UpCommingRequests extends React.Component {
     //        'imgUrl': 'https://www.bipmedia.com/uploads/media/2015/05/Samantha-Ruthford_avatar.jpg' ,
     //        'address' : 'Alex/smoha'
     //       })
-
-
+    this.getResquests = this.getResquests.bind(this)
     this.handleStatus = this.handleStatus.bind(this)
+    this.handleAlertOpen = this.handleAlertOpen.bind(this)
     this.state = {
+      isNew: true,
       resID: '',
+      OBJ: '',
       open: false,
       openAlert: false,
       dataShowList: [],
@@ -46,8 +53,8 @@ class UpCommingRequests extends React.Component {
       requests: [],
       tableBodyData: '',
       sampleStatus: '',
-       
-      sendObj : [],
+
+      sendObj: [],
       transferedObj: {
         userName: '',
         id: '',
@@ -86,22 +93,22 @@ class UpCommingRequests extends React.Component {
   handleStatus(obj) {
     debugger;
     // prompt(obj)
-  
-     let temp = this.state.fullDataList.filter(item => item.id != obj.id);
-    
- 
+    this.state.OBJ = obj;
+    let temp = this.state.fullDataList.filter(item => item.id != obj.id);
+
+
     // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
     //    gender:temp.gender,phone :temp.phone})
 
     //    var tttt =viewObj ;
     debugger;
 
-     this.state.transferedObj.userName     = temp[0][0]
-     this.state.transferedObj.id           = temp[0][7]
-     this.state.transferedObj.dateOfBirth  = temp[0][8] 
-     this.state.transferedObj.gender       = temp[0][9]
-     this.state.transferedObj.phone        = temp[0][10]
-   
+    this.state.transferedObj.userName = temp[0][0]
+    this.state.transferedObj.id = temp[0][7]
+    this.state.transferedObj.dateOfBirth = temp[0][8]
+    this.state.transferedObj.gender = temp[0][9]
+    this.state.transferedObj.phone = temp[0][10]
+
     //  var yyy = this.state.transferedObj.userName
     //  debugger;
 
@@ -120,25 +127,20 @@ class UpCommingRequests extends React.Component {
 
     }
 
-    //  change status of SampleObject to Done leave it in the same table
-    // in the result pages get all  tests which have status == Done only
-    // console.log(itemId)
-    // var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-    // ref.child(itemId).update({'status': 'Done'}) 
+  }
 
-
-    // this.setState({ sampleStatus: 'DONE' })
-
-
-    // this.forceUpdate()
+  onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
   }
 
 
 
 
+  debugger;
+
   getResquests = () => {
 
-    // debugger;
+    debugger;
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
     ref.orderByChild("status").equalTo("PendingForLabConfirmation").on('value', snapshot => {
@@ -156,29 +158,32 @@ class UpCommingRequests extends React.Component {
             user = snap.val();
             console.log(user)
             // this.setState({ sampleStatus: obj.status });
-            this.state.sampleStatus = obj.status;
-            this.state.sampleStatus = obj.status ==="PendingForLabConfirmation"? "View Request" : "";
+
+            this.state.sampleStatus = obj.status === "PendingForLabConfirmation" ? "View Request" : "";
 
             debugger
-            var reqObj = [ user.name , obj.date, obj.time , obj.isFromHome, obj.testName,
-           
-              obj.status , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+            var reqObj = [obj.id, user.name, obj.date, obj.time, obj.isFromHome, obj.testName,
+
+            obj.status, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
             ]
 
 
-            var fullObj = [   user.name , obj.date, obj.time , obj.isFromHome, obj.testName,
-           
-              obj.status , <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-                ,obj.id , user.dateOfBirth , user.gender,user.phone
-              ]
+            var fullObj = [user.name, obj.date, obj.time, obj.isFromHome, obj.testName,
+
+            obj.status, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+              , obj.id, user.dateOfBirth, user.gender, user.phone
+            ]
             // this.state.transferedObj.testName = 
 
-         
-      
+            var unique =   window.$name.state.dataShowList.filter((v, i, a) => a[i][0]  === reqObj[0])
+            if ( unique.length==0) {     
+                   window.$name.state.dataShowList.push(reqObj)
+          }  
+              
+
             this.state.fullDataList.push(fullObj);
             console.log(reqObj)
 
-            this.state.dataShowList.push(reqObj)
             this.forceUpdate()
           });
         // keys.push(itemVal);
@@ -188,126 +193,114 @@ class UpCommingRequests extends React.Component {
       }.bind(this));
 
 
+      //  this.state.dataShowList = []
+      debugger
 
       ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
-        //  this.state.dataShowList = []
-
-        snapshot.forEach(function (item) {
-          debugger;
-          var obj = item.val();
-          console.log(obj)
-          let user;
-          // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
-          firebase.database().ref('/').child('Users').child(obj.userId)
-            .on("value", snap => {
-              debugger;
-              user = snap.val();
-              console.log(user)
-              this.state.sampleStatus = obj.status ==="PendingForTakingTheSample"? "Done" : "";
-
-              // this.setState({ sampleStatus: obj.status });
-              
-              var reqObj = [    user.name , obj.date, obj.time , obj.isFromHome, obj.testName, obj.status ,
- <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-              ]
+        debugger;
+        // this.forceUpdate();
 
 
+        debugger;
+        if (window.$name.state.isNew) {
+          snapshot.forEach(function (item) {
 
-              console.log(reqObj)
+            var obj = item.val();
+            console.log(obj)
+            let user;
+            // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
+            firebase.database().ref('/').child('Users').child(obj.userId)
+              .on("value", snap => {
+                debugger;
+                user = snap.val();
+                console.log(user)
+                this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Done" : "";
 
-              this.state.dataShowList.push(reqObj)
-              this.forceUpdate()
-            });
-          // keys.push(itemVal);
+                // this.setState({ sampleStatus: obj.status });
 
-          //this.state.tableBodyData = 
+                var reqObj = [obj.id, user.name, obj.date, obj.time, obj.isFromHome, obj.testName, obj.status,
+                <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+                ]
 
-        }.bind(this));
 
+
+                console.log(reqObj)
+
+         
+                
+ var unique =   window.$name.state.dataShowList.filter((v, i, a) => a[i][0]  === reqObj[0])
+               if ( unique.length==0) {     
+                      window.$name.state.dataShowList.push(reqObj)
+             }  
+                 
+                
+                window.$name.forceUpdate()
+              });
+            // keys.push(itemVal);
+
+            //this.state.tableBodyData = 
+
+          }.bind(this));
+        }
         // data.map((obj,index)=>{
         //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
         //    this.state.dataShowList.push(reqObj)
         //    //this.state.tableBodyData = 
         //    this.forceUpdate()
-        // })
+
+        this.state.isNew = true;
+
+        // var unique =   window.$name.state.dataShowList.filter((v, i, a) => a.indexOf(v) === i); 
+        console.log("dddddddd")
       });
-      // data.map((obj,index)=>{
-      //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
-      //    this.state.dataShowList.push(reqObj)
-      //    //this.state.tableBodyData = 
-      //    this.forceUpdate()
-      // })
-   
+
+
+
+
     });
 
+
+
+    this.state.isNew = true;
     console.log('DATA RETRIEVED');
   }
 
 
-  // handleSubmit = (event) => {
-  //   debugger
-  //   // var employeeObj = {
-  //   //     name: 'a',
-  //   //     address: 's'
-  //   // }
-  //   const { Requests } = this.state;
-  //   // Requests.push(employeeObj);
-  //   this.setState({ Requests });
 
-  // }
-
-  // // const handleClickOpen = () => {
-  // //   setOpen(true);
-  // // };
 
   handleClose = () => {
-    // setOpen(false);
-    // this.state.open = false
+
     this.setState({ open: false })
 
   };
 
 
   handleAlertClose = () => {
-    // setOpen(false);
-    // this.state.open = false
+
     this.setState({ openAlert: false })
 
   };
 
   handleAlertOpen = () => {
-    // setOpen(false);
-    // this.state.open = false
-    // this.setState({ openAlert: true })
-    debugger
-    //  prompt(this.state.transferedObj.name)
 
+    debugger
 
     //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
-
+    this.state.isNew = false
     var id = this.state.resID
+
+    this.state.dataShowList = this.state.dataShowList.filter(item => !item.includes(id))
+
+
     var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
     ref.child(id).update({ 'status': 'PendingForResult' })
 
-  //  this.state.sampleStatus = "PendingForResult"
-    this.setState({ sampleStatus: "PendingForResult" })
+    //  this.state.sampleStatus = "PendingForResult"
+
+
     this.setState({ openAlert: false })
 
-    this.forceUpdate()
-
-    //  change status of SampleObject to Done leave it in the same table
-    // in the result pages get all  tests which have status == Done only
-    // console.log(itemId)
-    // var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-    // ref.child(itemId).update({'status': 'Done'}) 
-
-
-    // this.setState({ sampleStatus: 'Pending For Result' })
-
-
     // this.forceUpdate()
-
-
 
   };
 
@@ -320,10 +313,10 @@ class UpCommingRequests extends React.Component {
     return (
       <div>
         <AlertDialogSlide text="  Did You Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
- 
-        { this.state.open ?   
-        <TestReview  recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview>
-                 :''  }
+
+        {this.state.open ?
+          <TestReview recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview>
+          : ''}
         <GridContainer>
 
           <GridItem xs={12} sm={12} md={12}>
@@ -337,9 +330,11 @@ class UpCommingRequests extends React.Component {
               <CardBody>
                 <Table
                   tableHeaderColor="primary"
-                  tableHead={["Patient Name", "  Date", " Time", "  From Home", "  Test Name"  ,"   Sample Staus"]}
+                  tableHead={["Test Code", "Patient Name", "  Date", " Time", "  From Home", "  Test Name", "   Sample Staus"]}
                   tableData={this.state.dataShowList.length === 0 ? [] : this.state.dataShowList}
-                  //["Patient Name", "Date", "Time", "FromHome", " tast mame " , "Sample Staus"]
+
+
+                //["Patient Name", "Date", "Time", "FromHome", " tast mame " , "Sample Staus"]
                 //tableData={ [["Patient Name", "Date", "Time","FromHome","Action"]]}
                 />
               </CardBody>
@@ -349,8 +344,12 @@ class UpCommingRequests extends React.Component {
         </GridContainer>
       </div>
     );
+
+
+
   }
 }
 
 
 export default UpCommingRequests;
+

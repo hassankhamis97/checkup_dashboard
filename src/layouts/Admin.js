@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
+// import { withRouter } from 'react-router'
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
@@ -37,12 +38,33 @@ const switchRoutes = (
     <Redirect from="/admin" to="/admin/dashboard" />
   </Switch>
 );
+// const Home = withRouter(
+//   React.createClass({
 
+//     componentDidMount() {
+//       this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
+//     },
+
+//     routerWillLeave(nextLocation) {
+//       // return false to prevent a transition w/o prompting the user,
+//       // or return a string to allow the user to decide:
+//       // return `null` or nothing to let other hooks to be executed
+//       //
+//       // NOTE: if you return true, other hooks will not be executed!
+//       if (!this.state.isSaved)
+//         return 'Your work is not saved! Are you sure you want to leave?'
+//     },
+
+//     // ...
+
+//   })
+// )
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
   // styles
   debugger
+  
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
@@ -67,17 +89,16 @@ export default function Admin({ ...rest }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
   const getRoute = () => {
-    if(window.location.pathname !== "/admin/maps")
-    {
+    if (window.location.pathname !== "/admin/maps") {
       return false
     }
-    else if(window.location.pathname !== "/admin/chat")
-    {
+    else if (window.location.pathname !== "/admin/chat") {
       return false
 
     }
-    else{
+    else {
       return true
     }
     // return window.location.pathname !== "/admin/maps" || window.location.pathname !== "/admin/chat";
@@ -94,15 +115,15 @@ export default function Admin({ ...rest }) {
         suppressScrollX: true,
         suppressScrollY: false
       });
-    //   debugger
-    
-      if(getRoute()){
+      //   debugger
+
+      if (getRoute()) {
         document.body.style.overflow = "hidden";
-      
-    }
-    // else{
-    //   document.body.style.overflow = "auto";
-    // }
+
+      }
+      // else{
+      //   document.body.style.overflow = "auto";
+      // }
 
     }
 
@@ -115,6 +136,7 @@ export default function Admin({ ...rest }) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [mainPanel]);
+
   return (
     <div className={classes.wrapper}>
       <Sidebar
@@ -139,9 +161,9 @@ export default function Admin({ ...rest }) {
             <div className={classes.container}>{switchRoutes}</div>
           </div>
         ) : (
-          <div className={classes.map}>{switchRoutes}</div>
-        )}
-        {getRoute() ?  <Footer /> : null}
+            <div className={classes.map}>{switchRoutes}</div>
+          )}
+        {getRoute() ? <Footer /> : null}
         <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}

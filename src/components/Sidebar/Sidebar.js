@@ -16,15 +16,26 @@ import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
-
+import ChatOperations from 'views/Chat/ChatOperations'
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
+  // useEffect(callbackFunction, [dependentProps]) => cleanupFunction
+const [noUnReadTotalMessages,setUnReadTotalMessages] = React.useState(0)
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
+  debugger
+  if(noUnReadTotalMessages == 0){
+    var chatOperations = new ChatOperations()
+    chatOperations.getUnReadTotalMessages((number)=>{setUnReadTotalMessages(number)})
+  }
+  // function getTotalNoOfUnReadMessgages() {
+  //   debugger
+   
+  // }
   const { color, logo, image, logoText, routes } = props;
   var links = (
     <List className={classes.list}>
@@ -61,12 +72,12 @@ export default function Sidebar(props) {
                   {prop.icon}
                 </Icon>
               ) : (
-                <prop.icon
-                  className={classNames(classes.itemIcon, whiteFontClasses, {
-                    [classes.itemIconRTL]: props.rtlActive
-                  })}
-                />
-              )}
+                  <prop.icon
+                    className={classNames(classes.itemIcon, whiteFontClasses, {
+                      [classes.itemIconRTL]: props.rtlActive
+                    })}
+                  />
+                )}
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
                 className={classNames(classes.itemText, whiteFontClasses, {
@@ -74,81 +85,84 @@ export default function Sidebar(props) {
                 })}
                 disableTypography={true}
               />
+              {prop.name == "Chat" && noUnReadTotalMessages > 0 ?
+                < span class="notificationTotalChat">{noUnReadTotalMessages}</span> : ''
+              }
             </ListItem>
           </NavLink>
-        );
+  );
+})}
+    </List >
+  );
+var brand = (
+  <div className={classes.logo}>
+    <a
+      href="https://www.creative-tim.com?ref=mdr-sidebar"
+      className={classNames(classes.logoLink, {
+        [classes.logoLinkRTL]: props.rtlActive
       })}
-    </List>
-  );
-  var brand = (
-    <div className={classes.logo}>
-      <a
-        href="https://www.creative-tim.com?ref=mdr-sidebar"
-        className={classNames(classes.logoLink, {
-          [classes.logoLinkRTL]: props.rtlActive
-        })}
-        target="_blank"
+      target="_blank"
+    >
+      <div className={classes.logoImage}>
+        <img src={logo} alt="logo" className={classes.img} />
+      </div>
+      {logoText}
+    </a>
+  </div>
+);
+return (
+  <div>
+    <Hidden mdUp implementation="css">
+      <Drawer
+        variant="temporary"
+        anchor={props.rtlActive ? "left" : "right"}
+        open={props.open}
+        classes={{
+          paper: classNames(classes.drawerPaper, {
+            [classes.drawerPaperRTL]: props.rtlActive
+          })
+        }}
+        onClose={props.handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true // Better open performance on mobile.
+        }}
       >
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
+        {brand}
+        <div className={classes.sidebarWrapper}>
+          {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+          {links}
         </div>
-        {logoText}
-      </a>
-    </div>
-  );
-  return (
-    <div>
-      <Hidden mdUp implementation="css">
-        <Drawer
-          variant="temporary"
-          anchor={props.rtlActive ? "left" : "right"}
-          open={props.open}
-          classes={{
-            paper: classNames(classes.drawerPaper, {
-              [classes.drawerPaperRTL]: props.rtlActive
-            })
-          }}
-          onClose={props.handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true // Better open performance on mobile.
-          }}
-        >
-          {brand}
-          <div className={classes.sidebarWrapper}>
-            {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
-            {links}
-          </div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
-        </Drawer>
-      </Hidden>
-      <Hidden smDown implementation="css">
-        <Drawer
-          anchor={props.rtlActive ? "right" : "left"}
-          variant="permanent"
-          open
-          classes={{
-            paper: classNames(classes.drawerPaper, {
-              [classes.drawerPaperRTL]: props.rtlActive
-            })
-          }}
-        >
-          {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
-        </Drawer>
-      </Hidden>
-    </div>
-  );
+        {image !== undefined ? (
+          <div
+            className={classes.background}
+            style={{ backgroundImage: "url(" + image + ")" }}
+          />
+        ) : null}
+      </Drawer>
+    </Hidden>
+    <Hidden smDown implementation="css">
+      <Drawer
+        anchor={props.rtlActive ? "right" : "left"}
+        variant="permanent"
+        open
+        classes={{
+          paper: classNames(classes.drawerPaper, {
+            [classes.drawerPaperRTL]: props.rtlActive
+          })
+        }}
+      >
+        {brand}
+        <div className={classes.sidebarWrapper}>{links}</div>
+        {image !== undefined ? (
+          <div
+            className={classes.background}
+            style={{ backgroundImage: "url(" + image + ")" }}
+          />
+        ) : null}
+      </Drawer>
+    </Hidden>
+  </div>
+);
 }
 
 Sidebar.propTypes = {

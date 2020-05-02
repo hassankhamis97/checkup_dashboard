@@ -42,8 +42,10 @@ export default class TestReview extends React.Component {
     getData = (self) => {
         debugger
         let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-        ref.child(self.state.recievedObj.id).on('value', snapshot => {
-            debugger
+        // ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
+            // ref.orderByChild("userId").equalTo(self.state.recievedObj[0][6]).on('value', snapshot => {
+                ref.child(self.state.recievedObj.id).on('value', snapshot => {
+                debugger
             var obj = snapshot.val();
             console.log(obj)
             self.setState({ data: obj });
