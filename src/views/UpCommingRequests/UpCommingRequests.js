@@ -329,7 +329,7 @@ class UpCommingRequests extends React.Component {
                   Up Comminng Patient requests
                  </p>
               </CardHeader>
-              <div  xs={12} sm={12} md={6}>>
+              <div>
                 <CustomInput 
                   type="text"
                   // value={this.state.Employee.userName}
