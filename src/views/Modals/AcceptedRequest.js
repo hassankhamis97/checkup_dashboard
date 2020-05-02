@@ -70,13 +70,14 @@ export default class AcceptedRequest extends React.Component {
     updateData = () => {
         debugger
 
-        this.state.test.status = 'Done'
-        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
+        this.state.test.status = 'PendingForTakingTheSample'
+        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
             .update({
                 'status': this.state.test.status,
                 'precastions': this.state.test.precastions,
                 'employee': this.state.test.employee,
+                'testCost': this.state.test.testCost
             })
     }
 

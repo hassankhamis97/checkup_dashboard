@@ -15,7 +15,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import GridItem from "components/Grid/GridItem.js";
 import InputLabel from "@material-ui/core/InputLabel";
 import CustomInput from "components/CustomInput/CustomInput.js";
-import {database} from '../../firebase';
+import { database } from '../../firebase';
 
 
 
@@ -145,14 +145,21 @@ export default class RefuseRequest extends React.Component {
         return <Slide direction="up" ref={ref} {...props} />;
     });
     state = {
-
-        setChecked: true,
-        precastions:'',
+        test: {
+            // setChecked: true,
+            refuseReason: '',
+            refuseCheckedObj:{
+                notAvailable: false,
+                anotherTime: false,
+                youNeedToApplyRefuseReason: false
+            }
+        }
     }
 
     handleChange = (event) => {
+        debugger
         // setChecked(event.checked);
-        this.setState({ setChecked: event })
+        // this.setState({ setChecked: event })
     };
 
     /*updateData = () => {
@@ -163,7 +170,7 @@ export default class RefuseRequest extends React.Component {
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
             .update({
                 'status': this.state.test.status,
-                'precastions': this.state.test.precastions,
+                'refuseReason': this.state.test.refuseReason,
                 'employee': this.state.test.employee,
             })
     }*/
@@ -213,9 +220,10 @@ export default class RefuseRequest extends React.Component {
 
                     <div style={this.styleTestReview.TestReviewModal} >
                         <Checkbox
-                            checked={'Not Available'}
+                            checked={this.state.test.refuseCheckedObj.notAvailable}
                             onChange={this.handleChange('Not Available')}
                             value="cryon"
+                            // id="notAvailable"
                             style={{
                                 color: "#ab47bc",
                             }}
@@ -223,6 +231,7 @@ export default class RefuseRequest extends React.Component {
                         <span style={this.styleTestReview.textStyle}> Not Available</span>
                         <br></br>
                         <Checkbox
+                            checked={this.state.test.refuseCheckedObj.anotherTime}
                             // checked={ 'Another Time'}
                             // onChange={this.handleChange(' Another Time')}
                             // value=" Another Time"
@@ -233,6 +242,8 @@ export default class RefuseRequest extends React.Component {
                         <span style={this.styleTestReview.textStyle}> Another Time</span>
                         <br></br>
                         <Checkbox
+                            checked={this.state.test.refuseCheckedObj.youNeedToApplyRefuseReason}
+
                             // checked={'you need to apply precaustion'}
                             // onChange={this.handleChange('you need to apply precaustion')}
                             // value="you need to apply precaustion"
@@ -240,7 +251,7 @@ export default class RefuseRequest extends React.Component {
                                 color: "#ab47bc",
                             }}
                         />
-                        <span style={this.styleTestReview.textStyle}> you need to apply precaustion </span>
+                        <span style={this.styleTestReview.textStyle}> you need to apply Refuse Reason </span>
                         <br></br>
                         <br></br>
 
@@ -256,14 +267,14 @@ export default class RefuseRequest extends React.Component {
                                     rows: 5
                                 }}
 
-                                value={this.state.test.precastions}
+                                value={this.state.test.refuseReason}
                                 onChange={e => {
                                     debugger
                                     this.setState({
 
                                         test: {
                                             ...this.state.test,
-                                            precastions: e.target.value
+                                            refuseReason: e.target.value
                                         }
                                     })
                                 }}

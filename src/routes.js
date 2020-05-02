@@ -27,7 +27,7 @@ import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/TableList/TableList.js";
+import TableList from "views/EmployeeProfile/TableList.js";
 import Typography from "views/TestsResult/TestsResult";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
@@ -55,9 +55,9 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/pendingsamples",
-    name: "Pending Samples",
-    rtlName: "قائمة الجدول",
+    path: "/getEmployeesInfo",
+    name: "Get Employees Info",
+    rtlName: "قائمة الموظفين",
     icon: "content_paste",
     component: TableList,
     layout: "/admin"

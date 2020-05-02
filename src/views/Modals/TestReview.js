@@ -54,6 +54,7 @@ export default class TestReview extends React.Component {
 
 
     handleRefuse = () => {
+        debugger
         //passing empty object will re-render the component
         this.setState({ refuseDialog: true })
     }

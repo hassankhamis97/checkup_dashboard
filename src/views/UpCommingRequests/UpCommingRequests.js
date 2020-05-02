@@ -20,7 +20,9 @@ import Table from "components/Table/Table.js";
 
 import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 import TestReview from '../Modals/TestReview'
-
+import Search from "@material-ui/icons/Search";
+// core components
+import CustomInput from "components/CustomInput/CustomInput.js";
 class UpCommingRequests extends React.Component {
 
   //  const classes = useStyles();
@@ -94,20 +96,8 @@ class UpCommingRequests extends React.Component {
     debugger;
     // prompt(obj)
     this.state.OBJ = obj;
-    let temp = this.state.fullDataList.filter(item => item.id != obj.id);
+    // let temp = this.state.fullDataList.filter(item => item.id != obj.id);
 
-
-    // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
-    //    gender:temp.gender,phone :temp.phone})
-
-    //    var tttt =viewObj ;
-    debugger;
-
-    this.state.transferedObj.userName = temp[0][0]
-    this.state.transferedObj.id = temp[0][7]
-    this.state.transferedObj.dateOfBirth = temp[0][8]
-    this.state.transferedObj.gender = temp[0][9]
-    this.state.transferedObj.phone = temp[0][10]
 
     //  var yyy = this.state.transferedObj.userName
     //  debugger;
@@ -117,7 +107,19 @@ class UpCommingRequests extends React.Component {
     //  this.setState({transferedObj : obj})
     // debugger; 
     if (obj.status === "PendingForLabConfirmation") {
+      let temp = this.state.fullDataList.filter(item => item[7] === obj.id)
 
+      // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
+      //    gender:temp.gender,phone :temp.phone})
+
+      //    var tttt =viewObj ;
+      debugger;
+
+      this.state.transferedObj.userName = temp[0][0]
+      this.state.transferedObj.id = temp[0][7]
+      this.state.transferedObj.dateOfBirth = temp[0][8]
+      this.state.transferedObj.gender = temp[0][9]
+      this.state.transferedObj.phone = temp[0][10]
 
       this.setState({ open: true })
 
@@ -175,11 +177,11 @@ class UpCommingRequests extends React.Component {
             ]
             // this.state.transferedObj.testName = 
 
-            var unique =   window.$name.state.dataShowList.filter((v, i, a) => a[i][0]  === reqObj[0])
-            if ( unique.length==0) {     
-                   window.$name.state.dataShowList.push(reqObj)
-          }  
-              
+            var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
+            if (unique.length == 0) {
+              window.$name.state.dataShowList.push(reqObj)
+            }
+
 
             this.state.fullDataList.push(fullObj);
             console.log(reqObj)
@@ -226,14 +228,14 @@ class UpCommingRequests extends React.Component {
 
                 console.log(reqObj)
 
-         
-                
- var unique =   window.$name.state.dataShowList.filter((v, i, a) => a[i][0]  === reqObj[0])
-               if ( unique.length==0) {     
-                      window.$name.state.dataShowList.push(reqObj)
-             }  
-                 
-                
+
+
+                var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
+                if (unique.length == 0) {
+                  window.$name.state.dataShowList.push(reqObj)
+                }
+
+
                 window.$name.forceUpdate()
               });
             // keys.push(itemVal);
@@ -327,6 +329,33 @@ class UpCommingRequests extends React.Component {
                   Up Comminng Patient requests
                  </p>
               </CardHeader>
+              <div  xs={12} sm={12} md={6}>>
+                <CustomInput 
+                  type="text"
+                  // value={this.state.Employee.userName}
+                  onChange={e => {
+                    // this.setState({
+                    //   Employee: {
+                    //     ...this.state.Employee,
+                    //     userName: e.target.value
+                    //   }
+                    // })
+                  }}
+                  labelText="Search"
+                  id="wearch"
+                  formControlProps={{
+                    fullWidth: false
+                  }}
+                />
+                {/* <CustomInput
+
+                  style={{ color: 'white' }}
+                  
+                /> */}
+                <Button color="white" aria-label="edit" justIcon round>
+                  <Search />
+                </Button>
+              </div>
               <CardBody>
                 <Table
                   tableHeaderColor="primary"
