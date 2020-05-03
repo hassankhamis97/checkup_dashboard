@@ -18,162 +18,61 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import { database } from '../../firebase';
 
 
-
-/*const useStyles = makeStyles((theme) => ({
-    appBar: {
-        position: 'relative',
-    },
-    title: {
-        marginLeft: theme.spacing(2),
-        flex: 1,
-        backgroundColor:'#ab47bc'
-    },
-}));
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-export default function RefuseRequest(props) {
-    const classes = useStyles();
-
-    const [checked, setChecked] = React.useState(true);
-
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
-
-    const styleTestReview = {
-        TestReviewModal: {
-            // backgroundColor: "#111946",
-            width: '100%',
-            height: '100%',
-        },
-        textStyle: {
-            fontSize: '17px',
-            color: 'black',
-            margin: '10px',
-        },
-        btnAction: {
-            margin: '0 auto',
-            width: '150px',
-            marginLeft: '80px'
-        },
-        checkboxStyle: {
-            borderColor: 'black',
-        },
-        appBar: {
-            position: 'relative',
-            backgroundColor: '#ab47bc'
-        },
-    }
-// debugger;
-    return (
-        <div>
-            <Dialog fullScreen open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
-                <AppBar style={styleTestReview.appBar} >
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={props.handleClose} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography variant="h6" className={classes.title}>
-                            Refused Request
-                    </Typography>
-
-                        <Button autoFocus color="inherit" style={styleTestReview.btnAction} onClick={props.handleClose}>
-                            Done
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-
-                <div style={styleTestReview.TestReviewModal} >
-                    <Checkbox
-                        // checked={cryon}
-                        // onChange={this.handleChange('cryon')}
-                        // value="cryon"
-                        style={{
-                            color: "#ab47bc",
-                        }}
-                    />
-                    <span style={styleTestReview.textStyle}> Not Available</span>
-                    <br></br>
-                    <Checkbox
-                        // checked={cryon}
-                        // onChange={this.handleChange('cryon')}
-                        // value="cryon"
-                        style={{
-                            color: "#ab47bc",
-                        }}
-                    />
-                    <span style={styleTestReview.textStyle}> Another Time</span>
-                    <br></br>
-                    <Checkbox
-                        // checked={cryon}
-                        // onChange={this.handleChange('cryon')}
-                        // value="cryon"
-                        style={{
-                            color: "#ab47bc",
-                        }}
-                    />
-                    <span style={styleTestReview.textStyle}> you need to apply precaustion </span>
-                    <br></br>
-                    <br></br>
-
-                    <GridItem xs={12} sm={12} md={4}>
-                        <CustomInput
-                            labelText="Refuse Reson"
-                            id="about-me"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                multiline: true,
-                                rows: 5
-                            }}
-                        />
-                    </GridItem>
-                </div>
-            </Dialog>
-        </div>
-    );
-}
-*/
-
 export default class RefuseRequest extends React.Component {
 
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
     state = {
-        test: {
-            // setChecked: true,
+        refuse: {
             refuseReason: '',
-            refuseCheckedObj:{
-                notAvailable: false,
-                anotherTime: false,
-                youNeedToApplyRefuseReason: false
-            }
+            state: '',
+            notAvailableTxt: '',
+            anotherTimeTxt: '',
+            youNeedToApplyInstructionTxt: '',
+
+            checked: false,
+
         }
     }
 
+    myRefusion = ''//this.state.notAvailableTxt + '\n' + this.state.anotherTimeTxt + '\n' + this.youNeedToApplyInstructionTxt
+    refusesElement = ''
     handleChange = (event) => {
         debugger
-        // setChecked(event.checked);
-        // this.setState({ setChecked: event })
+        this.setState({ checked: event.target.checked });
+        if (event.target.checked === true) {
+
+            this.myRefusion += event.target.value + "\n"
+        }
+
+        var ar = this.myRefusion.split('\n')
+        
+        const namesArr = ar.filter(function(elem, pos) {
+            return ar.indexOf(elem) == pos;
+        }); 
+        this.refusesElement = namesArr.toString()
     };
 
-    /*updateData = () => {
+    updateData = () => {
         debugger
-
-        this.state.test.status = 'Done'
-        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
+        this.state.refuse.status = 'Refused'
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
             .update({
-                'status': this.state.test.status,
-                'refuseReason': this.state.test.refuseReason,
-                'employee': this.state.test.employee,
+                'status': this.state.refuse.status,
+                'refuseReason': this.state.refuse.refuseReason+ "\n" + this.refusesElement,
             })
-    }*/
+    }
+
+    validate = () => {
+        // if (this.state.refuse.youNeedToApplyInstructionTxt !== '' && this.state.refuse.notAvailableTxt !== '' && this.state.refuse.anotherTimeTxt !== '' && this.state.refuse.refuseReason !== '') {
+        if (this.state.refuse.refuseReason.length > 0) {
+            this.updateData()
+        } else {
+            alert('No Valid')
+        }
+
+    }
 
     styleTestReview = {
         TestReviewModal: {
@@ -208,11 +107,11 @@ export default class RefuseRequest extends React.Component {
                             <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
                                 <CloseIcon />
                             </IconButton>
-                            <Typography variant="h6"/* className={classes.title}*/>
+                            <Typography variant="h6">
                                 Refused Request
                         </Typography>
 
-                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} onClick={this.props.handleClose}>
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} onClick={this.props.handleClose, this.validate.bind(this)}>
                                 Done
                             </Button>
                         </Toolbar>
@@ -220,10 +119,12 @@ export default class RefuseRequest extends React.Component {
 
                     <div style={this.styleTestReview.TestReviewModal} >
                         <Checkbox
-                            checked={this.state.test.refuseCheckedObj.notAvailable}
-                            onChange={this.handleChange('Not Available')}
-                            value="cryon"
-                            // id="notAvailable"
+                            id="refuse"
+                            checked={
+                                this.state.checked
+                            }
+                            onChange={this.handleChange}
+                            value="Not Available"
                             style={{
                                 color: "#ab47bc",
                             }}
@@ -231,10 +132,13 @@ export default class RefuseRequest extends React.Component {
                         <span style={this.styleTestReview.textStyle}> Not Available</span>
                         <br></br>
                         <Checkbox
-                            checked={this.state.test.refuseCheckedObj.anotherTime}
-                            // checked={ 'Another Time'}
-                            // onChange={this.handleChange(' Another Time')}
-                            // value=" Another Time"
+                            id="refuse"
+                            checked={
+                                this.state.checked
+                            }
+                            onChange={this.handleChange}
+
+                            value=" Another Time"
                             style={{
                                 color: "#ab47bc",
                             }}
@@ -242,22 +146,24 @@ export default class RefuseRequest extends React.Component {
                         <span style={this.styleTestReview.textStyle}> Another Time</span>
                         <br></br>
                         <Checkbox
-                            checked={this.state.test.refuseCheckedObj.youNeedToApplyRefuseReason}
+                            id="refuse"
+                            checked={
+                                this.state.checked
+                            }
+                            onChange={this.handleChange}
 
-                            // checked={'you need to apply precaustion'}
-                            // onChange={this.handleChange('you need to apply precaustion')}
-                            // value="you need to apply precaustion"
+                            value="you need to apply instruction"
                             style={{
                                 color: "#ab47bc",
                             }}
                         />
-                        <span style={this.styleTestReview.textStyle}> you need to apply Refuse Reason </span>
+                        <span style={this.styleTestReview.textStyle}> you need to apply instruction </span>
                         <br></br>
                         <br></br>
 
                         <GridItem xs={12} sm={12} md={4}>
                             <CustomInput
-                                labelText="Refuse Reson"
+                                labelText="Refuse Reason"
                                 id="about-me"
                                 formControlProps={{
                                     fullWidth: true
@@ -267,14 +173,14 @@ export default class RefuseRequest extends React.Component {
                                     rows: 5
                                 }}
 
-                                value={this.state.test.refuseReason}
+                                value={this.state.refuse.refuseReason}
                                 onChange={e => {
                                     debugger
                                     this.setState({
 
-                                        test: {
-                                            ...this.state.test,
-                                            refuseReason: e.target.value
+                                        refuse: {
+                                            ...this.state.refuse,
+                                            refuseReason: e.target.value //+ refuseValue
                                         }
                                     })
                                 }}
