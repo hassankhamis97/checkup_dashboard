@@ -14,7 +14,9 @@ import firebase from 'firebase';
 import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 import SendResult from "views/Modals/SendResult/SendResult.js";
 
-
+import Search from "@material-ui/icons/Search";
+// core components
+import CustomInput from "components/CustomInput/CustomInput.js";
 
 const styles = {
     cardCategoryWhite: {
@@ -54,10 +56,11 @@ class MainTestResults extends React.Component {
     constructor(props) {
 
         super(props);
-
+        window.self = this
         this.state = {
+            
             openAlert: false,
-
+            searchResult :[],
             dataShowList: [],
             requests: [],
             tableBodyData: '',
@@ -146,6 +149,7 @@ class MainTestResults extends React.Component {
 
 
             }.bind(this));
+            window.self.state.searchResult =  this.state.dataShowList ;
 
         });
 
@@ -199,6 +203,36 @@ class MainTestResults extends React.Component {
 
 
 
+////************************   Search    ***************************** */
+ 
+handleSearch(te){
+    console.log(te.target.value)
+ var text = te ;
+    var searchText = te.target.value
+ debugger ;
+ 
+    var search =window.self.state.searchResult
+    window.self.state.dataShowList= []
+  for (const iterator of search) {
+   debugger ;
+     console.log(iterator[1])
+     if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
+     window.self.state.dataShowList.push(iterator)
+   }
+  
+ 
+   debugger ;
+ if( window.self.state.dataShowList.length<=0 &&  text.length >0){
+   debugger ;
+  prompt("no data found")   
+   }else if (te == "")
+   {
+    window.self.state.dataShowList = window.self.state.searchResult
+   } 
+   window.self.forceUpdate()
+ 
+ 
+ }
 
 
 
@@ -223,6 +257,42 @@ class MainTestResults extends React.Component {
                                     Shoo  The Pending  Resluts
                                 </p>
                             </CardHeader>
+                                
+                                <CardBody>
+                                <div>
+
+
+                                    
+                <CustomInput 
+                  type="text"
+                  // value={this.state.Employee.userName}
+                  onChange={
+                     this.handleSearch
+                    // this.setState({
+                    //   Employee: {
+                    //     ...this.state.Employee,
+                    //     userName: e.target.value
+                    //   }
+                    // })
+                  }
+                  labelText="Search"
+                  id="wearch"
+                  formControlProps={{
+                    fullWidth: false
+                  }}
+                />
+                {/* <CustomInput
+
+                  style={{ color: 'white' }}
+                  
+                /> */}
+                <Button color="white" aria-label="edit" justIcon round>
+                  <Search />
+                </Button>
+              </div>
+                                </CardBody>
+
+
                             <CardBody>
                                 <Table
                                     tableHeaderColor="primary"

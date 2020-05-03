@@ -41,6 +41,7 @@ class UpCommingRequests extends React.Component {
     //        'imgUrl': 'https://www.bipmedia.com/uploads/media/2015/05/Samantha-Ruthford_avatar.jpg' ,
     //        'address' : 'Alex/smoha'
     //       })
+    this.handleSearch = this .handleSearch.bind(this) ;
     this.getResquests = this.getResquests.bind(this)
     this.handleStatus = this.handleStatus.bind(this)
     this.handleAlertOpen = this.handleAlertOpen.bind(this)
@@ -55,7 +56,7 @@ class UpCommingRequests extends React.Component {
       requests: [],
       tableBodyData: '',
       sampleStatus: '',
-
+      searchResult:[],
       sendObj: [],
       transferedObj: {
         userName: '',
@@ -141,6 +142,7 @@ class UpCommingRequests extends React.Component {
   debugger;
 
   getResquests = () => {
+
 
     debugger;
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
@@ -251,7 +253,7 @@ class UpCommingRequests extends React.Component {
         //    this.forceUpdate()
 
         this.state.isNew = true;
-
+        this.state.searchResult =  window.$name.state.dataShowList ;
         // var unique =   window.$name.state.dataShowList.filter((v, i, a) => a.indexOf(v) === i); 
         console.log("dddddddd")
       });
@@ -262,7 +264,7 @@ class UpCommingRequests extends React.Component {
     });
 
 
-
+   
     this.state.isNew = true;
     console.log('DATA RETRIEVED');
   }
@@ -307,7 +309,32 @@ class UpCommingRequests extends React.Component {
   };
 
 
+////************************   Search    ***************************** */
+ 
+ handleSearch(te){
+   console.log(te.target.value)
+   var searchText = te.target.value
+debugger ;
 
+   var search =window.$name.state.searchResult
+    window.$name.state.dataShowList= []
+ for (const iterator of search) {
+  debugger ;
+    console.log(iterator[1])
+    if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
+    window.$name.state.dataShowList.push(iterator)
+  }
+  
+
+  debugger ;
+if( window.$name.state.dataShowList.length<=0){
+  debugger ;
+  window.$name.state.dataShowList = window.$name.state.searchResult
+  }
+  this.forceUpdate()
+
+
+}
 
   render() {
     debugger;
@@ -329,18 +356,19 @@ class UpCommingRequests extends React.Component {
                   Up Comminng Patient requests
                  </p>
               </CardHeader>
-              <div>
-                <CustomInput 
+              <div style={{textAlign : "center"}}> 
+                <CustomInput  
                   type="text"
                   // value={this.state.Employee.userName}
-                  onChange={e => {
+                  onChange={
+                     this.handleSearch
                     // this.setState({
                     //   Employee: {
                     //     ...this.state.Employee,
                     //     userName: e.target.value
                     //   }
                     // })
-                  }}
+                  }
                   labelText="Search"
                   id="wearch"
                   formControlProps={{
