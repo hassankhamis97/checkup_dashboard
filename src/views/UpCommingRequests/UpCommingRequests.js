@@ -47,6 +47,7 @@ class UpCommingRequests extends React.Component {
     this.handleAlertOpen = this.handleAlertOpen.bind(this)
     this.state = {
       isNew: true,
+      isVisable:'hidden',
       resID: '',
       OBJ: '',
       open: false,
@@ -312,6 +313,7 @@ class UpCommingRequests extends React.Component {
 ////************************   Search    ***************************** */
  
  handleSearch(te){
+  window.$name.state.isVisable='hidden'
    console.log(te.target.value)
    var searchText = te.target.value
 debugger ;
@@ -327,9 +329,13 @@ debugger ;
   
 
   debugger ;
-if( window.$name.state.dataShowList.length<=0){
+if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
   debugger ;
   window.$name.state.dataShowList = window.$name.state.searchResult
+  window.$name.state.isVisable='hidden'
+  }else if( window.$name.state.dataShowList.length<=0 && searchText.length>0){
+    console.log("dsffdddddddddddddddddddd")
+    window.$name.state.isVisable='visible'
   }
   this.forceUpdate()
 
@@ -397,6 +403,7 @@ if( window.$name.state.dataShowList.length<=0){
               </CardBody>
             </Card>
           </GridItem>
+          <GridItem >  <h1 style={{textAlign : "center" , visibility: window.$name.state.isVisable}}> There  Is  No  Data  Found   Tri   Again </h1></GridItem> 
 
         </GridContainer>
       </div>

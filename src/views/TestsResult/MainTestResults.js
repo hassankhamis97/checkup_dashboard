@@ -14,6 +14,7 @@ import firebase from 'firebase';
 import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 import SendResult from "views/Modals/SendResult/SendResult.js";
 
+
 import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
@@ -58,7 +59,7 @@ class MainTestResults extends React.Component {
         super(props);
         window.self = this
         this.state = {
-            
+            isVisable : 'hidden',
             openAlert: false,
             searchResult :[],
             dataShowList: [],
@@ -207,7 +208,8 @@ class MainTestResults extends React.Component {
  
 handleSearch(te){
     console.log(te.target.value)
- var text = te ;
+    window.self.state.isVisable='hidden'
+
     var searchText = te.target.value
  debugger ;
  
@@ -219,17 +221,22 @@ handleSearch(te){
      if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
      window.self.state.dataShowList.push(iterator)
    }
-  
+   
  
+
    debugger ;
- if( window.self.state.dataShowList.length<=0 &&  text.length >0){
-   debugger ;
-  prompt("no data found")   
-   }else if (te == "")
-   {
-    window.self.state.dataShowList = window.self.state.searchResult
-   } 
-   window.self.forceUpdate()
+   if(  window.self.state.dataShowList.length<=0 && searchText.length<=0){
+     debugger ;
+     window.self.state.isVisable='hidden'
+
+     window.self.state.dataShowList =  window.self.state.searchResult
+     }else if(  window.self.state.dataShowList.length<=0 && searchText.length>0){
+       console.log("dsffdddddddddddddddddddd")
+       window.self.state.isVisable='visible'
+
+     }
+     window.self.forceUpdate()
+   
  
  
  }
@@ -301,10 +308,13 @@ handleSearch(te){
                                     tableData={this.state.dataShowList.length === 0 ? [] : this.state.dataShowList}
                                 
                                 />
+                              
                             </CardBody>
+                            
+                           
                         </Card>
                     </GridItem>
-
+                    <GridItem >  <h1 style={{textAlign : "center" , visibility: window.self.state.isVisable}}> There  Is  No  Data  Found   Tri   Again </h1></GridItem> 
                 </GridContainer>
             </div>
 
