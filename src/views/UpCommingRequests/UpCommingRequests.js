@@ -54,6 +54,7 @@ class UpCommingRequests extends React.Component {
       openAlert: false,
       dataShowList: [],
       fullDataList: [],
+      temp :[],
       requests: [],
       tableBodyData: '',
       sampleStatus: '',
@@ -68,7 +69,6 @@ class UpCommingRequests extends React.Component {
       },
 
     }
-
 
   }
 
@@ -315,18 +315,51 @@ class UpCommingRequests extends React.Component {
  handleSearch(te){
   window.$name.state.isVisable='hidden'
    console.log(te.target.value)
-   var searchText = te.target.value
+  //  var searchText = te.target.value
+   var searchText = (te.target.value).toLowerCase();
 debugger ;
+var search  =  window.$name.state.searchResult
 
-   var search =window.$name.state.searchResult
-    window.$name.state.dataShowList= []
- for (const iterator of search) {
-  debugger ;
-    console.log(iterator[1])
-    if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
-    window.$name.state.dataShowList.push(iterator)
-  }
+
+// let filteredcontacts = this.props.contacts.filter(contact => {
+//   return contact.name.toLocaleLowerCase().indexOf(this.state.search) !== -1;
+// });
+
+
+
+   window.$name.state.temp= []
+   window.$name.state.dataShowList= []
+   ////************ Search with  Name    */
+if(search.length>0){ 
+
+  window.$name.state.temp  =  this.state.searchResult.filter(item =>{
+     return (item[1]).toLocaleLowerCase().startsWith(searchText)
+  });
+
+ }
+ window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
+
+       ////************ Search with  Code    */
+
+ if(search.length>0){ 
+
+  window.$name.state.temp  =  this.state.searchResult.filter(item =>{
+     return (item[0]).toLocaleLowerCase().startsWith(searchText)
+  });
+
+ }
+ window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
+
+ 
+//    return (item[1]).toLocaleLowerCase().includes(searchText)
+//  for (const iterator of search) {
+//   debugger ;
+//     console.log(iterator[1])
+//     if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
+//     window.$name.state.dataShowList.push(iterator)
+//   }
   
+ 
 
   debugger ;
 if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
@@ -403,7 +436,7 @@ if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
               </CardBody>
             </Card>
           </GridItem>
-          <GridItem >  <h1 style={{textAlign : "center" , visibility: window.$name.state.isVisable}}> There  Is  No  Data  Found   Tri   Again </h1></GridItem> 
+          <GridItem >  <h4 style={{textAlign : "center" , visibility: window.$name.state.isVisable , color:"purple"}}> There  Is  No  Data  Found   Tri   Again </h4></GridItem> 
 
         </GridContainer>
       </div>

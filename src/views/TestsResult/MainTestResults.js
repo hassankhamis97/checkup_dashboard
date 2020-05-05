@@ -63,6 +63,7 @@ class MainTestResults extends React.Component {
             openAlert: false,
             searchResult :[],
             dataShowList: [],
+            temp : [] ,
             requests: [],
             tableBodyData: '',
             sampleStatus: '',
@@ -210,17 +211,50 @@ handleSearch(te){
     console.log(te.target.value)
     window.self.state.isVisable='hidden'
 
-    var searchText = te.target.value
+    // var searchText = te.target.value
  debugger ;
  
-    var search =window.self.state.searchResult
-    window.self.state.dataShowList= []
-  for (const iterator of search) {
-   debugger ;
-     console.log(iterator[1])
-     if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
-     window.self.state.dataShowList.push(iterator)
-   }
+ var searchText = (te.target.value).toLowerCase();
+debugger ;
+var search  = window.self.state.searchResult
+
+
+// let filteredcontacts = this.props.contacts.filter(contact => {
+//   return contact.name.toLocaleLowerCase().indexOf(this.state.search) !== -1;
+// });
+
+
+
+window.self.state.temp= []
+window.self.state.dataShowList= []
+   ////************ Search with  Name    */
+if(search.length>0){ 
+
+    window.self.state.temp  =  window.self.state.searchResult.filter(item =>{
+     return (item[1]).toLocaleLowerCase().startsWith(searchText)
+  });
+
+ }
+ window.self.state.temp.forEach(item => window.self.state.dataShowList.push(item))
+
+       ////************ Search with  Code    */
+
+ if(search.length>0){ 
+
+    window.self.state.temp  =  window.self.state.searchResult.filter(item =>{
+     return (item[0]).toLocaleLowerCase().startsWith(searchText)
+  });
+
+ }
+ window.self.state.temp.forEach(item =>window.self.state.dataShowList.push(item))
+
+
+//   for (const iterator of search) {
+//    debugger ;
+//      console.log(iterator[1])
+//      if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
+//      window.self.state.dataShowList.push(iterator)
+//    }
    
  
 
@@ -314,7 +348,7 @@ handleSearch(te){
                            
                         </Card>
                     </GridItem>
-                    <GridItem >  <h1 style={{textAlign : "center" , visibility: window.self.state.isVisable}}> There  Is  No  Data  Found   Tri   Again </h1></GridItem> 
+                  <GridItem > <h4 style={{textAlign : "center" , visibility: window.self.state.isVisable , color : "purple"}}> There  Is  No  Data  Found   Tri   Again </h4>  </GridItem> 
                 </GridContainer>
             </div>
 
