@@ -6,7 +6,7 @@ export default class Authentication {
     static loggedUser = "wait";
     static currentUserImage = ''
     constructor() {
-        debugger
+        
         Authentication.loggedUser = firebase.auth().currentUser == null ? "wait" : firebase.auth().currentUser
         // firebase.auth().signOut().then(function() {
         //     Authentication.userId = firebase.auth().currentUser
@@ -17,7 +17,7 @@ export default class Authentication {
           
     }
     checkUser(email, password,errorBack) {
-        debugger
+        
         const auth = firebase.auth()
         auth.signInWithEmailAndPassword(email, password)
             .then(function (response) {
@@ -52,7 +52,7 @@ export default class Authentication {
                 // console.log(firebase.auth().currentUser)
                 Authentication.loggedUser = user
                 if(response){
-                    debugger
+                    
                     // firebase.auth().verifyIdToken(user.uid).then((claims) => {
                     //     if (claims.admin === true) {
                     //         
@@ -80,7 +80,7 @@ export default class Authentication {
           });
     }
     getImage (self,image,respose) {
-        debugger
+        
         storage.ref().child(image).getDownloadURL().then((url) => {
             respose(url,self)
             Authentication.currentUserImage = url

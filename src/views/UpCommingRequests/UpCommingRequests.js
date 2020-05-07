@@ -31,7 +31,7 @@ class UpCommingRequests extends React.Component {
 
 
 
-    // debugger;
+    // ;
     super(props);
     window.$name = this //global variable
     // let userRef =  firebase.database().ref('Users');
@@ -72,7 +72,7 @@ class UpCommingRequests extends React.Component {
 
 
   componentDidMount() {
-    // debugger
+    // 
     this.getResquests();
   }
 
@@ -90,22 +90,22 @@ class UpCommingRequests extends React.Component {
 
 
   ///****************   Changing Sample status ********************/
-  debugger;
+  ;
 
   handleStatus(obj) {
-    debugger;
+    ;
     // prompt(obj)
     this.state.OBJ = obj;
     // let temp = this.state.fullDataList.filter(item => item.id != obj.id);
 
 
     //  var yyy = this.state.transferedObj.userName
-    //  debugger;
+    //  ;
 
     // var id = obj.id;
     this.setState({ resID: obj.id })
     //  this.setState({transferedObj : obj})
-    // debugger; 
+    // ; 
     if (obj.status === "PendingForLabConfirmation") {
       let temp = this.state.fullDataList.filter(item => item[7] === obj.id)
 
@@ -113,7 +113,7 @@ class UpCommingRequests extends React.Component {
       //    gender:temp.gender,phone :temp.phone})
 
       //    var tttt =viewObj ;
-      debugger;
+      ;
 
       this.state.transferedObj.userName = temp[0][0]
       this.state.transferedObj.id = temp[0][7]
@@ -124,7 +124,7 @@ class UpCommingRequests extends React.Component {
       this.setState({ open: true })
 
     } else {
-      debugger;
+      ;
       this.setState({ openAlert: true })
 
     }
@@ -138,32 +138,32 @@ class UpCommingRequests extends React.Component {
 
 
 
-  debugger;
+  ;
 
   getResquests = () => {
 
-    debugger;
+    ;
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
     ref.orderByChild("status").equalTo("PendingForLabConfirmation").on('value', snapshot => {
       this.state.dataShowList = []
 
       snapshot.forEach(function (item) {
-        debugger;
+        ;
         var obj = item.val();
         console.log(obj)
         let user;
         // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
         firebase.database().ref('/').child('Users').child(obj.userId)
           .on("value", snap => {
-            debugger;
+            ;
             user = snap.val();
             console.log(user)
             // this.setState({ sampleStatus: obj.status });
 
             this.state.sampleStatus = obj.status === "PendingForLabConfirmation" ? "View Request" : "";
 
-            debugger
+            
             var reqObj = [obj.id, user.name, obj.date, obj.time, obj.isFromHome, obj.testName,
 
             obj.status, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
@@ -196,14 +196,14 @@ class UpCommingRequests extends React.Component {
 
 
       //  this.state.dataShowList = []
-      debugger
+      
 
       ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
-        debugger;
+        ;
         // this.forceUpdate();
 
 
-        debugger;
+        ;
         if (window.$name.state.isNew) {
           snapshot.forEach(function (item) {
 
@@ -213,7 +213,7 @@ class UpCommingRequests extends React.Component {
             // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
             firebase.database().ref('/').child('Users').child(obj.userId)
               .on("value", snap => {
-                debugger;
+                ;
                 user = snap.val();
                 console.log(user)
                 this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Done" : "";
@@ -285,7 +285,7 @@ class UpCommingRequests extends React.Component {
 
   handleAlertOpen = () => {
 
-    debugger
+    
 
     //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
     this.state.isNew = false
@@ -310,7 +310,7 @@ class UpCommingRequests extends React.Component {
 
 
   render() {
-    debugger;
+    ;
 
     return (
       <div>

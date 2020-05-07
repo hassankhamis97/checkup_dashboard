@@ -32,9 +32,9 @@ import EntryPoint from "views/Login/EntryPoint";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const hist = createBrowserHistory();
-debugger
+
 // window.addEventListener("beforeunload", (ev) => {
-//   debugger
+//   
 //   localStorage.openpages = Date.now();
 //   var onLocalStorageEvent = function(e){
 //       if(e.key == "openpages"){

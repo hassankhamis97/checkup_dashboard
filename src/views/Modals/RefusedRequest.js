@@ -67,7 +67,7 @@ export default function RefuseRequest(props) {
             backgroundColor: '#ab47bc'
         },
     }
-// debugger;
+// ;
     return (
         <div>
             <Dialog fullScreen open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
@@ -157,13 +157,13 @@ export default class RefuseRequest extends React.Component {
     }
 
     handleChange = (event) => {
-        debugger
+        
         // setChecked(event.checked);
         // this.setState({ setChecked: event })
     };
 
     /*updateData = () => {
-        debugger
+        
 
         this.state.refuse.status = 'Done'
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
@@ -269,7 +269,7 @@ export default class RefuseRequest extends React.Component {
 
                                 value={this.state.refuse.refuseReason}
                                 onChange={e => {
-                                    debugger
+                                    
                                     this.setState({
 
                                         test: {

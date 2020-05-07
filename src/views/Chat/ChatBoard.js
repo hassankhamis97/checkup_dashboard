@@ -11,7 +11,7 @@ import Authentication from 'Authentication';
 
 export default class ChatBoard extends Component {
     constructor(props) {
-        debugger
+        
         super(props)
         this.state = {
             isLoading: false,
@@ -62,26 +62,26 @@ export default class ChatBoard extends Component {
     }
 
     getListHistory = () => {
-        debugger
+        
         if (this.removeListener) {
             this.removeListener()
         }
         this.listMessage.length = 0
         this.setState({ isLoading: true })
-        debugger
+        
         if (
             this.hashString(this.currentUserId) <=
             this.hashString(this.currentPeerUser.id)
         ) {
-            debugger
+            
             this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`
         } else {
-            debugger
+            
             this.groupChatId = `${this.currentPeerUser.id}-${this.currentUserId}`
         }
 
         // Get history and listen new data added
-        debugger
+        
         this.removeListener = firestore
             .collection(AppString.NODE_MESSAGES)
             .doc(this.groupChatId)
@@ -106,7 +106,7 @@ export default class ChatBoard extends Component {
     }
 
     onSendMessage = async (content, type,self) => {
-        debugger
+        
         if (self.state.isShowSticker && type === 2) {
             self.setState({ isShowSticker: false })
         }
@@ -126,7 +126,7 @@ export default class ChatBoard extends Component {
             content: content.trim(),
             type: type
         }
-        debugger
+        
         firestore
             .collection(AppString.NODE_MESSAGES)
             .doc(self.groupChatId)
@@ -148,7 +148,7 @@ export default class ChatBoard extends Component {
             }
         }
         else{
-            debugger;
+            ;
              
             var pearObj = await firestore.collection(AppString.NODE_USERCHAT).doc(self.currentPeerUser.id).collection(self.currentPeerUser.id).doc(Authentication.loggedUser.uid).get()
             var noOfRM = pearObj.data().noOfUnReadMessage
@@ -193,7 +193,7 @@ export default class ChatBoard extends Component {
     }
 
     onChoosePhoto = event => {
-        debugger
+        
         if (event.target.files && event.target.files[0]) {
             this.setState({ isLoading: true })
             this.currentPhotoFile = event.target.files[0]
@@ -211,7 +211,7 @@ export default class ChatBoard extends Component {
     }
 
     uploadPhoto = () => {
-        debugger
+        
         if (this.currentPhotoFile) {
             const timestamp = moment()
                 .valueOf()
@@ -341,7 +341,7 @@ export default class ChatBoard extends Component {
     }
 
     renderListMessage = () => {
-        debugger
+        
         if (this.listMessage.length > 0) {
             let viewListMessage = []
             this.listMessage.forEach((item, index) => {
@@ -577,7 +577,7 @@ export default class ChatBoard extends Component {
     }
 
     isLastMessageRight(index) {
-        debugger
+        
         if (
             (index + 1 < this.listMessage.length &&
                 this.listMessage[index + 1].idFrom !== this.currentUserId) ||

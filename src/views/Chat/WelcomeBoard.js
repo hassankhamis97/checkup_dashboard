@@ -5,7 +5,7 @@ import Authentication from 'Authentication'
 
 export default class WelcomeBoard extends Component {
     render() {
-        debugger
+        
         return (
             <div className="viewWelcomeBoard">
         <span className="textTitleWelcome">{`Welcome, ${

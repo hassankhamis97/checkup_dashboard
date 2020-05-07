@@ -63,7 +63,7 @@ const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
   // styles
-  debugger
+  
   
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
@@ -115,7 +115,7 @@ export default function Admin({ ...rest }) {
         suppressScrollX: true,
         suppressScrollY: false
       });
-      //   debugger
+      //   
 
       if (getRoute()) {
         document.body.style.overflow = "hidden";

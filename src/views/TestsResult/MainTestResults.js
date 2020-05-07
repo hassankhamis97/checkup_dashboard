@@ -71,7 +71,7 @@ class MainTestResults extends React.Component {
 
 
     componentDidMount() {
-        // debugger
+        // 
 
         this.getResquests();
     }
@@ -87,7 +87,7 @@ class MainTestResults extends React.Component {
     }
 
 
-    debugger;
+    ;
 
     handleStatus(obj) {
 
@@ -114,26 +114,26 @@ class MainTestResults extends React.Component {
 
     getResquests = () => {
 
-        // debugger;
+        // ;
         let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
         ref.orderByChild("status").equalTo("PendingForResult").on('value', snapshot => {
             this.state.dataShowList = []
 
             snapshot.forEach(function (item) {
-                debugger;
+                ;
                 var obj = item.val();
                 console.log(obj)
                 let user;
                 firebase.database().ref('/').child('Users').child(obj.userId)
                     .on("value", snap => {
-                        debugger;
+                        ;
                         user = snap.val();
                         console.log(user)
 
                         this.state.sampleStatus = obj.status;
 
-                        debugger
+                        
                         var reqObj = [obj.id ,user.name, obj.date, obj.time, obj.isFromHome, obj.testName,
                         <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
                         ]
@@ -173,7 +173,7 @@ class MainTestResults extends React.Component {
         // setOpen(false);
         // this.state.open = false
         // this.setState({ openAlert: true })
-        debugger
+        
         //  prompt("ffsfsfsfsf")
         this.setState({ openAlert: true })
 
@@ -205,7 +205,7 @@ class MainTestResults extends React.Component {
 
 
     render() {
-        debugger;
+        ;
 
         return (
             <div>

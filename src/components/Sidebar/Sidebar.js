@@ -27,13 +27,13 @@ const [noUnReadTotalMessages,setUnReadTotalMessages] = React.useState(0)
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
-  debugger
+  
   if(noUnReadTotalMessages == 0){
     var chatOperations = new ChatOperations()
     chatOperations.getUnReadTotalMessages((number)=>{setUnReadTotalMessages(number)})
   }
   // function getTotalNoOfUnReadMessgages() {
-  //   debugger
+  //   
    
   // }
   const { color, logo, image, logoText, routes } = props;

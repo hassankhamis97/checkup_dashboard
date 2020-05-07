@@ -31,7 +31,7 @@ export default class ChatList extends Component {
         // chatOperations.getUnReadMessagesForSpecificPearedPerson( ,(number) => { this.setState({noUnReadTotalMessages: number}) })
     }
     // componentWillUnmount() {
-    //     debugger
+    //     
     //     var senderChatStatus = {
     //         currentViewedPerson: ""
     //     }
@@ -53,7 +53,7 @@ export default class ChatList extends Component {
         this.getListUser(this)
     }
     getListUser = (self) => {
-        debugger
+        
         // const result = await firestore.collection(AppString.NODE_USERS).orderBy('nickname').startAfter(self.listUser.length > 0 ? self.listUser[self.listUser.length-1] : 0).limit(2).get()
         // if (result.docs.length > 0) {
         //     self.skip += result.docs.length
@@ -66,10 +66,10 @@ export default class ChatList extends Component {
                 self.state.noUnReadTotalMessagesList = []
                 self.listUser = []
                 for (let i = 0; i < chatUserResult.docs.length; i++) {
-                    debugger
+                    
                     self.state.noUnReadTotalMessagesList.push(chatUserResult.docs[i].data().noOfUnReadMessage)
                     const result = firestore.collection(AppString.NODE_USERS).doc(chatUserResult.docs[i].id).get().then(result => {
-                        debugger
+                        
                         console.log(result.docs)
                         self.listUser.push(result)
                         self.forceUpdate()
@@ -85,7 +85,7 @@ export default class ChatList extends Component {
 
                 // self.setState({ isLoading: false })
                 // if (result.docs.length > 0) {
-                //     debugger
+                //     
                 //     console.log(result)
                 //     // self.skip += result.docs.length
                 //     // // self.listUser = [...result.docs]
@@ -105,7 +105,7 @@ export default class ChatList extends Component {
     handleScroll = (e) => {
         const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
         if (bottom) {
-            debugger
+            
             this.getListUser(this)
         }
     }
