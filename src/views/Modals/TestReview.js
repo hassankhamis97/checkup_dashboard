@@ -130,9 +130,9 @@ export default class TestReview extends React.Component {
         return (
             <div style={this.styleTestReview.TestReviewModal}>
                  {this.state.refuseDialog ?
-                <RefuseRequest testId={this.props.recievedObj.id} open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
+                <RefuseRequest testId={this.props.recievedObj.id}  open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
                 {this.state.acceptDialog ?
-                    <AcceptedRequest open={this.state.acceptDialog} testId={this.props.recievedObj.id} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
+                    <AcceptedRequest open={this.state.acceptDialog} fromHome={this.state.data.isFromHome} testId={this.props.recievedObj.id} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
 
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar}>
@@ -143,14 +143,14 @@ export default class TestReview extends React.Component {
                             <Typography variant="h6" >
                                 Test Review
                             </Typography>
-                            <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRefuse}>
+                <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRefuse /*this.props.handleClose*/}>
                                 Refuse
                             </Button>
 
                             <Button autoFocus color="inherit" style={this.styleTestReview.btn}  /*onClick={props.handleClose}*/>
                                 Chat
                             </Button>
-                            <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRAccept}>
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRAccept /*this.props.handleClose*/} >
                                 Accept
                             </Button>
                         </Toolbar>

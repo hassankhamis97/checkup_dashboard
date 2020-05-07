@@ -15,6 +15,9 @@ import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 import SendResult from "views/Modals/SendResult/SendResult.js";
 
 
+import Search from "@material-ui/icons/Search";
+// core components
+import CustomInput from "components/CustomInput/CustomInput.js";
 
 const styles = {
     cardCategoryWhite: {
@@ -54,11 +57,13 @@ class MainTestResults extends React.Component {
     constructor(props) {
 
         super(props);
-
+        window.self = this
         this.state = {
+            isVisable : 'hidden',
             openAlert: false,
-
+            searchResult :[],
             dataShowList: [],
+            temp : [] ,
             requests: [],
             tableBodyData: '',
             sampleStatus: '',
@@ -146,6 +151,7 @@ class MainTestResults extends React.Component {
 
 
             }.bind(this));
+            window.self.state.searchResult =  this.state.dataShowList ;
 
         });
 
@@ -199,6 +205,75 @@ class MainTestResults extends React.Component {
 
 
 
+////************************   Search    ***************************** */
+ 
+handleSearch(te){
+    console.log(te.target.value)
+    window.self.state.isVisable='hidden'
+
+    // var searchText = te.target.value
+ debugger ;
+ 
+ var searchText = (te.target.value).toLowerCase();
+debugger ;
+var search  = window.self.state.searchResult
+
+
+// let filteredcontacts = this.props.contacts.filter(contact => {
+//   return contact.name.toLocaleLowerCase().indexOf(this.state.search) !== -1;
+// });
+
+
+
+window.self.state.temp= []
+window.self.state.dataShowList= []
+   ////************ Search with  Name    */
+if(search.length>0){ 
+
+    window.self.state.temp  =  window.self.state.searchResult.filter(item =>{
+     return (item[1]).toLocaleLowerCase().startsWith(searchText)
+  });
+
+ }
+ window.self.state.temp.forEach(item => window.self.state.dataShowList.push(item))
+
+       ////************ Search with  Code    */
+
+ if(search.length>0){ 
+
+    window.self.state.temp  =  window.self.state.searchResult.filter(item =>{
+     return (item[0]).toLocaleLowerCase().startsWith(searchText)
+  });
+
+ }
+ window.self.state.temp.forEach(item =>window.self.state.dataShowList.push(item))
+
+
+//   for (const iterator of search) {
+//    debugger ;
+//      console.log(iterator[1])
+//      if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
+//      window.self.state.dataShowList.push(iterator)
+//    }
+   
+ 
+
+   debugger ;
+   if(  window.self.state.dataShowList.length<=0 && searchText.length<=0){
+     debugger ;
+     window.self.state.isVisable='hidden'
+
+     window.self.state.dataShowList =  window.self.state.searchResult
+     }else if(  window.self.state.dataShowList.length<=0 && searchText.length>0){
+       console.log("dsffdddddddddddddddddddd")
+       window.self.state.isVisable='visible'
+
+     }
+     window.self.forceUpdate()
+   
+ 
+ 
+ }
 
 
 
@@ -223,6 +298,42 @@ class MainTestResults extends React.Component {
                                     Shoo  The Pending  Resluts
                                 </p>
                             </CardHeader>
+                                
+                                <CardBody>
+                                <div>
+
+
+                                    
+                <CustomInput 
+                  type="text"
+                  // value={this.state.Employee.userName}
+                  onChange={
+                     this.handleSearch
+                    // this.setState({
+                    //   Employee: {
+                    //     ...this.state.Employee,
+                    //     userName: e.target.value
+                    //   }
+                    // })
+                  }
+                  labelText="Search"
+                  id="wearch"
+                  formControlProps={{
+                    fullWidth: false
+                  }}
+                />
+                {/* <CustomInput
+
+                  style={{ color: 'white' }}
+                  
+                /> */}
+                <Button color="white" aria-label="edit" justIcon round>
+                  <Search />
+                </Button>
+              </div>
+                                </CardBody>
+
+
                             <CardBody>
                                 <Table
                                     tableHeaderColor="primary"
@@ -231,10 +342,13 @@ class MainTestResults extends React.Component {
                                     tableData={this.state.dataShowList.length === 0 ? [] : this.state.dataShowList}
                                 
                                 />
+                              
                             </CardBody>
+                            
+                           
                         </Card>
                     </GridItem>
-
+                  <GridItem > <h4 style={{textAlign : "center" , visibility: window.self.state.isVisable , color : "purple"}}> There  Is  No  Data  Found   Tri   Again </h4>  </GridItem> 
                 </GridContainer>
             </div>
 

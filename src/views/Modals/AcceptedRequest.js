@@ -19,7 +19,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 
-import {database} from '../../firebase';
+import { database } from '../../firebase';
 
 // import database from '../../firebase';
 import firebase from 'firebase';
@@ -27,23 +27,18 @@ import firebase from 'firebase';
 export default class AcceptedRequest extends React.Component {
 
     state = {
-        setChecked: true,
         test: {
             testCost: '',
             precastions: '',
             employee: '',
             status: '',
+            generatedCode: '',
         },
     }
 
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
-
-    handleChange = (event) => {
-        // setChecked(event.checked);
-        this.setState({ setChecked: event })
-    };
 
     styleTestReview = {
         TestReviewModal: {
@@ -77,8 +72,19 @@ export default class AcceptedRequest extends React.Component {
                 'status': this.state.test.status,
                 'precastions': this.state.test.precastions,
                 'employee': this.state.test.employee,
-                'testCost': this.state.test.testCost
+                'testCost': this.state.test.testCost,
+                'generatedCode': this.state.test.generatedCode
             })
+    }
+
+    validate = () => {
+        debugger
+        if ( this.state.test.precastions.length > 0 && this.state.test.testCost.length > 0 && this.state.test.generatedCode.length > 0) {
+            this.updateData()
+
+        } else {
+            alert('Complete Data')
+        }
     }
 
     updateInputValue(evt) {
@@ -100,14 +106,15 @@ export default class AcceptedRequest extends React.Component {
                                 Accept Request
                         </Typography>
 
-                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} onClick={this.updateData()}  >
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btnAction} onClick={this.validate.bind(this)}>
                                 Send
                             </Button>
                         </Toolbar>
                     </AppBar>
 
                     <div style={this.styleTestReview.TestReviewModal} >
-                        <span style={this.styleTestReview.textStyle}>Enter Total Price : </span> <CustomInput
+                        <span style={this.styleTestReview.textStyle}>Enter Total Price : </span>
+                        <CustomInput
                             labelText="Test Cost"
                             id="username"
                             formControlProps={{
@@ -119,6 +126,24 @@ export default class AcceptedRequest extends React.Component {
                                 test: {
                                     ...this.state.test,
                                     testCost: e.target.value
+                                }
+                            })}
+                        />
+
+                        <br></br>
+                        <span style={this.styleTestReview.textStyle}>Generated Code : </span>
+                        <CustomInput
+                            labelText="Generated Code"
+                            id="username"
+                            formControlProps={{
+                                fullWidth: false
+                            }}
+
+                            value={this.state.test.generatedCode}
+                            onChange={e => this.setState({
+                                test: {
+                                    ...this.state.test,
+                                    generatedCode: e.target.value
                                 }
                             })}
                         />

@@ -41,21 +41,24 @@ class UpCommingRequests extends React.Component {
     //        'imgUrl': 'https://www.bipmedia.com/uploads/media/2015/05/Samantha-Ruthford_avatar.jpg' ,
     //        'address' : 'Alex/smoha'
     //       })
+    this.handleSearch = this .handleSearch.bind(this) ;
     this.getResquests = this.getResquests.bind(this)
     this.handleStatus = this.handleStatus.bind(this)
     this.handleAlertOpen = this.handleAlertOpen.bind(this)
     this.state = {
       isNew: true,
+      isVisable:'hidden',
       resID: '',
       OBJ: '',
       open: false,
       openAlert: false,
       dataShowList: [],
       fullDataList: [],
+      temp :[],
       requests: [],
       tableBodyData: '',
       sampleStatus: '',
-
+      searchResult:[],
       sendObj: [],
       transferedObj: {
         userName: '',
@@ -66,7 +69,6 @@ class UpCommingRequests extends React.Component {
       },
 
     }
-
 
   }
 
@@ -134,15 +136,7 @@ class UpCommingRequests extends React.Component {
   onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
-
-
-
-
-  ;
-
   getResquests = () => {
-
-    ;
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
     ref.orderByChild("status").equalTo("PendingForLabConfirmation").on('value', snapshot => {
@@ -251,7 +245,7 @@ class UpCommingRequests extends React.Component {
         //    this.forceUpdate()
 
         this.state.isNew = true;
-
+        this.state.searchResult =  window.$name.state.dataShowList ;
         // var unique =   window.$name.state.dataShowList.filter((v, i, a) => a.indexOf(v) === i); 
         console.log("dddddddd")
       });
@@ -262,7 +256,7 @@ class UpCommingRequests extends React.Component {
     });
 
 
-
+   
     this.state.isNew = true;
     console.log('DATA RETRIEVED');
   }
@@ -307,7 +301,70 @@ class UpCommingRequests extends React.Component {
   };
 
 
+////************************   Search    ***************************** */
+ 
+ handleSearch(te){
+  window.$name.state.isVisable='hidden'
+   console.log(te.target.value)
+  //  var searchText = te.target.value
+   var searchText = (te.target.value).toLowerCase();
+debugger ;
+var search  =  window.$name.state.searchResult
 
+
+// let filteredcontacts = this.props.contacts.filter(contact => {
+//   return contact.name.toLocaleLowerCase().indexOf(this.state.search) !== -1;
+// });
+
+
+
+   window.$name.state.temp= []
+   window.$name.state.dataShowList= []
+   ////************ Search with  Name    */
+if(search.length>0){ 
+
+  window.$name.state.temp  =  this.state.searchResult.filter(item =>{
+     return (item[1]).toLocaleLowerCase().startsWith(searchText)
+  });
+
+ }
+ window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
+
+       ////************ Search with  Code    */
+
+ if(search.length>0){ 
+
+  window.$name.state.temp  =  this.state.searchResult.filter(item =>{
+     return (item[0]).toLocaleLowerCase().startsWith(searchText)
+  });
+
+ }
+ window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
+
+ 
+//    return (item[1]).toLocaleLowerCase().includes(searchText)
+//  for (const iterator of search) {
+//   debugger ;
+//     console.log(iterator[1])
+//     if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
+//     window.$name.state.dataShowList.push(iterator)
+//   }
+  
+ 
+
+  debugger ;
+if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
+  debugger ;
+  window.$name.state.dataShowList = window.$name.state.searchResult
+  window.$name.state.isVisable='hidden'
+  }else if( window.$name.state.dataShowList.length<=0 && searchText.length>0){
+    console.log("dsffdddddddddddddddddddd")
+    window.$name.state.isVisable='visible'
+  }
+  this.forceUpdate()
+
+
+}
 
   render() {
     ;
@@ -329,18 +386,19 @@ class UpCommingRequests extends React.Component {
                   Up Comminng Patient requests
                  </p>
               </CardHeader>
-              <div>
-                <CustomInput 
+              <div style={{textAlign : "center"}}> 
+                <CustomInput  
                   type="text"
                   // value={this.state.Employee.userName}
-                  onChange={e => {
+                  onChange={
+                     this.handleSearch
                     // this.setState({
                     //   Employee: {
                     //     ...this.state.Employee,
                     //     userName: e.target.value
                     //   }
                     // })
-                  }}
+                  }
                   labelText="Search"
                   id="wearch"
                   formControlProps={{
@@ -369,6 +427,7 @@ class UpCommingRequests extends React.Component {
               </CardBody>
             </Card>
           </GridItem>
+          <GridItem >  <h4 style={{textAlign : "center" , visibility: window.$name.state.isVisable , color:"purple"}}> There  Is  No  Data  Found   Tri   Again </h4></GridItem> 
 
         </GridContainer>
       </div>
