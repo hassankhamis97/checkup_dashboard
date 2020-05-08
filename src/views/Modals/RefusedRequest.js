@@ -26,6 +26,7 @@ export default class RefuseRequest extends React.Component {
     state = {
         refuse: {
             refuseReason: '',
+            radioRefusion: '',
             state: '',
             notAvailableTxt: '',
             anotherTimeTxt: '',
@@ -43,15 +44,15 @@ export default class RefuseRequest extends React.Component {
         this.setState({ checked: event.target.checked });
         if (event.target.checked === true) {
 
-            this.myRefusion += event.target.value + "\n"
+            this.state.refuse.radioRefusion += event.target.value + "\n"
         }
 
-        var ar = this.myRefusion.split('\n')
+        // var ar = this.myRefusion.split('\n')
         
-        const namesArr = ar.filter(function(elem, pos) {
-            return ar.indexOf(elem) == pos;
-        }); 
-        this.refusesElement = namesArr.toString()
+        // const namesArr = ar.filter(function(elem, pos) {
+        //     return ar.indexOf(elem) == pos;
+        // }); 
+        // this.refusesElement = namesArr.toString()
     };
 
     updateData = () => {
@@ -61,12 +62,13 @@ export default class RefuseRequest extends React.Component {
             .update({
                 'status': this.state.refuse.status,
                 'refuseReason': this.state.refuse.refuseReason+ "\n" + this.refusesElement,
+                'radioReason': this.state.refuse.radioRefusion,
             })
     }
 
     validate = () => {
         // if (this.state.refuse.youNeedToApplyInstructionTxt !== '' && this.state.refuse.notAvailableTxt !== '' && this.state.refuse.anotherTimeTxt !== '' && this.state.refuse.refuseReason !== '') {
-        if (this.state.refuse.refuseReason.length > 0) {
+        if (this.state.refuse.refuseReason.length > 0 || this.state.refuse.radioRefusion.length > 0) {
             this.updateData()
         } else {
             alert('No Valid')
@@ -124,12 +126,14 @@ export default class RefuseRequest extends React.Component {
                                 this.state.checked
                             }
                             onChange={this.handleChange}
-                            value="Not Available"
+                            value="Tests are not available 
+                            "
                             style={{
                                 color: "#ab47bc",
                             }}
                         />
-                        <span style={this.styleTestReview.textStyle}> Not Available</span>
+                        <span style={this.styleTestReview.textStyle}> Tests are not available 
+</span>
                         <br></br>
                         <Checkbox
                             id="refuse"
@@ -138,13 +142,15 @@ export default class RefuseRequest extends React.Component {
                             }
                             onChange={this.handleChange}
 
-                            value=" Another Time"
+                            value=" Time is not suitable
+                            "
                             style={{
                                 color: "#ab47bc",
                             }}
                         />
-                        <span style={this.styleTestReview.textStyle}> Another Time</span>
-                        <br></br>
+                        <span style={this.styleTestReview.textStyle}> Time is not suitable
+</span>
+                        {/* <br></br>
                         <Checkbox
                             id="refuse"
                             checked={
@@ -157,7 +163,7 @@ export default class RefuseRequest extends React.Component {
                                 color: "#ab47bc",
                             }}
                         />
-                        <span style={this.styleTestReview.textStyle}> you need to apply instruction </span>
+                        <span style={this.styleTestReview.textStyle}> you need to apply instruction </span> */}
                         <br></br>
                         <br></br>
 
