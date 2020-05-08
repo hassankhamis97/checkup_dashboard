@@ -10,10 +10,10 @@
 
 // var defaultAuth = admin.auth();
 // var defaultDatabase = admin.database()
-// debugger
+// 
 // admin.auth().getUserByEmail("hassankhamis99@gmail.com")
 //   .then(function(userRecord) {
-//       debugger
+//       
 //     // See the UserRecord reference doc for the contents of userRecord.
 //     console.log('Successfully fetched user data:', userRecord.toJSON());
 //   })

@@ -26,7 +26,7 @@ import RTL from "layouts/RTL.js";
 // import authen from ''
 export default class CheckLogin extends React.Component {
     constructor(){
-        debugger
+        
 super()
         let authentication = new Authentication();
         authentication.getUser(() => {

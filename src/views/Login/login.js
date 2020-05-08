@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 const authentication = new Authentication();
 
 // function login() {
-//     debugger
+//     
 
 //     authentication.checkUser(email, password,(msg)=>{alert(msg)})
 //     // auth.signInWithEmailAndPassword("pp@pp.com", "123456789Iti")
@@ -89,7 +89,7 @@ export default function Login() {
     const [errMsg, setErrMsg] = React.useState('');
     const [value, setValue] = React.useState(0); 
     const [isLogin, setIsLogin] = React.useState(true);
-    // debugger
+    // 
 
     // function useForceUpdate(){
     //     const [value, setValue] = React.useState(0); // integer state
@@ -112,7 +112,7 @@ export default function Login() {
 
     }
     function login() {
-        debugger
+        
         if (email.trim() != '' && password.trim() != '') {
             authentication.checkUser(email, password, (msg) => { setErrMsg(msg) })
         }
@@ -121,7 +121,7 @@ export default function Login() {
         }
     }
     function forgetPassword() {
-        debugger
+        
         firebase.auth().sendPasswordResetEmail(email)
             .then(function() {
               alert('checkmail')

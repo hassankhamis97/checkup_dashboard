@@ -27,13 +27,13 @@ const [noUnReadTotalMessages,setUnReadTotalMessages] = React.useState(0)
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
-  debugger
+  
   if(noUnReadTotalMessages == 0){
     var chatOperations = new ChatOperations()
     chatOperations.getUnReadTotalMessages((number)=>{setUnReadTotalMessages(number)})
   }
   // function getTotalNoOfUnReadMessgages() {
-  //   debugger
+  //   
    
   // }
   const { color, logo, image, logoText, routes } = props;
@@ -97,7 +97,7 @@ const [noUnReadTotalMessages,setUnReadTotalMessages] = React.useState(0)
 var brand = (
   <div className={classes.logo}>
     <a
-      href="https://www.creative-tim.com?ref=mdr-sidebar"
+      href="#"
       className={classNames(classes.logoLink, {
         [classes.logoLinkRTL]: props.rtlActive
       })}

@@ -47,7 +47,7 @@ export default function CreateNewEmployee() {
             }, 6000);
             
           };
-        debugger
+        
 
     return (
         <div>

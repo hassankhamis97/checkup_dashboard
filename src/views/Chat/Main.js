@@ -13,7 +13,7 @@ import ChatList from './ChatList';
 import ChatOperations from './ChatOperations';
 // window.onbeforeunload = async function () {
 
-//     debugger
+//     
     // if (window.location.href === "http://localhost:3000/admin/chat") {
     //     var senderChatStatus = {
     //         currentViewedPerson: ""
@@ -32,7 +32,7 @@ import ChatOperations from './ChatOperations';
     // }
 // };
 window.addEventListener("beforeunload", (ev) => {
-    debugger
+    
     var chatOperations = new ChatOperations()
     chatOperations.clearCurrentViewedPerson(false)
     ev.preventDefault();
@@ -58,7 +58,7 @@ export default class Main extends Component {
     //     // Note that navigating to child routes won't register as leaving this route. In other words,
     //     // navigating to any routes described in this.props.route.childRoutes[] won't trigger the callback.
     //     // this.props.router.setRouteLeaveHook(this.props.route, () => {
-    //     //     debugger
+    //     //     
     //     //   if (this.state.unsaved)
     //     //     return 'You have unsaved information, are you sure you want to leave this page?'
     //     // })
@@ -87,7 +87,7 @@ export default class Main extends Component {
     // }
 
     // getListUser = async (self) => {
-    //     debugger
+    //     
     //     // const result = await firestore.collection(AppString.NODE_USERS).orderBy('nickname').startAfter(self.listUser.length > 0 ? self.listUser[self.listUser.length-1] : 0).limit(2).get()
     //     // if (result.docs.length > 0) {
     //     //     self.skip += result.docs.length
@@ -98,7 +98,7 @@ export default class Main extends Component {
     //     const chatUserResult = await firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).orderBy('lastMsgTimeStamp', 'desc').get()
     //     for (let i = 0; i < chatUserResult.docs.length; i++) {
     //         const result = await firestore.collection(AppString.NODE_USERS).doc(chatUserResult.docs[i].id).get()
-    //         debugger
+    //         
     //             console.log(result.docs)
     //             self.listUser.push(result)
 
@@ -112,7 +112,7 @@ export default class Main extends Component {
     //     }
     //     self.setState({ isLoading: false })
     //     // if (result.docs.length > 0) {
-    //     //     debugger
+    //     //     
     //     //     console.log(result)
     //     //     // self.skip += result.docs.length
     //     //     // // self.listUser = [...result.docs]
@@ -165,7 +165,7 @@ export default class Main extends Component {
     //     this.props.history.push('/profile')
     // }
     // scrolled = (e) => {
-    //     debugger
+    //     
     //     var myDiv = document.getElementsByClassName('viewListUser')[0];
     //     if (myDiv.offsetHeight + myDiv.scrollTop >= myDiv.scrollHeight) {
     //       scrolledToBottom(e);
@@ -174,7 +174,7 @@ export default class Main extends Component {
     // handleScroll = (e) => {
     //     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     //     if (bottom) {
-    //         debugger
+    //         
     //         this.getListUser(this)
     //     }
     // }
@@ -219,7 +219,7 @@ export default class Main extends Component {
     //     }
     // }
     handlePearClick = async (currentPeerUser, index, self) => {
-        debugger
+        
         this.setState({ currentPeerUser: currentPeerUser, index: index, isNew: true })
         this.chatListRef = self
 

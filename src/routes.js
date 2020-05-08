@@ -5,10 +5,10 @@
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Copyright 2020 Checkup (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-react/blob/master/LICENSE.md)
 
-* Coded by Creative Tim
+* Coded by Checkup
 
 =========================================================
 
@@ -27,7 +27,7 @@ import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/EmployeeProfile/TableList.js";
+import EmployeeProfile from "views/EmployeeProfile/EmployeeProfile.js";
 import Typography from "views/TestsResult/TestsResult";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
@@ -36,7 +36,8 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import CreateNewEmployee from "views/CreateNewEmployee/CreateNewEmployee"
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
-import Chat from "views/Chat/Chat"
+import Chat from "views/Chat/Chat"   
+import EmployeeProfileView from "views/EmployeeProfile/EmployeeProfileView.js"
 const dashboardRoutes = [
   {
     path: "/upcomingrequest",
@@ -46,20 +47,20 @@ const dashboardRoutes = [
     component: DashboardPage,
     layout: "/admin"
   },
-  {
-    path: "/employeesprofile",
-    name: "Employees Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/employeesprofile",
+  //   name: "Employees Profile",
+  //   rtlName: "ملف تعريفي للمستخدم",
+  //   icon: Person,
+  //   component: UserProfile,
+  //   layout: "/admin"
+  // },
   {
     path: "/getEmployeesInfo",
     name: "Get Employees Info",
     rtlName: "قائمة الموظفين",
     icon: "content_paste",
-    component: TableList,
+    component: EmployeeProfile,
     layout: "/admin"
   },
   {
@@ -70,38 +71,38 @@ const dashboardRoutes = [
     component: Typography,
     layout: "/admin"
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    rtlName: "خرائط",
-    icon: LocationOn,
-    component: Maps,
-    layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    rtlName: "إخطارات",
-    icon: Notifications,
-    component: NotificationsPage,
-    layout: "/admin"
-  },
-  {
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "پشتیبانی از راست به چپ",
-    icon: Language,
-    component: RTLPage,
-    layout: "/rtl"
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   rtlName: "الرموز",
+  //   icon: BubbleChart,
+  //   component: Icons,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   rtlName: "خرائط",
+  //   icon: LocationOn,
+  //   component: Maps,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   rtlName: "إخطارات",
+  //   icon: Notifications,
+  //   component: NotificationsPage,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/rtl-page",
+  //   name: "RTL Support",
+  //   rtlName: "پشتیبانی از راست به چپ",
+  //   icon: Language,
+  //   component: RTLPage,
+  //   layout: "/rtl"
+  // },
   {
     path: "/create-new-employee",
     name: "Create New Employee",
@@ -118,6 +119,15 @@ const dashboardRoutes = [
     component: Chat,
     layout: "/admin"
   }
+  // ,
+  // {
+  //   path: "/EmployeesInfo/employeeprofile",
+  //   name: "EmployeeProfile",
+  //   rtlName: "الرسائل",
+  //   icon: Unarchive,
+  //   component: EmployeeProfileView,
+  //   layout: "/admin"
+  // }
   // {
   //   path: "/upgrade-to-pro",
   //   name: "Upgrade To PRO",

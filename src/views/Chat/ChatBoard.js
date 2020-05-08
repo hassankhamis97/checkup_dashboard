@@ -11,7 +11,7 @@ import Authentication from 'Authentication';
 
 export default class ChatBoard extends Component {
     constructor(props) {
-        debugger
+        
         super(props)
         this.state = {
             isLoading: false,
@@ -62,26 +62,26 @@ export default class ChatBoard extends Component {
     }
 
     getListHistory = () => {
-        debugger
+        // let self = this
         if (this.removeListener) {
             this.removeListener()
         }
         this.listMessage.length = 0
         this.setState({ isLoading: true })
-        debugger
+        
         if (
             this.hashString(this.currentUserId) <=
             this.hashString(this.currentPeerUser.id)
         ) {
-            debugger
+            
             this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`
         } else {
-            debugger
+            
             this.groupChatId = `${this.currentPeerUser.id}-${this.currentUserId}`
         }
 
         // Get history and listen new data added
-        debugger
+        
         this.removeListener = firestore
             .collection(AppString.NODE_MESSAGES)
             .doc(this.groupChatId)
@@ -126,7 +126,7 @@ export default class ChatBoard extends Component {
             content: content.trim(),
             type: type
         }
-        debugger
+        
         firestore
             .collection(AppString.NODE_MESSAGES)
             .doc(self.groupChatId)
@@ -148,7 +148,7 @@ export default class ChatBoard extends Component {
             }
         }
         else{
-            debugger;
+            ;
              
             var pearObj = await firestore.collection(AppString.NODE_USERCHAT).doc(self.currentPeerUser.id).collection(self.currentPeerUser.id).doc(Authentication.loggedUser.uid).get()
             var noOfRM = pearObj.data().noOfUnReadMessage
@@ -193,7 +193,7 @@ export default class ChatBoard extends Component {
     }
 
     onChoosePhoto = event => {
-        debugger
+        
         if (event.target.files && event.target.files[0]) {
             this.setState({ isLoading: true })
             this.currentPhotoFile = event.target.files[0]
@@ -211,7 +211,7 @@ export default class ChatBoard extends Component {
     }
 
     uploadPhoto = () => {
-        debugger
+        
         if (this.currentPhotoFile) {
             const timestamp = moment()
                 .valueOf()
@@ -232,7 +232,7 @@ export default class ChatBoard extends Component {
                 () => {
                     uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
                         this.setState({ isLoading: false })
-                        this.onSendMessage(downloadURL, 1)
+                        this.onSendMessage(downloadURL, 1,this)
                     })
                 }
             )
@@ -321,7 +321,7 @@ export default class ChatBoard extends Component {
                         className="icSend"
                         src={images.ic_send}
                         alt="icon send"
-                        onClick={() => this.onSendMessage(this.state.inputValue, 0)}
+                        onClick={() => this.onSendMessage(this.state.inputValue, 0,this)}
                     />
                 </div>
 
@@ -341,7 +341,7 @@ export default class ChatBoard extends Component {
     }
 
     renderListMessage = () => {
-        debugger
+        
         if (this.listMessage.length > 0) {
             let viewListMessage = []
             this.listMessage.forEach((item, index) => {
@@ -476,55 +476,55 @@ export default class ChatBoard extends Component {
                     className="imgSticker"
                     src={images.mimi1}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi1', 2)}
+                    onClick={() => this.onSendMessage('mimi1', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi2}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi2', 2)}
+                    onClick={() => this.onSendMessage('mimi2', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi3}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi3', 2)}
+                    onClick={() => this.onSendMessage('mimi3', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi4}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi4', 2)}
+                    onClick={() => this.onSendMessage('mimi4', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi5}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi5', 2)}
+                    onClick={() => this.onSendMessage('mimi5', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi6}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi6', 2)}
+                    onClick={() => this.onSendMessage('mimi6', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi7}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi7', 2)}
+                    onClick={() => this.onSendMessage('mimi7', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi8}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi8', 2)}
+                    onClick={() => this.onSendMessage('mimi8', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi9}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi9', 2)}
+                    onClick={() => this.onSendMessage('mimi9', 2,this)}
                 />
             </div>
         )
@@ -577,7 +577,7 @@ export default class ChatBoard extends Component {
     }
 
     isLastMessageRight(index) {
-        debugger
+        
         if (
             (index + 1 < this.listMessage.length &&
                 this.listMessage[index + 1].idFrom !== this.currentUserId) ||

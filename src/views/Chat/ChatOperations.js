@@ -3,7 +3,7 @@ import { AppString } from './Const'
 import Authentication from 'Authentication';
 export default class ChatOperations {
     getUnReadTotalMessages(response) {
-        debugger
+        
 
         firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).onSnapshot(function (pearedUsersMessages) {
             // Document was found in the cache. If no cached document exists,
@@ -25,7 +25,7 @@ export default class ChatOperations {
 
     // }
     clearCurrentViewedPerson(isFromRoute) {
-        debugger
+        
         if (isFromRoute || window.location.href === "http://localhost:3000/admin/chat") {
             var senderChatStatus = {
                 currentViewedPerson: ""
