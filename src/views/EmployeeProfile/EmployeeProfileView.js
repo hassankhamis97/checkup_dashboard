@@ -68,7 +68,7 @@ export default class EmployeeProfileView extends React.Component {
   }
   componentDidMount() {
 
-    debugger
+    
     this.props.handleSetEmployeeProfileViewReference(this)
     //this.getUserData();
 
@@ -77,7 +77,7 @@ export default class EmployeeProfileView extends React.Component {
     this.props.updateEmployee(true);
   }
   deleteEmployee = () => {
-    debugger
+    
     
     this.state.alertConfig.open = true
       this.state.alertConfig.message = 'Are You sure delete this employee ?'
@@ -109,7 +109,7 @@ export default class EmployeeProfileView extends React.Component {
     authWorkerAuth.setPersistence(firebase.auth.Auth.Persistence.NONE);
     authWorkerAuth.signInWithEmailAndPassword(this.props.senderEmpObj.val().email, this.props.senderEmpObj.val().password)
       .then(function (user) {
-        debugger
+        
         var currentUser = authWorkerAuth.currentUser;
         database.ref('/').child("Employees").child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").child(currentUser.uid).remove()
         firestore.collection(AppString.NODE_USERS).doc(currentUser.uid).delete()
@@ -153,7 +153,7 @@ export default class EmployeeProfileView extends React.Component {
 
   }
   render() {
-    debugger
+    
     return (
       // <div>dfksdfol</div>
       <GridItem xs={12} sm={12} md={4}>

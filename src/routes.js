@@ -47,14 +47,14 @@ const dashboardRoutes = [
     component: DashboardPage,
     layout: "/admin"
   },
-  {
-    path: "/employeesprofile",
-    name: "Employees Profile",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/employeesprofile",
+  //   name: "Employees Profile",
+  //   rtlName: "ملف تعريفي للمستخدم",
+  //   icon: Person,
+  //   component: UserProfile,
+  //   layout: "/admin"
+  // },
   {
     path: "/getEmployeesInfo",
     name: "Get Employees Info",
@@ -71,38 +71,38 @@ const dashboardRoutes = [
     component: Typography,
     layout: "/admin"
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    rtlName: "خرائط",
-    icon: LocationOn,
-    component: Maps,
-    layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    rtlName: "إخطارات",
-    icon: Notifications,
-    component: NotificationsPage,
-    layout: "/admin"
-  },
-  {
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "پشتیبانی از راست به چپ",
-    icon: Language,
-    component: RTLPage,
-    layout: "/rtl"
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   rtlName: "الرموز",
+  //   icon: BubbleChart,
+  //   component: Icons,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   rtlName: "خرائط",
+  //   icon: LocationOn,
+  //   component: Maps,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   rtlName: "إخطارات",
+  //   icon: Notifications,
+  //   component: NotificationsPage,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/rtl-page",
+  //   name: "RTL Support",
+  //   rtlName: "پشتیبانی از راست به چپ",
+  //   icon: Language,
+  //   component: RTLPage,
+  //   layout: "/rtl"
+  // },
   {
     path: "/create-new-employee",
     name: "Create New Employee",
@@ -119,15 +119,15 @@ const dashboardRoutes = [
     component: Chat,
     layout: "/admin"
   }
-  ,
-  {
-    path: "/EmployeesInfo/employeeprofile",
-    name: "EmployeeProfile",
-    rtlName: "الرسائل",
-    icon: Unarchive,
-    component: EmployeeProfileView,
-    layout: "/admin"
-  }
+  // ,
+  // {
+  //   path: "/EmployeesInfo/employeeprofile",
+  //   name: "EmployeeProfile",
+  //   rtlName: "الرسائل",
+  //   icon: Unarchive,
+  //   component: EmployeeProfileView,
+  //   layout: "/admin"
+  // }
   // {
   //   path: "/upgrade-to-pro",
   //   name: "Upgrade To PRO",

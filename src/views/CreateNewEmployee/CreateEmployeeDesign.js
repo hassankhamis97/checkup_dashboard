@@ -72,7 +72,7 @@ class CreateEmployeeDesign extends React.Component {
                 userName: '',
                 email: '',
                 password: '',
-                imagePath: '',
+                imagePath: 'https://firebasestorage.googleapis.com/v0/b/checkup-23ffe.appspot.com/o/images%2Fdefault%2FnoProfilePhoto.png?alt=media&token=f9e5091b-8364-4953-98cf-b3f2d9829616',
                 phones: ['']
             }
 
@@ -128,7 +128,7 @@ class CreateEmployeeDesign extends React.Component {
     writeUserData = (userId) => {
         // firebase.database().ref('/').set(this.state);
         // var newPostKey = database.ref().push().key;
-        debugger
+        
         database.ref('/').child('Employees').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").child(userId).set(this.state.Employee);
         console.log('DATA SAVED');
     }
@@ -273,7 +273,7 @@ class CreateEmployeeDesign extends React.Component {
         if (this.props.senderEmpObj) {
             authWorkerAuth.signInWithEmailAndPassword(this.props.senderEmpObj.val().email, this.props.senderEmpObj.val().password)
                 .then(function (user) {
-                    debugger
+                    
                     self.saveOrUpdateData(user)
 
                 })

@@ -9,7 +9,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CancelIcon from '@material-ui/icons/Cancel';
 import ConfirmMessage from "views/Modals/ConfirmMessage";
 export default function EmployeeProfile() {
-  debugger
+  
   // constructor(props) {
   //   super(props);
   //   this.state = {
@@ -24,7 +24,7 @@ export default function EmployeeProfile() {
   const [alertConfig, setAlertConfig] = React.useState(null);
   const [employeeProfileViewReference, setEmployeeProfileViewReference] = React.useState(null);
   const handleViewProfile = (element, phoneStr) => {
-    debugger
+    
     setSenderEmpObj(element);
     setPhoneStr(phoneStr);
     // this.props.handleViewProfile(element)
@@ -33,6 +33,8 @@ export default function EmployeeProfile() {
     setIsEdit(status)
   }
   const showNotification = msg => {
+    setSenderEmpObj(null)
+
     setAlertMsg(msg)
     setTC(true);
     setTimeout(function() {
@@ -41,20 +43,26 @@ export default function EmployeeProfile() {
     
   };
   const updateAlertConfig = (alertConfig) => {
+    // 
+    // setSenderEmpObj(null)
     setAlertConfig({alertConfig: alertConfig})
+    
   }
   const handleConfirm = (status) => {
+    if(status === 'deleteEmployee'){
+      setSenderEmpObj(null)
+    }
     employeeProfileViewReference.handleConfirm(status)
   }
   const handleSetEmployeeProfileViewReference = (ref) => {
-    debugger
+    
     setEmployeeProfileViewReference(ref)
   }
   const handleClose = ()=> {
     setAlertConfig(null)
   }
   // handleViewProfile = (element) =>{
-  //   debugger
+  //   
   //   //  var obj = this.state.employeeList[index]
   //    this.setState({senderEmpObj: element});     
   //   this.props.handleViewProfile(element)

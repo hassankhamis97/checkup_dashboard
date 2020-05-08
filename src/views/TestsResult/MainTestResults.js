@@ -212,10 +212,10 @@ handleSearch(te){
     window.self.state.isVisable='hidden'
 
     // var searchText = te.target.value
- debugger ;
+ 
  
  var searchText = (te.target.value).toLowerCase();
-debugger ;
+
 var search  = window.self.state.searchResult
 
 
@@ -250,7 +250,7 @@ if(search.length>0){
 
 
 //   for (const iterator of search) {
-//    debugger ;
+//    
 //      console.log(iterator[1])
 //      if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
 //      window.self.state.dataShowList.push(iterator)
@@ -258,9 +258,9 @@ if(search.length>0){
    
  
 
-   debugger ;
+   
    if(  window.self.state.dataShowList.length<=0 && searchText.length<=0){
-     debugger ;
+     
      window.self.state.isVisable='hidden'
 
      window.self.state.dataShowList =  window.self.state.searchResult

@@ -39,7 +39,7 @@ export default class RefuseRequest extends React.Component {
     myRefusion = ''//this.state.notAvailableTxt + '\n' + this.state.anotherTimeTxt + '\n' + this.youNeedToApplyInstructionTxt
     refusesElement = ''
     handleChange = (event) => {
-        debugger
+        
         this.setState({ checked: event.target.checked });
         if (event.target.checked === true) {
 
@@ -55,7 +55,7 @@ export default class RefuseRequest extends React.Component {
     };
 
     updateData = () => {
-        debugger
+        
         this.state.refuse.status = 'Refused'
         database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
             .update({

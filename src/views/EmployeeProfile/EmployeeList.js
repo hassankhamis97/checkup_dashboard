@@ -82,7 +82,7 @@ export default class EmployeeList extends React.Component {
 
   }
   // handleViewProfile = (element) =>{
-  //   debugger
+  //   
   //   //  var obj = this.state.employeeList[index]
   //    this.setState({senderEmpObj: element});     
   //   this.props.handleViewProfile(element)
@@ -92,7 +92,7 @@ export default class EmployeeList extends React.Component {
 
   getEmployeeList = (self) => {
 
-    debugger
+    
     database.ref('/').child('Employees').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").on('value', function (employeesArr) {
 
       // }
@@ -110,7 +110,7 @@ export default class EmployeeList extends React.Component {
         element.val().phones.forEach((phone, i) => {
           phoneStr += i == 0 ? phone : "-" + phone
         })
-        debugger
+        
       
         var showEmployeeObj = [
           count,

@@ -308,7 +308,7 @@ class UpCommingRequests extends React.Component {
    console.log(te.target.value)
   //  var searchText = te.target.value
    var searchText = (te.target.value).toLowerCase();
-debugger ;
+
 var search  =  window.$name.state.searchResult
 
 
@@ -344,7 +344,7 @@ if(search.length>0){
  
 //    return (item[1]).toLocaleLowerCase().includes(searchText)
 //  for (const iterator of search) {
-//   debugger ;
+//   
 //     console.log(iterator[1])
 //     if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
 //     window.$name.state.dataShowList.push(iterator)
@@ -352,9 +352,9 @@ if(search.length>0){
   
  
 
-  debugger ;
+  
 if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
-  debugger ;
+  
   window.$name.state.dataShowList = window.$name.state.searchResult
   window.$name.state.isVisable='hidden'
   }else if( window.$name.state.dataShowList.length<=0 && searchText.length>0){

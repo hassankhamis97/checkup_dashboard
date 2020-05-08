@@ -27,7 +27,7 @@ export default function ConfirmMessage(props) {
         props.handleConfirm(props.alertConfig.alertConfig.status)
 
     };
-    debugger
+    
     return (
         
         <div>

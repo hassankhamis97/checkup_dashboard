@@ -78,7 +78,7 @@ export default class AcceptedRequest extends React.Component {
     }
 
     validate = () => {
-        debugger
+        
         if ( this.state.test.precastions.length > 0 && this.state.test.testCost.length > 0 && this.state.test.generatedCode.length > 0) {
             this.updateData()
 
