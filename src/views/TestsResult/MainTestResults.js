@@ -228,7 +228,7 @@ var search  = window.self.state.searchResult
 window.self.state.temp= []
 window.self.state.dataShowList= []
    ////************ Search with  Name    */
-if(search.length>0){ 
+if(search.length>0&&searchText.length>0){ 
 
     window.self.state.temp  =  window.self.state.searchResult.filter(item =>{
      return (item[1]).toLocaleLowerCase().startsWith(searchText)
@@ -239,7 +239,7 @@ if(search.length>0){
 
        ////************ Search with  Code    */
 
- if(search.length>0){ 
+ if(search.length>0&&searchText.length>0){ 
 
     window.self.state.temp  =  window.self.state.searchResult.filter(item =>{
      return (item[0]).toLocaleLowerCase().startsWith(searchText)
@@ -348,7 +348,7 @@ if(search.length>0){
                            
                         </Card>
                     </GridItem>
-                  <GridItem > <h4 style={{textAlign : "center" , visibility: window.self.state.isVisable , color : "purple"}}> There  Is  No  Data  Found   Tri   Again </h4>  </GridItem> 
+                    <GridItem >  <h4 style={{textAlign : "center" , visibility: window.self.state.isVisable , color:"purple"}}> There  Is  No  Data  Found   Tri   Again </h4></GridItem> 
                 </GridContainer>
             </div>
 

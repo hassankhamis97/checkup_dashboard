@@ -326,29 +326,32 @@ var search  =  window.$name.state.searchResult
 // });
 
 
-
    window.$name.state.temp= []
    window.$name.state.dataShowList= []
    ////************ Search with  Name    */
-if(search.length>0){ 
+if(search.length>0&&searchText.length>0){ 
 
   window.$name.state.temp  =  this.state.searchResult.filter(item =>{
      return (item[1]).toLocaleLowerCase().startsWith(searchText)
   });
-
+   
+  if(window.$name.state.temp.length>0)
+  window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
  }
- window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
+ 
 
        ////************ Search with  Code    */
+       window.$name.state.temp= []
 
- if(search.length>0){ 
+ if(search.length>0 &searchText.length>0){ 
 
   window.$name.state.temp  =  this.state.searchResult.filter(item =>{
      return (item[0]).toLocaleLowerCase().startsWith(searchText)
   });
-
+  if(window.$name.state.temp.length>0)
+  window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
  }
- window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
+ 
 
  
 //    return (item[1]).toLocaleLowerCase().includes(searchText)
@@ -359,7 +362,7 @@ if(search.length>0){
 //     window.$name.state.dataShowList.push(iterator)
 //   }
   
- 
+
 
   debugger ;
 if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
