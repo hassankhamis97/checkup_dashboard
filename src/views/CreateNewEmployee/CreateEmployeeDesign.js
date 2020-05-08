@@ -22,7 +22,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import PhoneNumber from './PhoneNumber'
 import PropTypes from "prop-types";
 import Authentication from "Authentication";
-import { AppString } from '../Chat/Const' 
+import { AppString } from '../Chat/Const'
 // import * as admin from 'firebase-admin';
 // var serviceAccount = require("../../../checkup-23ffe-firebase-adminsdk-7pwms-f7d9cf5cfa.json");
 
@@ -62,58 +62,32 @@ import { AppString } from '../Chat/Const'
 class CreateEmployeeDesign extends React.Component {
 
     constructor(props) {
-        debugger;
         super(props);
-        // var defaultAppConfig = admin.initializeApp({
-        //     credential: admin.credential.cert(serviceAccount),
-        //     databaseURL: "https://checkup-23ffe.firebaseio.com"
-        //   });
-
-        //   var defaultApp = admin.initializeApp(defaultAppConfig);
-        //   var defaultAuth = admin.auth();
-        //   var defaultDatabase = admin.database()
-        //   debugger
-        //   admin.auth().getUserByEmail("hassankhamis99@gmail.com")
-        //     .then(function(userRecord) {
-        //         debugger
-        //       // See the UserRecord reference doc for the contents of userRecord.
-        //       console.log('Successfully fetched user data:', userRecord.toJSON());
-        //     })
-        //     .catch(function(error) {
-        //      console.log('Error fetching user data:', error);
-        //     });
-
-
-
-        // firebase.initializeApp(config);
+        this.saveOrUpdateData = this.saveOrUpdateData.bind(this)
         var uploadedFile = null;
         this.state = {
-            // Employee: {
-            //     name: '',
-            //     address: ''
-
-            // }
             phonesDiv: [],
-            image: avatar,
-            // Employee: []
+            image: "https://firebasestorage.googleapis.com/v0/b/checkup-23ffe.appspot.com/o/images%2Fdefault%2FnoProfilePhoto.png?alt=media&token=f9e5091b-8364-4953-98cf-b3f2d9829616",
             Employee: {
                 userName: '',
                 email: '',
                 password: '',
-                imagePath: '',
+                imagePath: 'https://firebasestorage.googleapis.com/v0/b/checkup-23ffe.appspot.com/o/images%2Fdefault%2FnoProfilePhoto.png?alt=media&token=f9e5091b-8364-4953-98cf-b3f2d9829616',
                 phones: ['']
             }
 
         }
-        // this.database = firebase.database().ref().child(this.state);
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        // console.log(createEmpoStyle);
+        this.saveAfterUploadImage = this.saveAfterUploadImage.bind(this)
+        if (this.props.senderEmpObj) {
+            this.state.Employee = this.props.senderEmpObj.val()
+            this.state.image = this.props.senderEmpObj.val().imagePath
+        }
 
-        
 
 
-        var test= {
+        var test = {
             date: '2/5/2020',
             id: '-X5j2KVIhI0dhLchYrTe',
             isFromHome: false,
@@ -131,7 +105,7 @@ class CreateEmployeeDesign extends React.Component {
 
 
     componentDidMount() {
-        debugger
+
 
         //this.getUserData();
 
@@ -154,16 +128,17 @@ class CreateEmployeeDesign extends React.Component {
     writeUserData = (userId) => {
         // firebase.database().ref('/').set(this.state);
         // var newPostKey = database.ref().push().key;
+        
         database.ref('/').child('Employees').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").child(userId).set(this.state.Employee);
         console.log('DATA SAVED');
     }
 
     getUserData = () => {
-        debugger;
+        ;
         let ref = database.ref('/');
         // let ref = firebase.database().ref('/');
         ref.on('value', snapshot => {
-            debugger
+
             var state = snapshot.val();
             console.log(state)
             this.setState(state);
@@ -171,7 +146,7 @@ class CreateEmployeeDesign extends React.Component {
         console.log('DATA RETRIEVED');
     }
     handleSubmit = (event) => {
-        debugger
+
         var employeeObj = {
             name: 'a',
             address: 's'
@@ -182,7 +157,7 @@ class CreateEmployeeDesign extends React.Component {
 
     }
     handleUpdate = (event) => {
-        debugger
+
         //   this.state.Employee[0].name = 'fsdjfkjk';
         const { Employee } = this.state;
         // for (let i = 0; i < Employee.length; i++) {
@@ -198,23 +173,23 @@ class CreateEmployeeDesign extends React.Component {
         console.log("state: " + this.state.value); //shows onChanged value in console
     }
     handleDelete = (event) => {
-        debugger
+
         const { Employee } = this.state;
         Employee.pop();
         this.setState({ Employee });
         // this.state.Employee[0].name = 'fsdjfkjk';
     }
     handleChangeEmail = (event) => {
-        debugger
+
         prompt('dsaf');
     }
     changeText = (index, newValue) => {
-        debugger
+
         this.state.Employee.phones[index] = newValue;
         this.forceUpdate();
     }
     onImageChange = (event) => {
-        debugger
+
         if (event.target.files && event.target.files[0]) {
             this.uploadedFile = event.target.files[0]
             // this.setState({
@@ -241,8 +216,8 @@ class CreateEmployeeDesign extends React.Component {
         this.forceUpdate()
     }
     handleSendNewRequest = async (self) => {
-        debugger
-        var chatStatus={
+
+        var chatStatus = {
             lastMsgTimeStamp: 0,
             noOfUnReadMessage: 0
         }
@@ -282,30 +257,7 @@ class CreateEmployeeDesign extends React.Component {
     //     }
     // }
     handleCreateNewEmployee = () => {
-        // for (let i = 0; i < 10; i++) {
-        //     var newPostKey = database.ref().push().key;
-
-        //     var testObj = {
-        //         id: newPostKey,
-        //         testName: "Test" + i,
-        //         pdfpath: '',
-        //         roushettaPath: '',
-        //         description: 'description' + i,
-        //         isFromHome: i % 2 == 0 ? true : false,
-        //         status: 'PendingLabForConfiramtion'
-
-        //     }
-        //     database.ref('/').child('Tests').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").child(newPostKey).set(testObj);
-
-        // }
-
-        debugger
-        // function getFirebaseApp(name, config) {
-        //     let foundApp = firebase.apps.find(app => app.name === name);
-        //     return foundApp ? foundApp : firebase.initializeApp(config || firebase.app().options, 'auth-worker');
-        // }
-
-        // let authWorkerApp = getFirebaseApp('auth-worker');
+        let self = this
         function getFirebaseApp(name, config) {
             const auth = firebase.auth();
 
@@ -318,169 +270,102 @@ class CreateEmployeeDesign extends React.Component {
         // let authWorkerApp = firebase.initializeApp(firebase.app().options, 'auth-worker');
         let authWorkerAuth = firebase.auth(authWorkerApp);
         authWorkerAuth.setPersistence(firebase.auth.Auth.Persistence.NONE); // disables caching of account credentials
+        if (this.props.senderEmpObj) {
+            authWorkerAuth.signInWithEmailAndPassword(this.props.senderEmpObj.val().email, this.props.senderEmpObj.val().password)
+                .then(function (user) {
+                    
+                    self.saveOrUpdateData(user)
 
-        authWorkerAuth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password)
-            .then(function (userCreds) {
-                debugger
-                var userId = userCreds.user.uid;
-                // let authentication = new Authentication()
+                })
+                .catch(function (error) {
 
+                });
+        }
+        else {
+            authWorkerAuth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password)
+                .then(function (userCreds) {
 
+                    self.saveOrUpdateData(userCreds)
 
-                if (this.uploadedFile) {
-                    // this.setState({
-                    //     Employee: {
-                    //         ...this.state.Employee,
-                    //         imagePath: '/images/' + userId + '/' + this.uploadedFile.name
-                    //     }
-                    // })
-                    this.state.Employee.imagePath = '/images/' + userId + '/' + this.uploadedFile.name
-
-                }
-
-
-                for (let i = 0; i < this.state.Employee.phones.length; i++) {
-                    // const element = this.state.Employee.phones[i];
-                    if (this.state.Employee.phones[i].trim() == '') {
-                        this.state.Employee.phones.splice(i, 1)
-                    }
-
-                }
-                this.writeUserData(userId);
-                if (this.uploadedFile) {
-                    var storageRef = firebase.storage().ref('/images/' + userId + '/');
-                    var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile).then(() => {
-                        debugger
-                        let authentication = new Authentication()
-                        authentication.getImage(this, this.state.Employee.imagePath, (url, self) => {
-                            // self.state.currentUserAvatar = url
-                            // self.setState({currentUserAvatar: url})
-                            // self.forceUpdate()
-                            userCreds.user.updateProfile({
-                                
-                                displayName: this.state.Employee.userName,
-                                photoURL: url
-                            });
-                            firestore
-                                .collection('users')
-                                .doc(userId)
-                                .set({
-                                    id: userId,
-                                    nickname: this.state.Employee.userName,
-                                    photoUrl: url
-                                })
-                            console.log(userCreds)
-                            self.uploadedFile = null;
-                            // // this.state.Employee
-                            self.state.image = avatar;
-                            var empObj = {
-                                userName: '',
-                                email: '',
-                                password: '',
-                                imagePath: '',
-                                phones: ['']
-                            }
-                            self.state.Employee = empObj;
-                            self.props.showNotification("Employee saved successfully");
-                        })
-                    }).catch((error) => {
-                        // Handle any errors
-                    });
-
-
-                }
-                else {
-                    userCreds.user.updateProfile({
-                        displayName: this.state.Employee.userName,
-                    });
-                    firestore
-                        .collection('users')
-                        .doc(userId)
-                        .set({
-                            id: userId,
-                            nickname: this.state.Employee.userName,
-                        })
-                }
-
-
-            }.bind(this))
-            .catch(function (error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // ...
-            });
+                }.bind(this))
+                .catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // ...
+                });
+        }
+    }
+    saveOrUpdateData = (userCreds) => {
         
-        // auth.createUserWithEmailAndPassword(this.state.Employee.email, this.state.Employee.password)
-        // .then(function (userCreds) {
-        //     debugger
-        //     var uid = userCreds.user.uid;
-
-        // })
-        // .catch(function (error) {
-        //     // Handle Errors here.
-        //     var errorCode = error.code;
-        //     var errorMessage = error.message;
-        //     // ...
-        // });
-        // auth.onAuthStateChanged(firebaseUser => {
-        //     if (firebaseUser) {
-        //         let userId = firebaseUser.uid;
-        //         if (this.uploadedFile) {
-        //             this.setState({
-        //                 Employee: {
-        //                     ...this.state.Employee,
-        //                     imagePath: '/images/' + userId + this.uploadedFile.name
-        //                 }
-        //             })
-        //         }
-        //         for (let i = 0; i < this.state.Employee.phones.length; i++) {
-        //             // const element = this.state.Employee.phones[i];
-        //             if (this.state.Employee.phones[i].trim() == '') {
-        //                 this.state.Employee.phones.splice(i, 1)
-        //             }
-
-        //         }
-        //         this.writeUserData(userId);
-        //         if (this.uploadedFile) {
-        //             var storageRef = firebase.storage().ref('/images/' + userId + '/');
-
-        //             // var metadata = {
-        //             //     contentType: 'image/jpeg',
-        //             //   };
-
-        //             // Upload the file and metadata
-        //             var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile);
-        //         }
-        //         console.log(firebaseUser)
-        //         this.props.showNotification("Employee saved successfully")
-        //         this.uploadedFile = null;
-        //         // this.state.Employee
-        //         this.state.image = avatar;
-        //         var empObj={
-        //             userName: '',
-        //         email: '',
-        //         password: '',
-        //         imagePath: '',
-        //         phones: ['']
-        //         }
-        //         this.state.Employee = empObj;
-        //         // this.setState({
-        //         //     Employee: {
-        //         //         ...this.state.Employee,
-        //         //         userName: '',
-        //         // email: '',
-        //         // password: '',
-        //         // imagePath: '',
-        //         // phones: ['']
-        //         //     }
-        //         // })
-
-        //     }
-        // })
+        var userId = userCreds.user.uid;
+        if (this.uploadedFile) {
+            this.state.Employee.imagePath = '/images/' + userId + '/' + this.uploadedFile.name
+        }
+        for (let i = 0; i < this.state.Employee.phones.length; i++) {
+            if (this.state.Employee.phones[i].trim() == '') {
+                this.state.Employee.phones.splice(i, 1)
+            }
+        }
+        if (this.uploadedFile) {
+            var storageRef = firebase.storage().ref('/images/' + userId + '/');
+            var uploadTask = storageRef.child(this.uploadedFile.name).put(this.uploadedFile).then(() => {
+                let authentication = new Authentication()
+                authentication.getImage(this, this.state.Employee.imagePath, (url, self) => {
+                    self.saveAfterUploadImage(userCreds,userId,url)
+                }).bind(this)
+            }).catch((error) => {
+            });
+        }
+        else {
+            // userCreds.user.updateProfile({
+            //     displayName: this.state.Employee.userName,
+            // });
+            // firestore
+            //     .collection('users')
+            //     .doc(userId)
+            //     .set({
+            //         id: userId,
+            //         nickname: this.state.Employee.userName,
+            //     })
+            this.saveAfterUploadImage(userCreds,userId,this.state.Employee.imagePath)
+        }
+    }
+    saveAfterUploadImage = (userCreds,userId,url) => {
+        var self = this
+        userCreds.user.updateProfile({
+            displayName: self.state.Employee.userName,
+            photoURL: url
+        });
+        firestore
+            .collection('users')
+            .doc(userId)
+            .set({
+                id: userId,
+                nickname: self.state.Employee.userName,
+                photoUrl: url
+            })
+        console.log(userCreds)
+        self.uploadedFile = null;
+        self.state.image = "https://firebasestorage.googleapis.com/v0/b/checkup-23ffe.appspot.com/o/images%2Fdefault%2FnoProfilePhoto.png?alt=media&token=f9e5091b-8364-4953-98cf-b3f2d9829616";
+        var empObj = {
+            userName: '',
+            email: '',
+            password: '',
+            imagePath: '',
+            phones: ['']
+        }
+        self.state.Employee.imagePath = url
+        self.writeUserData(userId);
+        self.state.Employee = empObj;
+        if (this.props.senderEmpObj) {
+            self.props.showNotification("Employee updated successfully");
+            self.props.updateEmployee(false)
+        }else{
+        self.props.showNotification("Employee saved successfully");
+        }
     }
     render() {
-        debugger;
         const createEmpoStyle = {
             inputImage: {
                 display: 'none'
@@ -491,119 +376,122 @@ class CreateEmployeeDesign extends React.Component {
                 position: "absolute",
                 marginLeft: "78px"
             },
-
-
         };
-
         return (
-            <div>
+            // <div>
+            <GridItem xs={12} sm={12} md={8}>
                 <form onSubmit={this.handleSubmit.bind(this)}>
-                    <GridContainer>
-                        <GridItem xs={12} sm={12} md={8}>
-                            <Card>
-                                <CardHeader color="primary">
-                                    <h4>Edit Profile</h4>
-                                    <p>Complete your profile</p>
-                                </CardHeader>
-                                <CardAvatar profile>
-                                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                                        <img src={this.state.image} alt="..." />
-                                    </a>
-                                    <div style={createEmpoStyle.imgIcon} >
-                                        <input onChange={this.onImageChange} style={createEmpoStyle.inputImage} accept="image/*" id="icon-button-file" type="file" />
-                                        <label htmlFor="icon-button-file">
-                                            <IconButton color="primary" aria-label="upload picture" component="span">
-                                                <PhotoCamera />
-                                            </IconButton>
-                                        </label>
-                                    </div>
-                                </CardAvatar>
 
-                                <CardBody>
-                                    <GridContainer>
+                    <Card>
+                        <CardHeader color="primary">
+                            <h4>Edit Profile</h4>
+                            <p>Complete your profile</p>
+                        </CardHeader>
+                        <CardAvatar profile>
+                            <a href="#pablo" onClick={e => e.preventDefault()}>
+                                <img src={this.state.image} alt="..." />
+                            </a>
+                            <div style={createEmpoStyle.imgIcon} >
+                                <input onChange={this.onImageChange} style={createEmpoStyle.inputImage} accept="image/*" id="icon-button-file" type="file" />
+                                <label htmlFor="icon-button-file">
+                                    <IconButton color="primary" aria-label="upload picture" component="span">
+                                        <PhotoCamera />
+                                    </IconButton>
+                                </label>
+                            </div>
+                        </CardAvatar>
 
-                                        <GridItem xs={12} sm={12} md={12}>
-                                            <CustomInput
-                                                type="text"
-                                                value={this.state.Employee.userName}
-                                                onChange={e => {
-                                                    this.setState({
-                                                        Employee: {
-                                                            ...this.state.Employee,
-                                                            userName: e.target.value
-                                                        }
-                                                    })
-                                                }}
-                                                labelText="Username"
-                                                id="username"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                            />
-                                        </GridItem>
-                                        <GridItem xs={12} sm={12} md={12}>
-                                            <CustomInput
-                                                type="email"
-                                                value={this.state.Employee.email}
-                                                onChange={e => {
-                                                    this.setState({
-                                                        Employee: {
-                                                            ...this.state.Employee,
-                                                            email: e.target.value
-                                                        }
-                                                    })
-                                                }}
-                                                labelText="Email address"
-                                                id="email-address"
+                        <CardBody>
+                            <GridContainer>
 
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                            />
-                                        </GridItem>
-                                        <GridItem xs={12} sm={12} md={12}>
-                                            <CustomInput
-                                                type="password"
-                                                value={this.state.Employee.password}
-                                                onChange={e => {
-                                                    this.setState({
-                                                        Employee: {
-                                                            ...this.state.Employee,
-                                                            password: e.target.value
-                                                        }
-                                                    })
-                                                }}
-                                                labelText="Password"
-                                                id="email-address"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                            />
-                                        </GridItem>
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <CustomInput
+                                        type="text"
+                                        value={this.state.Employee.userName}
+                                        onChange={e => {
+                                            this.setState({
+                                                Employee: {
+                                                    ...this.state.Employee,
+                                                    userName: e.target.value
+                                                }
+                                            })
+                                        }}
+                                        labelText="Username"
+                                        id="username"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                    />
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <CustomInput disabled
+                                        type="email"
+                                        value={this.state.Employee.email}
+                                        onChange={e => {
+                                            this.setState({
+                                                Employee: {
+                                                    ...this.state.Employee,
+                                                    email: e.target.value
+                                                }
+                                            })
+                                        }}
+                                        labelText="Email address"
+                                        id="email-address"
 
-                                        {this.state.Employee.phones.map((textValue, index) => (
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            disabled: this.props.senderEmpObj?  true : false
+                                          }}
+                                    />
+                                </GridItem>
+                                {this.props.senderEmpObj ? ''
+                                :
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <CustomInput
+                                        type="password"
+                                        value={this.state.Employee.password}
+                                        onChange={e => {
+                                            this.setState({
+                                                Employee: {
+                                                    ...this.state.Employee,
+                                                    password: e.target.value
+                                                }
+                                            })
+                                        }}
+                                        labelText="Password"
+                                        id="email-address"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                    />
+                                </GridItem>
+                                    }
+                                {this.state.Employee.phones.map((textValue, index) => (
 
-                                            <PhoneNumber key={index} index={index} count={this.state.Employee.phones.length} textValue={textValue} deletePhone={this.deletePhone} changeText={this.changeText}></PhoneNumber>
-                                        ))}
+                                    <PhoneNumber key={index} index={index} count={this.state.Employee.phones.length} textValue={textValue} deletePhone={this.deletePhone} changeText={this.changeText}></PhoneNumber>
+                                ))}
 
-                                        <GridItem xs={12} sm={12} md={12}>
-                                            <Button onClick={this.handleAddNewPhone.bind(this)} color="primary">Add Phone</Button>
-                                        </GridItem>
-                                    </GridContainer>
-                                </CardBody>
-                                <CardFooter>
-                                    <Button onClick={this.handleCreateNewEmployee.bind(this)} color="primary">Update Profile</Button>
-                                    <Button onClick={this.handleSendNewRequest.bind(this)} color="primary">send New Request</Button>
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <Button onClick={this.handleAddNewPhone.bind(this)} color="primary">Add Phone</Button>
+                                </GridItem>
+                            </GridContainer>
+                        </CardBody>
+                        <CardFooter>
+        
+                            {/* <Button onClick={this.handleSendNewRequest.bind(this)} color="primary">send New Request</Button> */}
+                            {this.props.senderEmpObj?<Button onClick={()=> this.props.updateEmployee(false)} color="primary">cancel</Button> : ''}
+                            <Button onClick={this.handleCreateNewEmployee.bind(this)} color="primary">{this.props.senderEmpObj ? 'Update' : 'Add Employee'}</Button>
 
-                                    {/* <Button onClick={this.handleUpdate} color="primary">Update Profile</Button>
+                            {/* <Button onClick={this.handleUpdate} color="primary">Update Profile</Button>
                                     <Button onClick={this.handleDelete} color="primary">Update Profile</Button> */}
-                                </CardFooter>
-                            </Card>
-                        </GridItem>
-
-                    </GridContainer>
+                        </CardFooter>
+                    </Card>
                 </form>
-            </div>
+
+            </GridItem>
+            // </div>
         );
     }
 }

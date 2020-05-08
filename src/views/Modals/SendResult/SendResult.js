@@ -65,18 +65,18 @@ export default class SendResult extends React.Component {
         }
     
     componentDidMount() {
-        debugger
+        
 
         this.getUserData();
 
     }
     getUserData = () => {
-        debugger;
+        ;
         // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
 
         let ref = database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId);
         ref.on('value', snapshot => {
-            debugger
+            
             var testObj = snapshot.val();
             console.log(testObj)
             this.setState({test: testObj});
@@ -89,7 +89,7 @@ export default class SendResult extends React.Component {
         this.forceUpdate()
     }
     onImageChange = (event) => {
-        debugger
+        
         if (event.target.files) {
             // this.state.uploadedFiles = event.target.files;
             this.state.test.resultFilespaths = []
@@ -123,7 +123,7 @@ export default class SendResult extends React.Component {
         this.setState({ open: false })
     }
     handleOpenAlert = ()=> {
-        debugger
+        
         if(this.state.uploadedFiles.length > 0)
             this.setState({open: true})
         else
@@ -131,7 +131,7 @@ export default class SendResult extends React.Component {
         
     }
     updateData = () =>{
-        debugger
+        
         var storageRef = firebase.storage().ref('/TestResults/' + this.props.testId + '/');
                 
         // var metadata = {
@@ -261,7 +261,7 @@ render(){
                             }}
                             value={this.state.test.description}
                             onChange={ e => {
-                                debugger
+                                
                                 this.setState({
                                     
                                     test: {

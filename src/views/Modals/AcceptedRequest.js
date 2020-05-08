@@ -63,7 +63,7 @@ export default class AcceptedRequest extends React.Component {
     }
 
     updateData = () => {
-        debugger
+        
 
         this.state.test.status = 'PendingForTakingTheSample'
         // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
@@ -78,7 +78,7 @@ export default class AcceptedRequest extends React.Component {
     }
 
     validate = () => {
-        debugger
+        
         if ( this.state.test.precastions.length > 0 && this.state.test.testCost.length > 0 && this.state.test.generatedCode.length > 0) {
             this.updateData()
 
@@ -157,7 +157,7 @@ export default class AcceptedRequest extends React.Component {
 
                                 value={this.state.test.precastions}
                                 onChange={e => {
-                                    debugger
+                                    
                                     this.setState({
 
                                         test: {
@@ -201,7 +201,7 @@ export default class AcceptedRequest extends React.Component {
 
                                     value={this.state.test.employee}
                                     onChange={e => {
-                                        debugger
+                                        
                                         this.setState({
 
                                             test: {

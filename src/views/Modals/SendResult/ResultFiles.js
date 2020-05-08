@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default class ResultFiles extends React.Component {
     constructor()
     {
-        debugger
+        
         super()
         
     }
@@ -17,7 +17,7 @@ export default class ResultFiles extends React.Component {
         this.props.deleteFile(this.props.index)
     }
     changeText = e => {
-        debugger
+        
         // this.setState({
         //     Employee: {
         //         ...this.state.Employee,
@@ -27,7 +27,7 @@ export default class ResultFiles extends React.Component {
         this.props.changeText(this.props.index,e.target.value)
     }
     render(){
-        debugger;
+        ;
         var count = this.props.index+1 
         return(
             // <span>sdsd</span>

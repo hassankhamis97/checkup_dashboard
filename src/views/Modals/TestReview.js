@@ -31,7 +31,7 @@ export default class TestReview extends React.Component {
 
 
     componentDidMount() {
-        // debugger;
+        // ;
         this.state.recievedObj = this.props.recievedObj;
         console.log('*********************************************************************************')
         console.log(this.props.recievedObj)
@@ -40,12 +40,12 @@ export default class TestReview extends React.Component {
     }
 
     getData = (self) => {
-        debugger
+        
         let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
         // ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
             // ref.orderByChild("userId").equalTo(self.state.recievedObj[0][6]).on('value', snapshot => {
                 ref.child(self.state.recievedObj.id).on('value', snapshot => {
-                debugger
+                
             var obj = snapshot.val();
             console.log(obj)
             self.setState({ data: obj });
@@ -54,7 +54,7 @@ export default class TestReview extends React.Component {
 
 
     handleRefuse = () => {
-        debugger
+        
         //passing empty object will re-render the component
         this.setState({ refuseDialog: true })
     }
@@ -147,9 +147,9 @@ export default class TestReview extends React.Component {
                                 Refuse
                             </Button>
 
-                            <Button autoFocus color="inherit" style={this.styleTestReview.btn}  /*onClick={props.handleClose}*/>
+                            {/* <Button autoFocus color="inherit" style={this.styleTestReview.btn} >
                                 Chat
-                            </Button>
+                            </Button> */}
                             <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRAccept /*this.props.handleClose*/} >
                                 Accept
                             </Button>
