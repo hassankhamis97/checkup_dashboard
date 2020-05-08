@@ -97,7 +97,7 @@ const [noUnReadTotalMessages,setUnReadTotalMessages] = React.useState(0)
 var brand = (
   <div className={classes.logo}>
     <a
-      href="https://www.creative-tim.com?ref=mdr-sidebar"
+      href="#"
       className={classNames(classes.logoLink, {
         [classes.logoLinkRTL]: props.rtlActive
       })}

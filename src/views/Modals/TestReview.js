@@ -147,9 +147,9 @@ export default class TestReview extends React.Component {
                                 Refuse
                             </Button>
 
-                            <Button autoFocus color="inherit" style={this.styleTestReview.btn}  /*onClick={props.handleClose}*/>
+                            {/* <Button autoFocus color="inherit" style={this.styleTestReview.btn} >
                                 Chat
-                            </Button>
+                            </Button> */}
                             <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRAccept /*this.props.handleClose*/} >
                                 Accept
                             </Button>

@@ -62,7 +62,7 @@ export default class ChatBoard extends Component {
     }
 
     getListHistory = () => {
-        
+        // let self = this
         if (this.removeListener) {
             this.removeListener()
         }
@@ -106,7 +106,7 @@ export default class ChatBoard extends Component {
     }
 
     onSendMessage = async (content, type,self) => {
-        
+        debugger
         if (self.state.isShowSticker && type === 2) {
             self.setState({ isShowSticker: false })
         }
@@ -232,7 +232,7 @@ export default class ChatBoard extends Component {
                 () => {
                     uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
                         this.setState({ isLoading: false })
-                        this.onSendMessage(downloadURL, 1)
+                        this.onSendMessage(downloadURL, 1,this)
                     })
                 }
             )
@@ -321,7 +321,7 @@ export default class ChatBoard extends Component {
                         className="icSend"
                         src={images.ic_send}
                         alt="icon send"
-                        onClick={() => this.onSendMessage(this.state.inputValue, 0)}
+                        onClick={() => this.onSendMessage(this.state.inputValue, 0,this)}
                     />
                 </div>
 
@@ -476,55 +476,55 @@ export default class ChatBoard extends Component {
                     className="imgSticker"
                     src={images.mimi1}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi1', 2)}
+                    onClick={() => this.onSendMessage('mimi1', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi2}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi2', 2)}
+                    onClick={() => this.onSendMessage('mimi2', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi3}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi3', 2)}
+                    onClick={() => this.onSendMessage('mimi3', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi4}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi4', 2)}
+                    onClick={() => this.onSendMessage('mimi4', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi5}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi5', 2)}
+                    onClick={() => this.onSendMessage('mimi5', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi6}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi6', 2)}
+                    onClick={() => this.onSendMessage('mimi6', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi7}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi7', 2)}
+                    onClick={() => this.onSendMessage('mimi7', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi8}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi8', 2)}
+                    onClick={() => this.onSendMessage('mimi8', 2,this)}
                 />
                 <img
                     className="imgSticker"
                     src={images.mimi9}
                     alt="sticker"
-                    onClick={() => this.onSendMessage('mimi9', 2)}
+                    onClick={() => this.onSendMessage('mimi9', 2,this)}
                 />
             </div>
         )
