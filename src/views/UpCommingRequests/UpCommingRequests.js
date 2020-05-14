@@ -41,24 +41,24 @@ class UpCommingRequests extends React.Component {
     //        'imgUrl': 'https://www.bipmedia.com/uploads/media/2015/05/Samantha-Ruthford_avatar.jpg' ,
     //        'address' : 'Alex/smoha'
     //       })
-    this.handleSearch = this .handleSearch.bind(this) ;
+    this.handleSearch = this.handleSearch.bind(this);
     this.getResquests = this.getResquests.bind(this)
     this.handleStatus = this.handleStatus.bind(this)
     this.handleAlertOpen = this.handleAlertOpen.bind(this)
     this.state = {
       isNew: true,
-      isVisable:'hidden',
+      isVisable: 'hidden',
       resID: '',
       OBJ: '',
       open: false,
       openAlert: false,
       dataShowList: [],
       fullDataList: [],
-      temp :[],
+      temp: [],
       requests: [],
       tableBodyData: '',
       sampleStatus: '',
-      searchResult:[],
+      searchResult: [],
       sendObj: [],
       transferedObj: {
         userName: '',
@@ -91,8 +91,8 @@ class UpCommingRequests extends React.Component {
   }
 
 
-  ///****************   Changing Sample status ********************/
-  ;
+    ///****************   Changing Sample status ********************/
+    ;
 
   handleStatus(obj) {
     ;
@@ -111,11 +111,11 @@ class UpCommingRequests extends React.Component {
     if (obj.status === "PendingForLabConfirmation") {
       let temp = this.state.fullDataList.filter(item => item[7] === obj.id)
 
-      // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
-      //    gender:temp.gender,phone :temp.phone})
+        // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
+        //    gender:temp.gender,phone :temp.phone})
 
-      //    var tttt =viewObj ;
-      ;
+        //    var tttt =viewObj ;
+        ;
 
       this.state.transferedObj.userName = temp[0][0]
       this.state.transferedObj.id = temp[0][7]
@@ -137,6 +137,9 @@ class UpCommingRequests extends React.Component {
     return self.indexOf(value) === index;
   }
   getResquests = () => {
+debugger;
+    var fromHome = ""
+    var btnStatus = ""
     let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
     ref.orderByChild("status").equalTo("PendingForLabConfirmation").on('value', snapshot => {
@@ -150,17 +153,23 @@ class UpCommingRequests extends React.Component {
         // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
         firebase.database().ref('/').child('Users').child(obj.userId)
           .on("value", snap => {
-            ;
+            debugger;;
             user = snap.val();
             console.log(user)
             // this.setState({ sampleStatus: obj.status });
 
-            this.state.sampleStatus = obj.status === "PendingForLabConfirmation" ? "View Request" : "";
+            this.state.sampleStatus = obj.status === "PendingForLabConfirmation" ? " Pending " : "";
 
-            
-            var reqObj = [obj.id, user.name, obj.date, obj.time, obj.isFromHome, obj.testName,
+            if (obj.isFromHome === "true") {
+              fromHome = "Yes"
+            } else if (obj.isFromHome === "false") {
+              fromHome = "No"
+            }
 
-            obj.status, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+
+            var reqObj = ["-  -  -  -  -  -  -", user.name, obj.date, obj.time, fromHome, obj.testName,
+
+            <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
             ]
 
 
@@ -190,14 +199,14 @@ class UpCommingRequests extends React.Component {
 
 
       //  this.state.dataShowList = []
-      
+
 
       ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
         ;
         // this.forceUpdate();
 
 
-        ;
+        debugger;;
         if (window.$name.state.isNew) {
           snapshot.forEach(function (item) {
 
@@ -207,14 +216,23 @@ class UpCommingRequests extends React.Component {
             // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
             firebase.database().ref('/').child('Users').child(obj.userId)
               .on("value", snap => {
-                ;
+                debugger ;
                 user = snap.val();
                 console.log(user)
-                this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Done" : "";
+                this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Waiting   Sample" : "";
+                // this.state.sampleStatus  = obj.status;
+                if (obj.status === "PendingForResult") {
+                  this.state.sampleStatus = "Upload  Result"
+                }
+                if (obj.isFromHome === "true") {
+                  fromHome = "Yes"
+                } else if (obj.isFromHome === "false") {
+                  fromHome = "No"
+                }
 
                 // this.setState({ sampleStatus: obj.status });
-
-                var reqObj = [obj.id, user.name, obj.date, obj.time, obj.isFromHome, obj.testName, obj.status,
+           
+                var reqObj = [obj.generatedCode, user.name, obj.date, obj.time, fromHome, obj.testName, 
                 <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
                 ]
 
@@ -225,6 +243,26 @@ class UpCommingRequests extends React.Component {
 
 
                 var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
+
+
+                 if(unique.length > 0){
+
+                  window.$name.state.dataShowList.forEach(function( item , i ) {
+                    if(item[0]===reqObj[0]){
+                      console.log(item[1])
+                       item[1]=reqObj[1]
+                       console.log( item[1])
+                       window.$name.state.dataShowList[i][1] = reqObj[1]
+                       console.log( item)
+                       console.log( window.$name.state.dataShowList[i][1])
+                       console.log("*************")
+                    }
+                  });
+
+                 }
+
+                 
+                 window.$name.forceUpdate()
                 if (unique.length == 0) {
                   window.$name.state.dataShowList.push(reqObj)
                 }
@@ -245,7 +283,7 @@ class UpCommingRequests extends React.Component {
         //    this.forceUpdate()
 
         this.state.isNew = true;
-        this.state.searchResult =  window.$name.state.dataShowList ;
+        this.state.searchResult = window.$name.state.dataShowList;
         // var unique =   window.$name.state.dataShowList.filter((v, i, a) => a.indexOf(v) === i); 
         console.log("dddddddd")
       });
@@ -256,7 +294,7 @@ class UpCommingRequests extends React.Component {
     });
 
 
-   
+
     this.state.isNew = true;
     console.log('DATA RETRIEVED');
   }
@@ -279,7 +317,7 @@ class UpCommingRequests extends React.Component {
 
   handleAlertOpen = () => {
 
-    
+
 
     //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
     this.state.isNew = false
@@ -301,73 +339,80 @@ class UpCommingRequests extends React.Component {
   };
 
 
-////************************   Search    ***************************** */
- 
- handleSearch(te){
-  window.$name.state.isVisable='hidden'
-   console.log(te.target.value)
-  //  var searchText = te.target.value
-   var searchText = (te.target.value).toLowerCase();
+  ////************************   Search    ***************************** */
 
-var search  =  window.$name.state.searchResult
+  handleSearch(te) {
+    let mySet = new Set()
+    window.$name.state.isVisable = 'hidden'
+    console.log(te.target.value)
+    //  var searchText = te.target.value
+    var searchText = (te.target.value).toLowerCase();
 
-
-// let filteredcontacts = this.props.contacts.filter(contact => {
-//   return contact.name.toLocaleLowerCase().indexOf(this.state.search) !== -1;
-// });
+    var search = window.$name.state.searchResult
 
 
-   window.$name.state.temp= []
-   window.$name.state.dataShowList= []
-   ////************ Search with  Name    */
-if(search.length>0&&searchText.length>0){ 
+    // let filteredcontacts = this.props.contacts.filter(contact => {
+    //   return contact.name.toLocaleLowerCase().indexOf(this.state.search) !== -1;
+    // });
 
-  window.$name.state.temp  =  this.state.searchResult.filter(item =>{
-     return (item[1]).toLocaleLowerCase().startsWith(searchText)
-  });
-   
-  if(window.$name.state.temp.length>0)
-  window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
- }
- 
 
-       ////************ Search with  Code    */
-       window.$name.state.temp= []
+    window.$name.state.temp = []
+    window.$name.state.dataShowList = []
+    ////************ Search with  Name    */
+    if (search.length > 0 && searchText.length > 0) {
 
- if(search.length>0 &searchText.length>0){ 
+      window.$name.state.temp = this.state.searchResult.filter(item => {
+        return (item[1]).toLocaleLowerCase().startsWith(searchText)
+      });
 
-  window.$name.state.temp  =  this.state.searchResult.filter(item =>{
-     return (item[0]).toLocaleLowerCase().startsWith(searchText)
-  });
-  if(window.$name.state.temp.length>0)
-  window.$name.state.temp.forEach(item => this.state.dataShowList.push(item))
- }
- 
+      if (window.$name.state.temp.length > 0)
+        window.$name.state.temp.forEach(item => mySet.add(item))
+    }
 
- 
-//    return (item[1]).toLocaleLowerCase().includes(searchText)
-//  for (const iterator of search) {
-//   
-//     console.log(iterator[1])
-//     if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
-//     window.$name.state.dataShowList.push(iterator)
-//   }
+
+    ////************ Search with  Code    */
+    window.$name.state.temp = []
+
+    if (search.length > 0 & searchText.length > 0) {
+
+      window.$name.state.temp = this.state.searchResult.filter(item => {
+        return (item[0]).toLocaleLowerCase().startsWith(searchText)
+      });
+      if (window.$name.state.temp.length > 0)
+        window.$name.state.temp.forEach(item => mySet.add(item))
+    }
+
+
+
+    //    return (item[1]).toLocaleLowerCase().includes(searchText)
+    //  for (const iterator of search) {
+    //   
+    //     console.log(iterator[1])
+    //     if(iterator[1].toUpperCase()===searchText.toUpperCase() || iterator[0].toUpperCase()===searchText.toUpperCase() )
+    //     window.$name.state.dataShowList.push(iterator)
+    //   }
+      
+    
+           
+      for (let item of mySet) {
+        window.$name.state.dataShowList.push(item);
+    }
   
 
 
-  
-if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
-  
-  window.$name.state.dataShowList = window.$name.state.searchResult
-  window.$name.state.isVisable='hidden'
-  }else if( window.$name.state.dataShowList.length<=0 && searchText.length>0){
-    console.log("dsffdddddddddddddddddddd")
-    window.$name.state.isVisable='visible'
+
+    if (window.$name.state.dataShowList.length <= 0 && searchText.length <= 0) {
+
+      window.$name.state.dataShowList = window.$name.state.searchResult
+      window.$name.state.isVisable = 'hidden'
+    } else if (window.$name.state.dataShowList.length <= 0 && searchText.length > 0) {
+      console.log("dsffdddddddddddddddddddd")
+      window.$name.state.isVisable = 'visible'
+    }
+    this.forceUpdate()
+
+
   }
-  this.forceUpdate()
-
-
-}
 
   render() {
     ;
@@ -389,12 +434,12 @@ if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
                   Up Comminng Patient requests
                  </p>
               </CardHeader>
-              <div style={{textAlign : "center"}}> 
-                <CustomInput  
+              <div style={{ textAlign: "center" }}>
+                <CustomInput
                   type="text"
                   // value={this.state.Employee.userName}
                   onChange={
-                     this.handleSearch
+                    this.handleSearch
                     // this.setState({
                     //   Employee: {
                     //     ...this.state.Employee,
@@ -430,7 +475,7 @@ if( window.$name.state.dataShowList.length<=0 && searchText.length<=0){
               </CardBody>
             </Card>
           </GridItem>
-          <GridItem >  <h4 style={{textAlign : "center" , visibility: window.$name.state.isVisable , color:"purple"}}> There  Is  No  Data  Found   Tri   Again </h4></GridItem> 
+          <GridItem >  <h4 style={{ textAlign: "center", visibility: window.$name.state.isVisable, color: "purple" }}> There  Is  No  Data  Found   Tri   Again </h4></GridItem>
 
         </GridContainer>
       </div>
