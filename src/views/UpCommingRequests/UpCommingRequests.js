@@ -158,7 +158,7 @@ debugger;
             console.log(user)
             // this.setState({ sampleStatus: obj.status });
 
-            this.state.sampleStatus = obj.status === "PendingForLabConfirmation" ? " Pending " : "";
+            this.state.sampleStatus = obj.status === "PendingForLabConfirmation" ? " Confirm " : "";
 
             if (obj.isFromHome === "true") {
               fromHome = "Yes"
@@ -219,7 +219,7 @@ debugger;
                 debugger ;
                 user = snap.val();
                 console.log(user)
-                this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Waiting   Sample" : "";
+                this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Take Sample" : "";
                 // this.state.sampleStatus  = obj.status;
                 if (obj.status === "PendingForResult") {
                   this.state.sampleStatus = "Upload  Result"
