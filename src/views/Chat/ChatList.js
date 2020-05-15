@@ -148,9 +148,7 @@ export default class ChatList extends Component {
                                 <span className="textItem">{`Nickname: ${
                                     item.data().nickname
                                     }`}</span>
-                                <span className="textItem">{`About me: ${
-                                    item.data().aboutMe ? item.data().aboutMe : 'Not available'
-                                    }`}</span>
+                         
                             </div>
                             {this.state.noUnReadTotalMessagesList[index] == 0 ? '' : < span class="notificationChat">{this.state.noUnReadTotalMessagesList[index]}</span>}
                         </button>
