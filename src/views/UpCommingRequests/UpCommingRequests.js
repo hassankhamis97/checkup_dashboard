@@ -95,7 +95,7 @@ class UpCommingRequests extends React.Component {
     ;
 
   handleStatus(obj) {
-    ;
+   debugger ;
     // prompt(obj)
     this.state.OBJ = obj;
     // let temp = this.state.fullDataList.filter(item => item.id != obj.id);
@@ -105,7 +105,7 @@ class UpCommingRequests extends React.Component {
     //  ;
 
     // var id = obj.id;
-    this.setState({ resID: obj.id })
+    this.setState({ resID:obj })
     //  this.setState({transferedObj : obj})
     // ; 
     if (obj.status === "PendingForLabConfirmation") {
@@ -249,13 +249,12 @@ debugger;
 
                   window.$name.state.dataShowList.forEach(function( item , i ) {
                     if(item[0]===reqObj[0]){
-                      console.log(item[1])
-                       item[1]=reqObj[1]
-                       console.log( item[1])
+                   
+              
                        window.$name.state.dataShowList[i][1] = reqObj[1]
-                       console.log( item)
+                     
                        console.log( window.$name.state.dataShowList[i][1])
-                       console.log("*************")
+                     
                     }
                   });
 
@@ -321,20 +320,21 @@ debugger;
 
     //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
     this.state.isNew = false
-    var id = this.state.resID
+    var obj = this.state.resID
 
-    this.state.dataShowList = this.state.dataShowList.filter(item => !item.includes(id))
-
+   var ssssssss= this.state.dataShowList.filter(item => !item.includes(obj.generatedCode))
+   this.state.dataShowList =[]
+   this.state.dataShowList = ssssssss
 
     var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-    ref.child(id).update({ 'status': 'PendingForResult' })
+    ref.child(obj.id).update({ 'status': 'PendingForResult' })
 
     //  this.state.sampleStatus = "PendingForResult"
 
 
     this.setState({ openAlert: false })
 
-    // this.forceUpdate()
+    //  this.forceUpdate()
 
   };
 
