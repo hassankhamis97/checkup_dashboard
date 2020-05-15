@@ -144,23 +144,28 @@ export default class ChatBoard extends Component {
             var pearedChatStatus = {
                 lastMsgTimeStamp: timestamp,
                 noOfUnReadMessage: 0,
+                lastMessage: content,
+                senderId: Authentication.loggedUser.uid
                 // currentViewedPerson: ""
             }
         }
         else{
-            ;
-             
+
             var pearObj = await firestore.collection(AppString.NODE_USERCHAT).doc(self.currentPeerUser.id).collection(self.currentPeerUser.id).doc(Authentication.loggedUser.uid).get()
             var noOfRM = pearObj.data().noOfUnReadMessage
             var pearedChatStatus = {
                 lastMsgTimeStamp: timestamp,
                 noOfUnReadMessage: parseInt(noOfRM) + 1,
+                lastMessage: content,
+                senderId: Authentication.loggedUser.uid
                 // currentViewedPerson: ""
             }
         }
         var senderChatStatus = {
             lastMsgTimeStamp: timestamp,
             noOfUnReadMessage: 0,
+            lastMessage: content,
+                senderId: Authentication.loggedUser.uid
             // currentViewedPerson: ""
         }
         
