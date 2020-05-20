@@ -56,14 +56,43 @@ export default class RefuseRequest extends React.Component {
     };
 
     updateData = () => {
-        
+        // debugger
         this.state.refuse.status = 'Refused'
-        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
-            .update({
-                'status': this.state.refuse.status,
-                'refuseReason': this.state.refuse.refuseReason+ "\n" + this.refusesElement,
-                'radioReason': this.state.refuse.radioRefusion,
+
+                var testObj = {
+                    testId : this.props.testId,
+                    status : this.state.refuse.status,
+                    refuseReason :  this.state.refuse.refuseReason+ "\n" + this.refusesElement,
+                    radioReason : this.state.refuse.radioRefusion,
+                }
+                var data = testObj;
+
+        fetch('http://checkup.somee.com/api/AnalysisService/RefuseAnalysis', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                debugger
+                console.log('Success:', data);
+                // var responseArray = JSON.parse(data)
+                this.props.handleClose();
+
             })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        // this.state.refuse.status = 'Refused'
+        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
+        //     .update({
+        //         'status': this.state.refuse.status,
+        //         'refuseReason': this.state.refuse.refuseReason+ "\n" + this.refusesElement,
+        //         'radioReason': this.state.refuse.radioRefusion,
+        //     })
     }
 
     validate = () => {

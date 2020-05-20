@@ -63,18 +63,45 @@ export default class AcceptedRequest extends React.Component {
     }
 
     updateData = () => {
-        
-
+        debugger
         this.state.test.status = 'PendingForTakingTheSample'
+        var testObj = {
+            testId : this.props.testId,
+            status : this.state.test.status,
+            precautions : this.state.test.precastions,
+            employeeId : this.state.test.employee,
+            totalCost: this.state.test.testCost,
+            generatedCode: this.state.test.generatedCode
+        }
+        var data = testObj
+   debugger
+   fetch('http://checkup.somee.com/api/AnalysisService/ConfirmAnalysis', {
+       method: 'POST', // or 'PUT'
+       headers: {
+           'Content-Type': 'application/json',
+       },
+       body: JSON.stringify(data),
+   })
+       .then(response => response.json())
+       .then(data => {
+           debugger
+           console.log('Success:', data);
+           // var responseArray = JSON.parse(data)
+           this.props.handleClose();
+
+       })
+       .catch((error) => {
+           console.error('Error:', error);
+       });
         // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
-        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
-            .update({
-                'status': this.state.test.status,
-                'precastions': this.state.test.precastions,
-                'employee': this.state.test.employee,
-                'testCost': this.state.test.testCost,
-                'generatedCode': this.state.test.generatedCode
-            })
+        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
+        //     .update({
+        //         'status': this.state.test.status,
+        //         'precastions': this.state.test.precastions,
+        //         'employee': this.state.test.employee,
+        //         'testCost': this.state.test.testCost,
+        //         'generatedCode': this.state.test.generatedCode
+        //     })
     }
 
     validate = () => {

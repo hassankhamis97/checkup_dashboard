@@ -105,23 +105,39 @@ class UpCommingRequests extends React.Component {
     //  ;
 
     // var id = obj.id;
-    this.setState({ resID:obj })
+    this.setState({ resID:obj }) 
     //  this.setState({transferedObj : obj})
-    // ; 
+    //debu ; 
     if (obj.status === "PendingForLabConfirmation") {
-      let temp = this.state.fullDataList.filter(item => item[7] === obj.id)
-
+      let temp = this.state.fullDataList.filter(item => item[0] === obj.testId)
+      
         // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
         //    gender:temp.gender,phone :temp.phone})
 
         //    var tttt =viewObj ;
-        ;
+       debugger ;
 
-      this.state.transferedObj.userName = temp[0][0]
-      this.state.transferedObj.id = temp[0][7]
-      this.state.transferedObj.dateOfBirth = temp[0][8]
-      this.state.transferedObj.gender = temp[0][9]
-      this.state.transferedObj.phone = temp[0][10]
+
+       /////////////////////////////////////////////////////// // need to un comment code
+
+       this.state.transferedObj = {
+        testId : temp[0][0],
+        name :  temp[0][1],
+        dateRequest :  temp[0][2],
+        timeRequest :  temp[0][3],
+        dateForTakingSample :  temp[0][4],
+        timeForTakingSample :  temp[0][5],
+        birthdate :  temp[0][6],
+        gender :  temp[0][7],
+        roushettaPaths :  temp[0][8],
+        generatedCode :  temp[0][9],
+        Address :  temp[0][10]
+       }
+      // this.state.transferedObj.userName = temp[0][0]
+      // this.state.transferedObj.id = temp[0][7]
+      // this.state.transferedObj.dateOfBirth = temp[0][8]
+      // this.state.transferedObj.gender = temp[0][9]
+      // this.state.transferedObj.phone = temp[0][10]
 
       this.setState({ open: true })
 
@@ -138,159 +154,231 @@ class UpCommingRequests extends React.Component {
   }
   getResquests = () => {
 debugger;
+    let self = this
     var fromHome = ""
     var btnStatus = ""
-    let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+    var data = { labBranchFireBaseId: 'IaTcOwrdXhVBa7qx40FOkW5b94J3', Status: ['PendingForLabConfirmation','PendingForTakingTheSample'] };
+        // debugger
+        fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                debugger
+                console.log('Success:', data);
+                // var responseArray = JSON.parse(data)
+                data.forEach(function (item) {
 
-    ref.orderByChild("status").equalTo("PendingForLabConfirmation").on('value', snapshot => {
-      this.state.dataShowList = []
-
-      snapshot.forEach(function (item) {
-        ;
-        var obj = item.val();
-        console.log(obj)
-        let user;
-        // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
-        firebase.database().ref('/').child('Users').child(obj.userId)
-          .on("value", snap => {
-            debugger;;
-            user = snap.val();
-            console.log(user)
-            // this.setState({ sampleStatus: obj.status });
-
-            this.state.sampleStatus = obj.status === "PendingForLabConfirmation" ? " Confirm " : "";
-
-            if (obj.isFromHome === "true") {
-              fromHome = "Yes"
-            } else if (obj.isFromHome === "false") {
-              fromHome = "No"
-            }
-
-
-            var reqObj = ["-  -  -  -  -  -  -", user.name, obj.date, obj.time, fromHome, obj.testName,
-
-            <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-            ]
+                    var obj = item
+                    let user;
+                    firebase.database().ref('/').child('Users').child(obj.userId)
+                        .on("value", snap => {
+                            ;
+                            user = snap.val();
+                            console.log(user)
+                            debugger
+                            // self.state.sampleStatus  = obj.status;
+                            if ((obj.isFromHome)) {
+                                fromHome = "Yes"
+                            } else if ((!obj.isFromHome)) {
 
 
-            var fullObj = [user.name, obj.date, obj.time, obj.isFromHome, obj.testName,
+                                fromHome = "No"
+                            }
+                            if (obj.status == "PendingForLabConfirmation") {
+                              self.state.sampleStatus = "Confirm"
+                          } else {
+                            self.state.sampleStatus = "Take Sample"
+                          }
 
-            obj.status, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-              , obj.id, user.dateOfBirth, user.gender, user.phone
-            ]
-            // this.state.transferedObj.testName = 
+                            var reqObj = [obj.generatedCode, user.name, obj.dateRequest, obj.timeRequest, fromHome, obj.testName,
+                            <Button key={obj.id} onClick={() => self.handleStatus(obj)} color="primary" >{self.state.sampleStatus}</Button>
+                            ]
 
-            var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
-            if (unique.length == 0) {
-              window.$name.state.dataShowList.push(reqObj)
-            }
+                            console.log(reqObj)
+                            debugger
+                            self.state.dataShowList.push(reqObj)
+                            var fullObj = [obj.testId,user.name, obj.dateRequest, obj.timeRequest,obj.dateForTakingSample, obj.timeForTakingSample, obj.isFromHome, obj.testName,obj.status,
+                                , user.birthdate, user.gender, user.phone,obj.roushettaPaths,obj.generatedCode,obj.Address
+                              ]
 
-
-            this.state.fullDataList.push(fullObj);
-            console.log(reqObj)
-
-            this.forceUpdate()
-          });
-        // keys.push(itemVal);
-
-        //this.state.tableBodyData = 
-
-      }.bind(this));
-
-
-      //  this.state.dataShowList = []
+                              // this.state.transferedObj.testName = 
+                  
+                      //         var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
+                      //         if (unique.length == 0) {
+                      //           window.$name.state.dataShowList.push(reqObj)
+                      //         }
+                  
+                  
+                      self.state.fullDataList.push(fullObj);
+                            self.forceUpdate()
+                        });
 
 
-      ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
-        ;
-        // this.forceUpdate();
+                        
+                  //         console.log(reqO
+              
+
+                })    // un mute me ya 7aba
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    // let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+
+    // ref.orderByChild("status").equalTo("PendingForLabConfirmation").on('value', snapshot => {
+    //   this.state.dataShowList = []
+
+    //   snapshot.forEach(function (item) {
+    //     ;
+    //     var obj = item.val();
+    //     console.log(obj)
+    //     let user;
+    //     // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
+    //     firebase.database().ref('/').child('Users').child(obj.userId)
+    //       .on("value", snap => {
+    //         debugger;;
+    //         user = snap.val();
+    //         console.log(user)
+    //         // this.setState({ sampleStatus: obj.status });
+
+    //         this.state.sampleStatus = obj.status === "PendingForLabConfirmation" ? " Confirm " : "";
+
+    //         if (obj.isFromHome === "true") {
+    //           fromHome = "Yes"
+    //         } else if (obj.isFromHome === "false") {
+    //           fromHome = "No"
+    //         }
 
 
-        debugger;;
-        if (window.$name.state.isNew) {
-          snapshot.forEach(function (item) {
+    //         var reqObj = ["-  -  -  -  -  -  -", user.name, obj.date, obj.time, fromHome, obj.testName,
 
-            var obj = item.val();
-            console.log(obj)
-            let user;
-            // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
-            firebase.database().ref('/').child('Users').child(obj.userId)
-              .on("value", snap => {
-                debugger ;
-                user = snap.val();
-                console.log(user)
-                this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Take Sample" : "";
-                // this.state.sampleStatus  = obj.status;
-                if (obj.status === "PendingForResult") {
-                  this.state.sampleStatus = "Upload  Result"
-                }
-                if (obj.isFromHome === "true") {
-                  fromHome = "Yes"
-                } else if (obj.isFromHome === "false") {
-                  fromHome = "No"
-                }
+    //         <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+    //         ]
 
-                // this.setState({ sampleStatus: obj.status });
+
+    //         var fullObj = [user.name, obj.date, obj.time, obj.isFromHome, obj.testName,
+
+    //         obj.status, <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+    //           , obj.id, user.dateOfBirth, user.gender, user.phone
+    //         ]
+    //         // this.state.transferedObj.testName = 
+
+    // //         var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
+    // //         if (unique.length == 0) {
+    // //           window.$name.state.dataShowList.push(reqObj)
+    // //         }
+
+
+    //         this.state.fullDataList.push(fullObj);
+    // //         console.log(reqObj)
+
+    //         this.forceUpdate()
+    //       });
+    //     // keys.push(itemVal);
+
+    //     //this.state.tableBodyData = 
+
+    //   }.bind(this));
+
+
+    //   //  this.state.dataShowList = []
+
+
+    //   ref.orderByChild("status").equalTo("PendingForTakingTheSample").on('value', snapshot => {
+    //     ;
+    //     // this.forceUpdate();
+
+
+    //     debugger;;
+    //     if (window.$name.state.isNew) {
+    //       snapshot.forEach(function (item) {
+
+    //         var obj = item.val();
+    //         console.log(obj)
+    //         let user;
+    //         // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
+    //         firebase.database().ref('/').child('Users').child(obj.userId)
+    //           .on("value", snap => {
+    //             debugger ;
+    //             user = snap.val();
+    //             console.log(user)
+    //             this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Take Sample" : "";
+    //             // this.state.sampleStatus  = obj.status;
+    //             if (obj.status === "PendingForResult") {
+    //               this.state.sampleStatus = "Upload  Result"
+    //             }
+    //             if (obj.isFromHome === "true") {
+    //               fromHome = "Yes"
+    //             } else if (obj.isFromHome === "false") {
+    //               fromHome = "No"
+    //             }
+
+    //             // this.setState({ sampleStatus: obj.status });
            
-                var reqObj = [obj.generatedCode, user.name, obj.date, obj.time, fromHome, obj.testName, 
-                <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-                ]
+    //             var reqObj = [obj.generatedCode, user.name, obj.date, obj.time, fromHome, obj.testName, 
+    //             <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+    //             ]
 
 
 
-                console.log(reqObj)
+    //             console.log(reqObj)
 
 
 
-                var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
+    //             var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
 
 
-                 if(unique.length > 0){
+    //              if(unique.length > 0){
 
-                  window.$name.state.dataShowList.forEach(function( item , i ) {
-                    if(item[0]===reqObj[0]){
+    //               window.$name.state.dataShowList.forEach(function( item , i ) {
+    //                 if(item[0]===reqObj[0]){
                    
               
-                       window.$name.state.dataShowList[i][1] = reqObj[1]
+    //                    window.$name.state.dataShowList[i][1] = reqObj[1]
                      
-                       console.log( window.$name.state.dataShowList[i][1])
+    //                    console.log( window.$name.state.dataShowList[i][1])
                      
-                    }
-                  });
+    //                 }
+    //               });
 
-                 }
+    //              }
 
                  
-                 window.$name.forceUpdate()
-                if (unique.length == 0) {
-                  window.$name.state.dataShowList.push(reqObj)
-                }
+    //              window.$name.forceUpdate()
+    //             if (unique.length == 0) {
+    //               window.$name.state.dataShowList.push(reqObj)
+    //             }
 
 
-                window.$name.forceUpdate()
-              });
-            // keys.push(itemVal);
+    //             window.$name.forceUpdate()
+    //           });
+    //         // keys.push(itemVal);
 
-            //this.state.tableBodyData = 
+    //         //this.state.tableBodyData = 
 
-          }.bind(this));
-        }
-        // data.map((obj,index)=>{
-        //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
-        //    this.state.dataShowList.push(reqObj)
-        //    //this.state.tableBodyData = 
-        //    this.forceUpdate()
+    //       }.bind(this));
+    //     }
+    //     // data.map((obj,index)=>{
+    //     //    var reqObj = [obj[index].testName,obj[index].date,obj[index].time,obj[index].isFromHome]
+    //     //    this.state.dataShowList.push(reqObj)
+    //     //    //this.state.tableBodyData = 
+    //     //    this.forceUpdate()
 
-        this.state.isNew = true;
-        this.state.searchResult = window.$name.state.dataShowList;
-        // var unique =   window.$name.state.dataShowList.filter((v, i, a) => a.indexOf(v) === i); 
-        console.log("dddddddd")
-      });
-
-
+    //     this.state.isNew = true;
+    //     this.state.searchResult = window.$name.state.dataShowList;
+    //     // var unique =   window.$name.state.dataShowList.filter((v, i, a) => a.indexOf(v) === i); 
+    //     console.log("dddddddd")
+    //   });
 
 
-    });
+
+
+    // });
 
 
 
@@ -322,12 +410,36 @@ debugger;
     this.state.isNew = false
     var obj = this.state.resID
 
-   var ssssssss= this.state.dataShowList.filter(item => !item.includes(obj.generatedCode))
+   var item = this.state.dataShowList.filter(item => !item.includes(obj.generatedCode))
    this.state.dataShowList =[]
-   this.state.dataShowList = ssssssss
+   this.state.dataShowList = item
+   debugger
+  var testObj = {
+     testId: obj.testId, //to be dynamic
+     status: "PendingForResult"
+   }
+   var data = testObj
+   // debugger
+   fetch('http://checkup.somee.com/api/AnalysisService/UpdateTakeSampleStatus', {
+       method: 'POST', // or 'PUT'
+       headers: {
+           'Content-Type': 'application/json',
+       },
+       body: JSON.stringify(data),
+   })
+       .then(response => response.json())
+       .then(data => {
+           debugger
+           console.log('Success:', data);
+           // var responseArray = JSON.parse(data)
+           this.props.handleClose();
 
-    var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-    ref.child(obj.id).update({ 'status': 'PendingForResult' })
+       })
+       .catch((error) => {
+           console.error('Error:', error);
+       });
+    // var ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+    // ref.child(obj.id).update({ 'status': 'PendingForResult' })
 
     //  this.state.sampleStatus = "PendingForResult"
 

@@ -40,16 +40,32 @@ export default class TestReview extends React.Component {
     }
 
     getData = (self) => {
-        
-        let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-        // ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
-            // ref.orderByChild("userId").equalTo(self.state.recievedObj[0][6]).on('value', snapshot => {
-                ref.child(self.state.recievedObj.id).on('value', snapshot => {
+        // fetch('http://checkup.somee.com/api/AnalysisService/GetSpecificTest?testId='+this.props.testId, {
+        //     fetch('http://checkup.somee.com/api/AnalysisService/GetSpecificTest?testId='+self.state.recievedObj.id, {
+        //     method: 'GET', // or 'PUT'
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         debugger
+        //         var obj = data;
+        //         console.log(obj)
+        //         self.setState({ data: obj });
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
+        // let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+        // // ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
+        //     // ref.orderByChild("userId").equalTo(self.state.recievedObj[0][6]).on('value', snapshot => {
+        //         ref.child(self.state.recievedObj.id).on('value', snapshot => {
                 
-            var obj = snapshot.val();
-            console.log(obj)
-            self.setState({ data: obj });
-        });
+        //     var obj = snapshot.val();
+        //     console.log(obj)
+        //     self.setState({ data: obj });
+        // });
     }
 
 
@@ -130,9 +146,9 @@ export default class TestReview extends React.Component {
         return (
             <div style={this.styleTestReview.TestReviewModal}>
                  {this.state.refuseDialog ?
-                <RefuseRequest testId={this.props.recievedObj.id}  open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
+                <RefuseRequest testId={this.props.recievedObj.testId}  open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
                 {this.state.acceptDialog ?
-                    <AcceptedRequest open={this.state.acceptDialog} fromHome={this.state.data.isFromHome} testId={this.props.recievedObj.id} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
+                    <AcceptedRequest open={this.state.acceptDialog} fromHome={this.state.data.isFromHome} testId={this.props.recievedObj.testId} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
 
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar}>
@@ -157,10 +173,14 @@ export default class TestReview extends React.Component {
                     </AppBar>
                     <div style={this.styleTestReview.TestReviewModal}>
                         <div style={this.styleTestReview.TestData}>
-                            <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.state.data.testName}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Date : </span><p style={this.styleTestReview.TestDataObject}>{this.state.data.date}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Time : </span><p style={this.styleTestReview.TestDataObject}>{this.state.data.time}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.state.data.isFromHome}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br>
+                            {/* <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br> */}
+
+                            <span style={this.styleTestReview.textStyle}>Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>                           
+                            <span style={this.styleTestReview.textStyle}>Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateForTakingSample}</p><br></br>                            
+                            <span style={this.styleTestReview.textStyle}>Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.isFromHome}</p><br></br>
                             <span style={this.styleTestReview.textStyle}>Address : </span><p style={this.styleTestReview.TestDataObject}>Cairo</p><br></br>
                             {/* <span style={this.styleTestReview.textStyle}>Phone : </span><p style={this.styleTestReview.TestDataObject}>+201023548432</p><br></br> */}
                             {/* <span style={this.styleTestReview.textStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>50</p><br></br> */}

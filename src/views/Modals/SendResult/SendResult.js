@@ -73,14 +73,31 @@ export default class SendResult extends React.Component {
     getUserData = () => {
         ;
         // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
-
-        let ref = database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId);
-        ref.on('value', snapshot => {
-            
-            var testObj = snapshot.val();
+        // var data = {labBranchFireBaseId :'IaTcOwrdXhVBa7qx40FOkW5b94J3',Status : ['PendingForResult']};
+// debugger
+        fetch('http://checkup.somee.com/api/AnalysisService/GetSpecificTest?testId='+this.props.testId, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                debugger
+                var testObj = data;
             console.log(testObj)
             this.setState({test: testObj});
-        });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        // let ref = database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId);
+        // ref.on('value', snapshot => {
+            
+        //     var testObj = snapshot.val();
+        //     console.log(testObj)
+        //     this.setState({test: testObj});
+        // });
         console.log('DATA RETRIEVED');
     }
     deleteFile = (index) =>{
@@ -142,15 +159,35 @@ export default class SendResult extends React.Component {
         for (let i = 0; i < this.state.uploadedFiles.length; i++) {
             var uploadTask = storageRef.child(this.state.uploadedFiles[i].name).put(this.state.uploadedFiles[i]);
         }
+        this.state.test.testId = this.props.testId
         this.state.test.status = 'Done'
-        database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
+        var data = this.state.test;
+        // debugger
+        fetch('http://checkup.somee.com/api/AnalysisService/UpdateAnalysis', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                debugger
+                console.log('Success:', data);
+                // var responseArray = JSON.parse(data)
+                this.props.handleClose();
+
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
         // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
         // .update({ 'status': this.state.test.status,
         //             'description': this.state.test.description,
         //             'hba1c': this.state.test.hba1c,
         //             'resultFilespaths': this.state.test.resultFilespaths,
         //              })
-        this.props.handleClose();
     }
 
     // const classes = useStyles();

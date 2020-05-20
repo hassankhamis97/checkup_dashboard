@@ -99,7 +99,7 @@ class MainTestResults extends React.Component {
         // prompt(obj.id)
 
 
-        this.setState({ objId: obj.id })
+        this.setState({ objId: obj.testId })
 
         this.setState({ openAlert: true })
 
@@ -118,52 +118,152 @@ class MainTestResults extends React.Component {
 
 
     getResquests = () => {
-
+        let self = this
         // ;
         var fromHome = ""
         var btnStatus = ""
-        let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+        debugger
+        var data = { labBranchFireBaseId: 'IaTcOwrdXhVBa7qx40FOkW5b94J3', Status: ['PendingForResult'] };
+        // debugger
+        fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                debugger
+                console.log('Success:', data);
+                // var responseArray = JSON.parse(data)
+                data.forEach(function (item) {
 
-        ref.orderByChild("status").equalTo("PendingForResult").on('value', snapshot => {
-            this.state.dataShowList = []
+                    var obj = item
+                    let user;
+                    firebase.database().ref('/').child('Users').child(obj.userId)
+                        .on("value", snap => {
+                            ;
+                            user = snap.val();
+                            console.log(user)
 
-            snapshot.forEach(function (item) {
-                ;
-                var obj = item.val();
-                console.log(obj)
-                let user;
-                firebase.database().ref('/').child('Users').child(obj.userId)
-                    .on("value", snap => {
-                        ;
-                        user = snap.val();
-                        console.log(user)
-
-                        // this.state.sampleStatus  = obj.status;
-                        if (obj.status ==="PendingForResult") {
-                            this.state.sampleStatus = "Upload  Result"
-                        }
-                        if ((obj.isFromHome ==="true")) {
-                            fromHome = "Yes"
-                        } else if ((obj.isFromHome === "false")) {
-                            fromHome = "No"
-                        }           
-
-
-                        var reqObj = [obj.generatedCode, user.name, obj.date, obj.time, fromHome, obj.testName,
-                        <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
-                        ]
-
-                        console.log(reqObj)
-
-                        this.state.dataShowList.push(reqObj)
-                        this.forceUpdate()
-                    });
+                            // this.state.sampleStatus  = obj.status;
+                            if (obj.status === "PendingForResult") {
+                                self.state.sampleStatus = "Upload  Result"
+                            }
+                            if ((obj.isFromHome)) {
+                                fromHome = "Yes"
+                            } else if ((!obj.isFromHome)) {
+                                fromHome = "No"
+                            }
 
 
-            }.bind(this));
-            window.self.state.searchResult = this.state.dataShowList;
+                            var reqObj = [obj.generatedCode, user.name, obj.dateRequest, obj.timeRequest, fromHome, obj.testName,
+                            <Button key={obj.id} onClick={() => self.handleStatus(obj)} color="primary" >{self.state.sampleStatus}</Button>
+                            ]
 
-        });
+                            console.log(reqObj)
+
+                            self.state.dataShowList.push(reqObj)
+                            self.forceUpdate()
+                        });
+                })
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('POST', 'http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches',true);
+        // xhr.setRequestHeader("Content-Type", "application/json");
+        // // xhr.setRequestHeader('Origin','http://checkup.somee.com');
+        // var data = {labBranchFireBaseId :'IaTcOwrdXhVBa7qx40FOkW5b94J3',Status : ['PendingForResult']};
+        // xhr.send(JSON.stringify(data));
+        // xhr.onreadystatechange = function() {
+        //    debugger;
+
+        //    var responseArray = JSON.parse(xhr.response)
+        //    responseArray.forEach(function (item) {
+
+        //    var obj = item
+        //    let user;
+        //    firebase.database().ref('/').child('Users').child(obj.userId)
+        //                .on("value", snap => {
+        //                    ;
+        //                    user = snap.val();
+        //                    console.log(user)
+
+        //                    // this.state.sampleStatus  = obj.status;
+        //                    if (obj.status ==="PendingForResult") {
+        //                     self.state.sampleStatus = "Upload  Result"
+        //                    }
+        //                    if ((obj.isFromHome)) {
+        //                        fromHome = "Yes"
+        //                    } else if ((!obj.isFromHome)) {
+        //                        fromHome = "No"
+        //                    }           
+
+
+        //                    var reqObj = [obj.generatedCode, user.name, obj.dateRequest, obj.timeRequest, fromHome, obj.testName,
+        //                    <Button key={obj.id} onClick={() => self.handleStatus(obj)} color="primary" >{self.state.sampleStatus}</Button>
+        //                    ]
+
+        //                    console.log(reqObj)
+
+        //                    self.state.dataShowList.push(reqObj)
+        //                    self.forceUpdate()
+        //                });
+        //             })
+        // //    console.log(x)
+        // //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        // //         // Request finished. Do processing here.
+        // //         var response = this.responseText;
+        // //     }
+        // };
+
+
+
+        // let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
+
+        // ref.orderByChild("status").equalTo("PendingForResult").on('value', snapshot => {
+        //     this.state.dataShowList = []
+        //     debugger
+        //     snapshot.forEach(function (item) {
+        //         debugger
+        //         var obj = item.val();
+        //         console.log(obj)
+        //         let user;
+        //         firebase.database().ref('/').child('Users').child(obj.userId)
+        //             .on("value", snap => {
+        //                 ;
+        //                 user = snap.val();
+        //                 console.log(user)
+
+        //                 // this.state.sampleStatus  = obj.status;
+        //                 if (obj.status ==="PendingForResult") {
+        //                     this.state.sampleStatus = "Upload  Result"
+        //                 }
+        //                 if ((obj.isFromHome ==="true")) {
+        //                     fromHome = "Yes"
+        //                 } else if ((obj.isFromHome === "false")) {
+        //                     fromHome = "No"
+        //                 }           
+
+
+        //                 var reqObj = [obj.generatedCode, user.name, obj.date, obj.time, fromHome, obj.testName,
+        //                 <Button key={obj.id} onClick={() => this.handleStatus(obj)} color="primary" >{this.state.sampleStatus}</Button>
+        //                 ]
+
+        //                 console.log(reqObj)
+
+        //                 this.state.dataShowList.push(reqObj)
+        //                 this.forceUpdate()
+        //             });
+
+
+        //     }.bind(this));
+        //     window.self.state.searchResult = this.state.dataShowList;
+
+        // });
 
 
     }
@@ -223,7 +323,7 @@ class MainTestResults extends React.Component {
 
         // var searchText = te.target.value
 
-debugger
+        debugger
         var searchText = (te.target.value).toLowerCase();
 
         var search = window.self.state.searchResult
@@ -257,8 +357,8 @@ debugger
 
         }
         window.self.state.temp.forEach(item => mySet.add(item))
-       
-              
+
+
         for (let item of mySet) {
             window.self.state.dataShowList.push(item);
         }
