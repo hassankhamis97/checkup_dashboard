@@ -10,7 +10,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
-import firebase from 'firebase';
+import firebase, { auth } from 'firebase';
 import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 import SendResult from "views/Modals/SendResult/SendResult.js";
 
@@ -123,7 +123,7 @@ class MainTestResults extends React.Component {
         var fromHome = ""
         var btnStatus = ""
         debugger
-        var data = { labBranchFireBaseId: 'IaTcOwrdXhVBa7qx40FOkW5b94J3', Status: ['PendingForResult'] };
+        var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForResult'] };
         // debugger
         fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
             method: 'POST', // or 'PUT'
@@ -168,6 +168,8 @@ class MainTestResults extends React.Component {
                             self.forceUpdate()
                         });
                 })
+                            window.self.state.searchResult = this.state.dataShowList;
+
             })
             .catch((error) => {
                 console.error('Error:', error);

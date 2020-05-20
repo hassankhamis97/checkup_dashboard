@@ -26,9 +26,10 @@ export default class TestReview extends React.Component {
         refuseDialog: false,
         acceptDialog: false,
         recievedObj: {},
-        data: {}
+        data: {},
+        arr : []
     }
-
+    arr = this.props.recievedObj.roushettaPaths
 
     componentDidMount() {
         // ;
@@ -173,21 +174,31 @@ export default class TestReview extends React.Component {
                     </AppBar>
                     <div style={this.styleTestReview.TestReviewModal}>
                         <div style={this.styleTestReview.TestData}>
-                            <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>User Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br>
                             {/* <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br> */}
 
-                            <span style={this.styleTestReview.textStyle}>Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>                           
-                            <span style={this.styleTestReview.textStyle}>Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateForTakingSample}</p><br></br>                            
-                            <span style={this.styleTestReview.textStyle}>Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.isFromHome}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Request Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>                           
+                            <span style={this.styleTestReview.textStyle}>Take sample Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>
+                            <span style={this.styleTestReview.textStyle}>Take sample Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateForTakingSample}</p><br></br>                            
+                            <span style={this.styleTestReview.textStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.isFromHome == true ? 'YES' : 'No'}</p><br></br>
                             <span style={this.styleTestReview.textStyle}>Address : </span><p style={this.styleTestReview.TestDataObject}>Cairo</p><br></br>
                             {/* <span style={this.styleTestReview.textStyle}>Phone : </span><p style={this.styleTestReview.TestDataObject}>+201023548432</p><br></br> */}
                             {/* <span style={this.styleTestReview.textStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>50</p><br></br> */}
                         </div>
                         <div style={this.styleTestReview.TestPic}>
                             <AwesomeSlider>
-                                <div>
+                            { this.props.recievedObj.roushettaPaths.map(element => {
+                                // <AcceptedRequest></AcceptedRequest>
+                                debugger
+                               return <div>
+                                <img style={this.styleTestReview.ImgTestPic}
+                                    src = {element}
+                                    alt="new"
+                                />
+                            </div>
+                            })}
+                                {/* <div>
                                     <img style={this.styleTestReview.ImgTestPic}
                                         src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
                                         alt="new"
@@ -204,7 +215,7 @@ export default class TestReview extends React.Component {
                                         src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
                                         alt="new"
                                     />
-                                </div>
+                                </div> */}
                             </AwesomeSlider>
                         </div>
                     </div>

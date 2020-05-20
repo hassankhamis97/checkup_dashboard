@@ -3,7 +3,8 @@ import React from "react";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "../../components/CustomButtons/Button.js";
 
-import firebase from 'firebase';
+// import firebase from 'firebase';
+import firebase, { auth } from 'firebase';
 
 import database from '../../firebase';
 
@@ -127,11 +128,15 @@ class UpCommingRequests extends React.Component {
         timeRequest :  temp[0][3],
         dateForTakingSample :  temp[0][4],
         timeForTakingSample :  temp[0][5],
-        birthdate :  temp[0][6],
-        gender :  temp[0][7],
-        roushettaPaths :  temp[0][8],
-        generatedCode :  temp[0][9],
-        Address :  temp[0][10]
+        isFromHome :  temp[0][6],
+        testName :  temp[0][7],
+        status :  temp[0][8],
+        birthdate :  temp[0][10],
+        gender :  temp[0][11],
+        phone :  temp[0][12],
+        roushettaPaths :  temp[0][13],
+        generatedCode :  temp[0][14],
+        Address :  temp[0][15]
        }
       // this.state.transferedObj.userName = temp[0][0]
       // this.state.transferedObj.id = temp[0][7]
@@ -157,7 +162,7 @@ debugger;
     let self = this
     var fromHome = ""
     var btnStatus = ""
-    var data = { labBranchFireBaseId: 'IaTcOwrdXhVBa7qx40FOkW5b94J3', Status: ['PendingForLabConfirmation','PendingForTakingTheSample'] };
+    var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForLabConfirmation','PendingForTakingTheSample'] };
         // debugger
         fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
             method: 'POST', // or 'PUT'
@@ -205,7 +210,6 @@ debugger;
                             var fullObj = [obj.testId,user.name, obj.dateRequest, obj.timeRequest,obj.dateForTakingSample, obj.timeForTakingSample, obj.isFromHome, obj.testName,obj.status,
                                 , user.birthdate, user.gender, user.phone,obj.roushettaPaths,obj.generatedCode,obj.Address
                               ]
-
                               // this.state.transferedObj.testName = 
                   
                       //         var unique = window.$name.state.dataShowList.filter((v, i, a) => a[i][0] === reqObj[0])
@@ -224,6 +228,9 @@ debugger;
               
 
                 })    // un mute me ya 7aba
+
+                this.state.searchResult = window.$name.state.dataShowList;
+
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -472,7 +479,7 @@ debugger;
     window.$name.state.dataShowList = []
     ////************ Search with  Name    */
     if (search.length > 0 && searchText.length > 0) {
-
+      debugger
       window.$name.state.temp = this.state.searchResult.filter(item => {
         return (item[1]).toLocaleLowerCase().startsWith(searchText)
       });
