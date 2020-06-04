@@ -56,11 +56,12 @@ export default class RefuseRequest extends React.Component {
     };
 
     updateData = () => {
-        // debugger
+        let self = this
+        // 
         this.state.refuse.status = 'Refused'
 
                 var testObj = {
-                    testId : this.props.testId,
+                    id : this.props.testId,
                     status : this.state.refuse.status,
                     refuseReason :  this.state.refuse.refuseReason+ "\n" + this.refusesElement,
                     radioReason : this.state.refuse.radioRefusion,
@@ -76,8 +77,10 @@ export default class RefuseRequest extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                debugger
+                
                 console.log('Success:', data);
+                database.ref('/').child('Notification').child(self.props.userId).set({getNotified: database.ref().push().key})
+
                 // var responseArray = JSON.parse(data)
                 this.props.handleClose();
 

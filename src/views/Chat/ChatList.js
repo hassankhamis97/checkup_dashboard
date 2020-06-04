@@ -64,11 +64,11 @@ export default class ChatList extends Component {
         //     self.listUser.push(...result.docs)
         //     self.setState({isLoading: false})
         // }
-        debugger
+        
         // self.lastElement = self.listUserParent[self.listUserParent.length - 1]
         // firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).orderBy('lastMsgTimeStamp').startAfter(self.lastElement ? self.lastElement : 0).limit(1).onSnapshot(function (chatUserResult) {
         firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).orderBy('lastMsgTimeStamp','desc').onSnapshot(function (chatUserResult) {
-
+                debugger
                 // self.listUserParent = []
                 self.state.noUnReadTotalMessagesList = []
                 self.listUser = []
@@ -82,7 +82,7 @@ export default class ChatList extends Component {
                 // if (unique.length > 0) {
                 //     window.$name.state.listUserParent
                 // }
-                debugger
+                
 
                 self.state.noUnReadTotalMessagesList.push(chatUserResult.docs[i].data().noOfUnReadMessage);
                 firestore.collection(AppString.NODE_USERS).doc(chatUserResult.docs[i].id).get().then(result => {

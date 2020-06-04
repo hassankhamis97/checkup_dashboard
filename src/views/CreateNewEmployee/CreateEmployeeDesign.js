@@ -129,7 +129,7 @@ class CreateEmployeeDesign extends React.Component {
         // firebase.database().ref('/').set(this.state);
         // var newPostKey = database.ref().push().key;
         
-        database.ref('/').child('Employees').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").child(userId).set(this.state.Employee);
+        database.ref('/').child('Employees').child(Authentication.loggedUser.uid).child(userId).set(this.state.Employee);
         console.log('DATA SAVED');
     }
 
@@ -222,30 +222,30 @@ class CreateEmployeeDesign extends React.Component {
             noOfUnReadMessage: 0
         }
 
-        firestore
-            .collection(AppString.NODE_USERCHAT)
-            .doc(Authentication.loggedUser.uid)
-            .collection(Authentication.loggedUser.uid)
-            .doc("IaTcOwrdXhVBa7qx40FOkW5b94J3")
-            .set(chatStatus)
-            .then(() => {
-                //this.setState({ inputValue: '' })
-            })
-            .catch(err => {
-                self.props.showToast(0, err.toString())
-            })
-        firestore
-            .collection(AppString.NODE_USERCHAT)
-            .doc("IaTcOwrdXhVBa7qx40FOkW5b94J3")
-            .collection("IaTcOwrdXhVBa7qx40FOkW5b94J3")
-            .doc(Authentication.loggedUser.uid)
-            .set(chatStatus)
-            .then(() => {
-                //this.setState({ inputValue: '' })
-            })
-            .catch(err => {
-                self.props.showToast(0, err.toString())
-            })
+        // firestore
+        //     .collection(AppString.NODE_USERCHAT)
+        //     .doc(Authentication.loggedUser.uid)
+        //     .collection(Authentication.loggedUser.uid)
+        //     .doc("IaTcOwrdXhVBa7qx40FOkW5b94J3")
+        //     .set(chatStatus)
+        //     .then(() => {
+        //         //this.setState({ inputValue: '' })
+        //     })
+        //     .catch(err => {
+        //         self.props.showToast(0, err.toString())
+        //     })
+        // firestore
+        //     .collection(AppString.NODE_USERCHAT)
+        //     .doc("IaTcOwrdXhVBa7qx40FOkW5b94J3")
+        //     .collection("IaTcOwrdXhVBa7qx40FOkW5b94J3")
+        //     .doc(Authentication.loggedUser.uid)
+        //     .set(chatStatus)
+        //     .then(() => {
+        //         //this.setState({ inputValue: '' })
+        //     })
+        //     .catch(err => {
+        //         self.props.showToast(0, err.toString())
+        //     })
     }
     // handleSendNewRequest = () => {
     //     const result = await firestore.collection(AppString.NODE_USERCHAT).orderBy('nickname').startAfter(self.listUser.length > 0 ? self.listUser[self.listUser.length-1] : 0).limit(2).get()
@@ -257,6 +257,7 @@ class CreateEmployeeDesign extends React.Component {
     //     }
     // }
     handleCreateNewEmployee = () => {
+        
         let self = this
         function getFirebaseApp(name, config) {
             const auth = firebase.auth();
@@ -328,7 +329,8 @@ class CreateEmployeeDesign extends React.Component {
             //         id: userId,
             //         nickname: this.state.Employee.userName,
             //     })
-            this.saveAfterUploadImage(userCreds,userId,this.state.Employee.imagePath)
+            // this.saveAfterUploadImage(userCreds,userId,this.state.Employee.imagePath)
+            this.saveAfterUploadImage(userCreds,userId,this.state.image)
         }
     }
     saveAfterUploadImage = (userCreds,userId,url) => {
@@ -337,13 +339,21 @@ class CreateEmployeeDesign extends React.Component {
             displayName: self.state.Employee.userName,
             photoURL: url
         });
+        debugger
         firestore
             .collection('users')
             .doc(userId)
             .set({
                 id: userId,
                 nickname: self.state.Employee.userName,
-                photoUrl: url
+                photoUrl: url,
+                type: 2
+            }).then(() => {
+                console.log("success")
+            })
+            .catch(err => {
+                console.log(err)
+                // self.props.showToast(0, err.toString())
             })
         console.log(userCreds)
         self.uploadedFile = null;

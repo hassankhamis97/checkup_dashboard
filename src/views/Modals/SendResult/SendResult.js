@@ -18,6 +18,7 @@ import {database} from '../../../firebase';
 import ResultFiles from './ResultFiles'
 // import database from '../../../firebase';
 import firebase from 'firebase';
+import Authentication from "Authentication";
 import SendResultConfirmationAlert from './SendResultConfirmationAlert';
 import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -74,7 +75,7 @@ export default class SendResult extends React.Component {
         ;
         // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
         // var data = {labBranchFireBaseId :'IaTcOwrdXhVBa7qx40FOkW5b94J3',Status : ['PendingForResult']};
-// debugger
+// 
         fetch('http://checkup.somee.com/api/AnalysisService/GetSpecificTest?testId='+this.props.testId, {
             method: 'GET', // or 'PUT'
             headers: {
@@ -83,7 +84,7 @@ export default class SendResult extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                debugger
+                
                 var testObj = data;
             console.log(testObj)
             this.setState({test: testObj});
@@ -148,7 +149,7 @@ export default class SendResult extends React.Component {
         
     }
     updateData = () =>{
-        
+        let me = this
         var storageRef = firebase.storage().ref('/TestResults/' + this.props.testId + '/');
                 
         // var metadata = {
@@ -156,13 +157,37 @@ export default class SendResult extends React.Component {
         //   }; 
 
             // Upload the file and metadata
-        for (let i = 0; i < this.state.uploadedFiles.length; i++) {
-            var uploadTask = storageRef.child(this.state.uploadedFiles[i].name).put(this.state.uploadedFiles[i]);
+        for (let i = 0; i < me.state.uploadedFiles.length; i++) {
+            var count = 0
+            // var uploadTask = storageRef.child(this.state.uploadedFiles[i].name).put(this.state.uploadedFiles[i]);
+            
+            var uploadTask = storageRef.child(me.state.uploadedFiles[i].name).put(me.state.uploadedFiles[i]).then(() => {
+                let authentication = new Authentication()
+                authentication.getImage(me, me.state.test.resultFilespaths[i], (url, self) => {
+                    me.state.test.resultFilespaths[count] = url
+                    count++;
+                    if (count == me.state.uploadedFiles.length){
+                        me.saveDataInDB()
+                    }
+                }).bind(this)
+            }).catch((error) => {
+            });
         }
-        this.state.test.testId = this.props.testId
+        
+        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
+        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
+        // .update({ 'status': this.state.test.status,
+        //             'description': this.state.test.description,
+        //             'hba1c': this.state.test.hba1c,
+        //             'resultFilespaths': this.state.test.resultFilespaths,
+        //              })
+    }
+    saveDataInDB = () => {
+        let self = this
+        this.state.test.id = this.props.testId
         this.state.test.status = 'Done'
         var data = this.state.test;
-        // debugger
+        // 
         fetch('http://checkup.somee.com/api/AnalysisService/UpdateAnalysis', {
             method: 'POST', // or 'PUT'
             headers: {
@@ -172,24 +197,17 @@ export default class SendResult extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                debugger
                 console.log('Success:', data);
+                database.ref('/').child('Notification').child(self.state.test.userId).set({getNotified: database.ref().push().key})
                 // var responseArray = JSON.parse(data)
                 this.props.handleClose();
+                
 
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
-        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
-        // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId)
-        // .update({ 'status': this.state.test.status,
-        //             'description': this.state.test.description,
-        //             'hba1c': this.state.test.hba1c,
-        //             'resultFilespaths': this.state.test.resultFilespaths,
-        //              })
     }
-
     // const classes = useStyles();
 render(){
     

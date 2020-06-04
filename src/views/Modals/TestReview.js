@@ -50,7 +50,7 @@ export default class TestReview extends React.Component {
         // })
         //     .then(response => response.json())
         //     .then(data => {
-        //         debugger
+        //         
         //         var obj = data;
         //         console.log(obj)
         //         self.setState({ data: obj });
@@ -147,9 +147,9 @@ export default class TestReview extends React.Component {
         return (
             <div style={this.styleTestReview.TestReviewModal}>
                  {this.state.refuseDialog ?
-                <RefuseRequest testId={this.props.recievedObj.testId}  open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
+                <RefuseRequest testId={this.props.recievedObj.testId} userId={this.props.recievedObj.userId}  open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
                 {this.state.acceptDialog ?
-                    <AcceptedRequest open={this.state.acceptDialog} fromHome={this.state.data.isFromHome} testId={this.props.recievedObj.testId} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
+                    <AcceptedRequest open={this.state.acceptDialog} userId={this.props.recievedObj.userId} fromHome={this.state.data.isFromHome} testId={this.props.recievedObj.testId} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
 
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar}>
@@ -190,7 +190,7 @@ export default class TestReview extends React.Component {
                             <AwesomeSlider>
                             { this.props.recievedObj.roushettaPaths.map(element => {
                                 // <AcceptedRequest></AcceptedRequest>
-                                debugger
+                                
                                return <div>
                                 <img style={this.styleTestReview.ImgTestPic}
                                     src = {element}

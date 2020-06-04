@@ -20,22 +20,37 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 
 import { database } from '../../firebase';
-
+import Authentication from 'Authentication';
 // import database from '../../firebase';
 import firebase from 'firebase';
 
 export default class AcceptedRequest extends React.Component {
+    constructor(props) {
+        super(props);
+        this.getEmployeeData()
+            this.state = {
+                employeeList : [],
+                test: {
+                    testCost: '',
+                    precastions: '',
+                    employee: '',
+                    status: '',
+                    generatedCode: '',
+                },
 
-    state = {
-        test: {
-            testCost: '',
-            precastions: '',
-            employee: '',
-            status: '',
-            generatedCode: '',
-        },
+        }
+    
     }
-
+    getEmployeeData = () => {
+        
+        let self = this
+        database.ref('/').child('Employees').child(Authentication.loggedUser.uid).on('value', function (employeesArr) {
+            employeesArr.forEach((element) => {
+                self.state.employeeList.push(element)
+            })
+            self.forceUpdate()
+        })
+    }
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
@@ -63,10 +78,11 @@ export default class AcceptedRequest extends React.Component {
     }
 
     updateData = () => {
-        debugger
+        let self = this
+        
         this.state.test.status = 'PendingForTakingTheSample'
         var testObj = {
-            testId : this.props.testId,
+            id : this.props.testId,
             status : this.state.test.status,
             precautions : this.state.test.precastions,
             employeeId : this.state.test.employee,
@@ -74,7 +90,7 @@ export default class AcceptedRequest extends React.Component {
             generatedCode: this.state.test.generatedCode
         }
         var data = testObj
-   debugger
+   
    fetch('http://checkup.somee.com/api/AnalysisService/ConfirmAnalysis', {
        method: 'POST', // or 'PUT'
        headers: {
@@ -84,10 +100,13 @@ export default class AcceptedRequest extends React.Component {
    })
        .then(response => response.json())
        .then(data => {
-           debugger
+           
            console.log('Success:', data);
            // var responseArray = JSON.parse(data)
+           database.ref('/').child('Notification').child(self.props.userId).set({getNotified: database.ref().push().key})
+
            this.props.handleClose();
+           
 
        })
        .catch((error) => {
@@ -241,10 +260,13 @@ export default class AcceptedRequest extends React.Component {
                                 >
                                     <option aria-label="None" value="" />
                                     <optgroup label="Employees">
-                                        <option value={1}> Ali </option>
+                                        {this.state.employeeList.map((item,index) => (
+                                            <option value={item.key}> {item.val().userName} </option>
+                                        ))}
+                                        {/* <option value={1}> Ali </option>
                                         <option value={2}> Muhamed </option>
                                         <option value={3}> Mazen </option>
-                                        <option value={4}> yasien </option>
+                                        <option value={4}> yasien </option> */}
                                     </optgroup>
                                 </Select>
                             </FormControl>

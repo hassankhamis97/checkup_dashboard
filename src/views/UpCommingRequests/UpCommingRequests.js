@@ -6,7 +6,8 @@ import Button from "../../components/CustomButtons/Button.js";
 // import firebase from 'firebase';
 import firebase, { auth } from 'firebase';
 
-import database from '../../firebase';
+// import database from '../../firebase';
+import { database } from '../../firebase';
 
 
 import GridContainer from "components/Grid/GridContainer.js";
@@ -96,7 +97,7 @@ class UpCommingRequests extends React.Component {
     ;
 
   handleStatus(obj) {
-   debugger ;
+    ;
     // prompt(obj)
     this.state.OBJ = obj;
     // let temp = this.state.fullDataList.filter(item => item.id != obj.id);
@@ -110,13 +111,13 @@ class UpCommingRequests extends React.Component {
     //  this.setState({transferedObj : obj})
     //debu ; 
     if (obj.status === "PendingForLabConfirmation") {
-      let temp = this.state.fullDataList.filter(item => item[0] === obj.testId)
+      let temp = this.state.fullDataList.filter(item => item[0] === obj.id)
       
         // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
         //    gender:temp.gender,phone :temp.phone})
 
         //    var tttt =viewObj ;
-       debugger ;
+        ;
 
 
        /////////////////////////////////////////////////////// // need to un comment code
@@ -136,7 +137,8 @@ class UpCommingRequests extends React.Component {
         phone :  temp[0][12],
         roushettaPaths :  temp[0][13],
         generatedCode :  temp[0][14],
-        Address :  temp[0][15]
+        Address :  temp[0][15],
+        userId : temp[0][16]
        }
       // this.state.transferedObj.userName = temp[0][0]
       // this.state.transferedObj.id = temp[0][7]
@@ -158,12 +160,13 @@ class UpCommingRequests extends React.Component {
     return self.indexOf(value) === index;
   }
   getResquests = () => {
-debugger;
+
     let self = this
     var fromHome = ""
     var btnStatus = ""
+    debugger
     var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForLabConfirmation','PendingForTakingTheSample'] };
-        // debugger
+        // 
         fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
             method: 'POST', // or 'PUT'
             headers: {
@@ -182,10 +185,10 @@ debugger;
                     let user;
                     firebase.database().ref('/').child('Users').child(obj.userId)
                         .on("value", snap => {
-                            ;
+                            
                             user = snap.val();
                             console.log(user)
-                            debugger
+                            
                             // self.state.sampleStatus  = obj.status;
                             if ((obj.isFromHome)) {
                                 fromHome = "Yes"
@@ -199,16 +202,17 @@ debugger;
                           } else {
                             self.state.sampleStatus = "Take Sample"
                           }
-
+                          
+                          obj.userId = user.id
                             var reqObj = [obj.generatedCode, user.name, obj.dateRequest, obj.timeRequest, fromHome, obj.testName,
                             <Button key={obj.id} onClick={() => self.handleStatus(obj)} color="primary" >{self.state.sampleStatus}</Button>
                             ]
 
                             console.log(reqObj)
-                            debugger
+                            
                             self.state.dataShowList.push(reqObj)
-                            var fullObj = [obj.testId,user.name, obj.dateRequest, obj.timeRequest,obj.dateForTakingSample, obj.timeForTakingSample, obj.isFromHome, obj.testName,obj.status,
-                                , user.birthdate, user.gender, user.phone,obj.roushettaPaths,obj.generatedCode,obj.Address
+                            var fullObj = [obj.id,user.name, obj.dateRequest, obj.timeRequest,obj.dateForTakingSample, obj.timeForTakingSample, obj.isFromHome, obj.testName,obj.status,
+                                , user.birthdate, user.gender, user.phone,obj.roushettaPaths,obj.generatedCode,obj.Address, obj.userId
                               ]
                               // this.state.transferedObj.testName = 
                   
@@ -233,6 +237,7 @@ debugger;
 
             })
             .catch((error) => {
+              debugger
                 console.error('Error:', error);
             });
     // let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
@@ -248,7 +253,7 @@ debugger;
     //     // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
     //     firebase.database().ref('/').child('Users').child(obj.userId)
     //       .on("value", snap => {
-    //         debugger;;
+    //         ;
     //         user = snap.val();
     //         console.log(user)
     //         // this.setState({ sampleStatus: obj.status });
@@ -301,7 +306,7 @@ debugger;
     //     // this.forceUpdate();
 
 
-    //     debugger;;
+    //     ;
     //     if (window.$name.state.isNew) {
     //       snapshot.forEach(function (item) {
 
@@ -311,7 +316,7 @@ debugger;
     //         // firebase.database().ref('/').child('Users').child('-M5sNybXk09dmQ6gx443')
     //         firebase.database().ref('/').child('Users').child(obj.userId)
     //           .on("value", snap => {
-    //             debugger ;
+    //              ;
     //             user = snap.val();
     //             console.log(user)
     //             this.state.sampleStatus = obj.status === "PendingForTakingTheSample" ? "Take Sample" : "";
@@ -410,23 +415,21 @@ debugger;
   };
 
   handleAlertOpen = () => {
-
-
-
     //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
     this.state.isNew = false
+    
     var obj = this.state.resID
 
    var item = this.state.dataShowList.filter(item => !item.includes(obj.generatedCode))
    this.state.dataShowList =[]
    this.state.dataShowList = item
-   debugger
+   
   var testObj = {
-     testId: obj.testId, //to be dynamic
+     id: obj.id, //to be dynamic
      status: "PendingForResult"
    }
    var data = testObj
-   // debugger
+   // 
    fetch('http://checkup.somee.com/api/AnalysisService/UpdateTakeSampleStatus', {
        method: 'POST', // or 'PUT'
        headers: {
@@ -436,10 +439,12 @@ debugger;
    })
        .then(response => response.json())
        .then(data => {
-           debugger
            console.log('Success:', data);
+           database.ref('/').child('Notification').child(obj.userId).set({getNotified: database.ref().push().key})
+
            // var responseArray = JSON.parse(data)
            this.props.handleClose();
+           
 
        })
        .catch((error) => {
@@ -479,7 +484,7 @@ debugger;
     window.$name.state.dataShowList = []
     ////************ Search with  Name    */
     if (search.length > 0 && searchText.length > 0) {
-      debugger
+      
       window.$name.state.temp = this.state.searchResult.filter(item => {
         return (item[1]).toLocaleLowerCase().startsWith(searchText)
       });

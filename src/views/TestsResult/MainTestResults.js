@@ -99,7 +99,7 @@ class MainTestResults extends React.Component {
         // prompt(obj.id)
 
 
-        this.setState({ objId: obj.testId })
+        this.setState({ objId: obj.id })
 
         this.setState({ openAlert: true })
 
@@ -122,9 +122,9 @@ class MainTestResults extends React.Component {
         // ;
         var fromHome = ""
         var btnStatus = ""
-        debugger
+        
         var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForResult'] };
-        // debugger
+        // 
         fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
             method: 'POST', // or 'PUT'
             headers: {
@@ -134,7 +134,7 @@ class MainTestResults extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                debugger
+                
                 console.log('Success:', data);
                 // var responseArray = JSON.parse(data)
                 data.forEach(function (item) {
@@ -181,7 +181,7 @@ class MainTestResults extends React.Component {
         // var data = {labBranchFireBaseId :'IaTcOwrdXhVBa7qx40FOkW5b94J3',Status : ['PendingForResult']};
         // xhr.send(JSON.stringify(data));
         // xhr.onreadystatechange = function() {
-        //    debugger;
+        //    
 
         //    var responseArray = JSON.parse(xhr.response)
         //    responseArray.forEach(function (item) {
@@ -228,9 +228,9 @@ class MainTestResults extends React.Component {
 
         // ref.orderByChild("status").equalTo("PendingForResult").on('value', snapshot => {
         //     this.state.dataShowList = []
-        //     debugger
+        //     
         //     snapshot.forEach(function (item) {
-        //         debugger
+        //         
         //         var obj = item.val();
         //         console.log(obj)
         //         let user;
@@ -325,7 +325,7 @@ class MainTestResults extends React.Component {
 
         // var searchText = te.target.value
 
-        debugger
+        
         var searchText = (te.target.value).toLowerCase();
 
         var search = window.self.state.searchResult

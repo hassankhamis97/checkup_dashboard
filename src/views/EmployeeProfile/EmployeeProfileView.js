@@ -111,7 +111,7 @@ export default class EmployeeProfileView extends React.Component {
       .then(function (user) {
         
         var currentUser = authWorkerAuth.currentUser;
-        database.ref('/').child("Employees").child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").child(currentUser.uid).remove()
+        database.ref('/').child("Employees").child(Authentication.loggedUser.uid).child(currentUser.uid).remove()
         firestore.collection(AppString.NODE_USERS).doc(currentUser.uid).delete()
         currentUser.delete().then(function () {
           console.log("deleted Success");

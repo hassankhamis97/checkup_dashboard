@@ -18,6 +18,8 @@ export default class ChatBoard extends Component {
             isShowSticker: false,
             inputValue: ''
         }
+        
+        // this.hashString("Vgo15V8FFZX9b9bRtFT3kkAdJ9D2")
         // this.currentUserId = localStorage.getItem(AppString.ID)
         // this.currentUserAvatar = localStorage.getItem(AppString.PHOTO_URL)
         this.currentUserAvatar = Authentication.loggedUser.photoURL
@@ -68,10 +70,12 @@ export default class ChatBoard extends Component {
         }
         this.listMessage.length = 0
         this.setState({ isLoading: true })
-        
+        // this.hashString(this.currentUserId) <=
+        // this.hashString(this.currentPeerUser.id)
+        debugger
         if (
-            this.hashString(this.currentUserId) <=
-            this.hashString(this.currentPeerUser.id)
+           
+            this.currentUserId <= this.currentPeerUser.id
         ) {
             
             this.groupChatId = `${this.currentUserId}-${this.currentPeerUser.id}`
@@ -106,7 +110,7 @@ export default class ChatBoard extends Component {
     }
 
     onSendMessage = async (content, type,self) => {
-        debugger
+        
         if (self.state.isShowSticker && type === 2) {
             self.setState({ isShowSticker: false })
         }

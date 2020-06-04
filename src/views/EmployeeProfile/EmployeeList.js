@@ -13,6 +13,8 @@ import { database } from '../../firebase';
 import firebase from 'firebase';
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import Authentication from 'Authentication';
+
 // import { useHistory } from "react-router-dom";
 // import database from '../../firebase';
 
@@ -93,8 +95,8 @@ export default class EmployeeList extends React.Component {
   getEmployeeList = (self) => {
 
     
-    database.ref('/').child('Employees').child("0G9djW7SzMXGTiXKdGkiYuiTY3g1").on('value', function (employeesArr) {
-
+    // database.ref('/').child('Employees').child(Authentication.loggedUser).on('value', function (employeesArr) {
+      database.ref('/').child('Employees').child(Authentication.loggedUser.uid).on('value', function (employeesArr) {
       // }
       // ref.on('value', snapshot => {
       // this.state.dataShowList = []
