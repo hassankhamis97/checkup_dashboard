@@ -193,7 +193,8 @@ export default class TestReview extends React.Component {
                                     <span style={this.styleTestReview.subview} >{element.number}</span>
                                 </div>
                             })}
-                            {/* <span style={this.styleTestReview.textStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>50</p><br></br> */}
+                            <span style={this.styleTestReview.titleStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>{Math.floor((new Date()-new Date(this.props.recievedObj.birthdate))/31557600000)
+}</p><br></br>
                         </div>
                         <div style={this.styleTestReview.TestPic}>
                         {this.props.recievedObj.testName.length > 0 ?
