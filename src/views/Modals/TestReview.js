@@ -13,6 +13,7 @@ import 'react-awesome-slider/dist/styles.css';
 
 import RefuseRequest from './RefusedRequest'
 import AcceptedRequest from './AcceptedRequest'
+import HealthProfilePreview from './HealthProfilePreview'
 
 import firebase from 'firebase';
 
@@ -25,9 +26,10 @@ export default class TestReview extends React.Component {
     state = {
         refuseDialog: false,
         acceptDialog: false,
+        healthDialog: false,
         recievedObj: {},
         data: {},
-        arr : []
+        arr: []
     }
     arr = this.props.recievedObj.roushettaPaths
 
@@ -37,43 +39,25 @@ export default class TestReview extends React.Component {
         console.log('*********************************************************************************')
         console.log(this.props.recievedObj)
         console.log('*********************************************************************************')
-        this.getData(this);
+        // this.getData(this);
     }
 
-    getData = (self) => {
-        // fetch('http://checkup.somee.com/api/AnalysisService/GetSpecificTest?testId='+this.props.testId, {
-        //     fetch('http://checkup.somee.com/api/AnalysisService/GetSpecificTest?testId='+self.state.recievedObj.id, {
-        //     method: 'GET', // or 'PUT'
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         
-        //         var obj = data;
-        //         console.log(obj)
-        //         self.setState({ data: obj });
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error:', error);
-        //     });
-        // let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
-        // // ref.orderByChild("userId").equalTo("-M5sNybXk09dmQ6gx443"/*this.state.recievedObj.userId*/).on('value', snapshot => {
-        //     // ref.orderByChild("userId").equalTo(self.state.recievedObj[0][6]).on('value', snapshot => {
-        //         ref.child(self.state.recievedObj.id).on('value', snapshot => {
-                
-        //     var obj = snapshot.val();
-        //     console.log(obj)
-        //     self.setState({ data: obj });
-        // });
-    }
+    
 
 
     handleRefuse = () => {
-        
+
         //passing empty object will re-render the component
         this.setState({ refuseDialog: true })
+    }
+    
+    handleHealthDialog = () => {
+        this.setState({ healthDialog: true })
+    }
+
+    handleHealthDialogClose = () => {
+        //passing empty object will re-render the component
+        this.setState({ healthDialog: false })
     }
 
     handleRAccept = () => {
@@ -140,16 +124,32 @@ export default class TestReview extends React.Component {
             margin: '0 auto',
             width: '150px',
             marginLeft: '80px'
-        }
+        },
+        titleStyle: {
+            fontSize: '17px',
+            fontWeight: "bold",
+            color: 'black',
+            margin: '10px',
+        },
+        subview: {
+            alignItems: 'flex-end',
+            fontSize: '15px',
+            color: 'black',
+            marginLeft: '20px'
+        },
     }
 
     render() {
         return (
             <div style={this.styleTestReview.TestReviewModal}>
-                 {this.state.refuseDialog ?
-                <RefuseRequest testId={this.props.recievedObj.testId} userId={this.props.recievedObj.userId}  open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
+                {this.state.refuseDialog ?
+                    <RefuseRequest testId={this.props.recievedObj.testId} userId={this.props.recievedObj.userId} open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
                 {this.state.acceptDialog ?
                     <AcceptedRequest open={this.state.acceptDialog} userId={this.props.recievedObj.userId} fromHome={this.state.data.isFromHome} testId={this.props.recievedObj.testId} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
+
+{this.state.healthDialog ?
+                    <HealthProfilePreview open={this.state.healthDialog} userId={this.props.recievedObj.userId}  handleClose={this.handleHealthDialogClose}></HealthProfilePreview> : ''}
+
 
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar}>
@@ -160,7 +160,7 @@ export default class TestReview extends React.Component {
                             <Typography variant="h6" >
                                 Test Review
                             </Typography>
-                <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRefuse /*this.props.handleClose*/}>
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRefuse /*this.props.handleClose*/}>
                                 Refuse
                             </Button>
 
@@ -170,53 +170,56 @@ export default class TestReview extends React.Component {
                             <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRAccept /*this.props.handleClose*/} >
                                 Accept
                             </Button>
+
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleHealthDialog /*this.props.handleClose*/} >
+                                Patient Health
+                            </Button>
                         </Toolbar>
                     </AppBar>
                     <div style={this.styleTestReview.TestReviewModal}>
                         <div style={this.styleTestReview.TestData}>
-                            <span style={this.styleTestReview.textStyle}>User Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>User Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br>
                             {/* <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br> */}
 
-                            <span style={this.styleTestReview.textStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Request Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>                           
-                            <span style={this.styleTestReview.textStyle}>Take sample Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Take sample Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateForTakingSample}</p><br></br>                            
-                            <span style={this.styleTestReview.textStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.isFromHome == true ? 'YES' : 'No'}</p><br></br>
-                            <span style={this.styleTestReview.textStyle}>Address : </span><p style={this.styleTestReview.TestDataObject}>Cairo</p><br></br>
-                            {/* <span style={this.styleTestReview.textStyle}>Phone : </span><p style={this.styleTestReview.TestDataObject}>+201023548432</p><br></br> */}
+                            <span style={this.styleTestReview.titleStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest}</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Request Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Take sample Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Take sample Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateForTakingSample}</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.isFromHome == true ? 'YES' : 'No'}</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Address : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.Address}</p><br></br><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Phone : </span><br></br>
+                            {this.props.recievedObj.phone.map(element => {
+                                return <div>
+                                    <span style={this.styleTestReview.subview} >{element.number}</span>
+                                </div>
+                            })}
                             {/* <span style={this.styleTestReview.textStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>50</p><br></br> */}
                         </div>
                         <div style={this.styleTestReview.TestPic}>
+                        {this.props.recievedObj.testName.length > 0 ?
                             <AwesomeSlider>
-                            { this.props.recievedObj.roushettaPaths.map(element => {
-                                // <AcceptedRequest></AcceptedRequest>
-                                
-                               return <div>
-                                <img style={this.styleTestReview.ImgTestPic}
-                                    src = {element}
-                                    alt="new"
-                                />
-                            </div>
-                            })}
-                                {/* <div>
-                                    <img style={this.styleTestReview.ImgTestPic}
-                                        src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                                        alt="new"
-                                    />
-                                </div>
-                                <div>
-                                    <img style={this.styleTestReview.ImgTestPic}
-                                        src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                                        alt="new"
-                                    />
-                                </div>
-                                <div>
-                                    <img style={this.styleTestReview.ImgTestPic}
-                                        src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-                                        alt="new"
-                                    />
-                                </div> */}
+                                {this.props.recievedObj.roushettaPaths.map(element => {
+                                    // <AcceptedRequest></AcceptedRequest>
+
+                                    return <div>
+                                        <img style={this.styleTestReview.ImgTestPic}
+                                            src={element}
+                                            alt="new"
+                                        />
+                                    </div>
+                                })}
                             </AwesomeSlider>
+                            : ''}
+                            <br></br>
+                            <br></br>
+                            {this.props.recievedObj.testName.length > 0 ?
+                                <span style={this.styleTestReview.titleStyle}>Test Names : </span> : ''}
+                            <br></br>
+                            {this.props.recievedObj.testName.map(element => {
+                                return <div>
+                                    <span style={this.styleTestReview.subview} >{element}</span>
+                                </div>
+                            })}
                         </div>
                     </div>
                 </Dialog>
