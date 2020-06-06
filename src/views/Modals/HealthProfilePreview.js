@@ -29,7 +29,7 @@ export default class HealthProfilePreview extends React.Component {
         super(props);
         this.state = {
             healthStatus: {},
-            healthData: {},
+            healthData: {dieaseNamesArray:[]},
         }
         this.getData(this)
     }
@@ -106,14 +106,14 @@ export default class HealthProfilePreview extends React.Component {
                         <div style={this.styleTestReview.textStyle}>{this.state.healthData.isSTakeantiBiotic == true ? 'Yes' : 'No'}</div>
                         <div style={this.styleTestReview.titleStyle}>Do patient take haemophilia ? </div>
                         <div style={this.styleTestReview.textStyle}>{this.state.healthData.isTakehaemophilia == true ? 'Yes' : 'No'}</div>
-                        {/* {this.state.healthData.dieaseNamesArray.length > 0 ?
+                         {this.state.healthData.dieaseNamesArray.length > 0 ?
                         <div style= {this.styleTestReview.titleStyle}>Diseases Names : </div>:''}
                         {this.state.healthData.dieaseNamesArray.map(element => {
                             debugger
                             return <div>
-                                <span style={this.styleTestReview.subview} >{element}</span>
+                                <span style={this.styleTestReview.subview , this.styleTestReview.textStyle} >{element}</span>
                             </div>
-                        })} */}
+                        })} 
 
                     </div>
                 </Dialog>
