@@ -121,6 +121,9 @@ export default class RefuseRequest extends React.Component {
         if (this.state.refuse.refuseReason.length > 0 || this.state.refuse.radioRefusion.length > 0) {
             this.updateData()
             window.$self.setState({ openAlert: false })
+
+            this.setState({ open: false })
+            window.location.reload();
             //goBack()
         } else {
             alert('No Valid')
