@@ -350,10 +350,6 @@ export default class AcceptedRequest extends React.Component {
                                         {window.$self.state.employeeList.map((item,index) => (
                                             <option value={item.key}> {item.val().userName} </option>
                                         ))}
-                                        {/* <option value={1}> Ali </option>
-                                        <option value={2}> Muhamed </option>
-                                        <option value={3}> Mazen </option>
-                                        <option value={4}> yasien </option> */}
                                     </optgroup>
                                 </Select>
                             </FormControl>

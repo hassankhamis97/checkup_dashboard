@@ -106,6 +106,7 @@ class UpCommingRequests extends React.Component {
     //  this.setState({transferedObj : obj})
     //debu ; 
     if (obj.status === "PendingForLabConfirmation") {
+      debugger
       let temp = this.state.fullDataList.filter(item => item[0] === obj.id)
       
         // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
@@ -133,7 +134,7 @@ class UpCommingRequests extends React.Component {
         roushettaPaths :  temp[0][13],
         generatedCode :  temp[0][14],
         Address :  temp[0][15],
-        userId : temp[0][16]
+        userId : temp[0][16], 
        }
       // this.state.transferedObj.userName = temp[0][0]
       // this.state.transferedObj.id = temp[0][7]
