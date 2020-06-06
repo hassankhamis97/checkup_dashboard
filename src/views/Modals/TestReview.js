@@ -255,7 +255,7 @@ export default class TestReview extends React.Component {
                         </div>
                         <div style={this.styleTestReview.TestPic}>
                             {this.props.recievedObj.roushettaPaths.length > 0 ?
-                           <AwesomeSlider  fillParent = {window.$self.state.isFullScreen} >
+                           <AwesomeSlider  style={this.styleTestReview.titleStyle} fillParent = {window.$self.state.isFullScreen} >
                             { this.props.recievedObj.roushettaPaths.map(element => {
                                 // <AcceptedRequest></AcceptedRequest>
                                 
@@ -267,7 +267,7 @@ export default class TestReview extends React.Component {
                             </div>
                             })}
                               
-                            </AwesomeSlider>
+                            </AwesomeSlider >
                             : ''}
                             <br></br>
                             <br></br>
