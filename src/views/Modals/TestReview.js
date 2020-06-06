@@ -34,7 +34,7 @@ export default class TestReview extends React.Component {
             arr : [] ,
             open : (TestReview.fromAcceptRequestPage == true ? false : true) ,
            isFullScreen : false ,
-           maximizLable : ""
+           maximizLable : "Maiximize Images"
         }
         debugger
       // props.open = (AcceptedRequest.fromAcceptRequestPage == true ? 'hidden' : 'visable')
@@ -103,7 +103,7 @@ export default class TestReview extends React.Component {
        // this.setState({ acceptDialog: false })
        window.location.reload();
     }
-
+debugger
     handleMaximize = ()=>{
         if ( window.$self.state.maximizLable == "Maiximize Images"){
           window.$self.state.maximizLable = "Minimize Image"
@@ -246,7 +246,7 @@ export default class TestReview extends React.Component {
                                 return <div>
                                     <span style={this.styleTestReview.subview} >{element.number}</span>
                                 </div>
-                            })}
+                            })}     
                             <span style={this.styleTestReview.titleStyle}>Inshurance : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.insurance.length>0 ? this.props.recievedObj.insurance.length : "Nothing"}</p><br></br> 
 
                             <span style={this.styleTestReview.titleStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest} </p><br></br>
