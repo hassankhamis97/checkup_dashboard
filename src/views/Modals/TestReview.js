@@ -240,20 +240,22 @@ export default class TestReview extends React.Component {
                             <span style={this.styleTestReview.titleStyle}>Gender : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.gender}</p><br></br> 
                             <span style={this.styleTestReview.titleStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>{Math.floor((new Date() - new Date(this.props.recievedObj.birthdate)) / 31557600000)
                             }</p><br></br>
-                            <span style={this.styleTestReview.titleStyle}>Inshurance : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.insurance.length>0 ? this.props.recievedObj.insurance.length : "Nothing"}</p><br></br> 
-
-                            <span style={this.styleTestReview.titleStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest}</p><br></br>
-                            <span style={this.styleTestReview.titleStyle}>Request Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>
-                            <span style={this.styleTestReview.titleStyle}>Take sample Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>
-                            <span style={this.styleTestReview.titleStyle}>Take sample Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateForTakingSample}</p><br></br>
-                            <span style={this.styleTestReview.titleStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.isFromHome == true ? 'YES' : 'No'}</p><br></br>
-                            <span style={this.styleTestReview.titleStyle}>Address : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.Address}</p><br></br><br></br>
+                              <span style={this.styleTestReview.titleStyle}>Address : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.Address}</p><br></br><br></br>
                             <span style={this.styleTestReview.titleStyle}>Phone : </span><br></br>
                             {this.props.recievedObj.phone.map(element => {
                                 return <div>
                                     <span style={this.styleTestReview.subview} >{element.number}</span>
                                 </div>
                             })}
+                            <span style={this.styleTestReview.titleStyle}>Inshurance : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.insurance.length>0 ? this.props.recievedObj.insurance.length : "Nothing"}</p><br></br> 
+
+                            <span style={this.styleTestReview.titleStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest} </p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Request Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Take sample Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateForTakingSample} </p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Take sample Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Is From Home : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.isFromHome == true ? 'YES' : 'No'}</p><br></br>
+                          
+                           
                         </div>
                         <div style={this.styleTestReview.TestPic}>
                             {this.props.recievedObj.roushettaPaths.length > 0 ?
