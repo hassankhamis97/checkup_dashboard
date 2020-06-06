@@ -31,11 +31,12 @@ export default class HealthProfilePreview extends React.Component {
             healthStatus: {},
             healthData: {},
         }
-
+        this.getData(this)
     }
 
     getData = (self) => {
-        fetch('http://checkup.somee.com/api/AnalysisService/HEALTH?userId=' + this.props.userId, {
+        debugger
+        fetch('http://checkup.somee.com/api/AnalysisService/RetrieveHealthProfile?userId=' + this.props.userId, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +44,7 @@ export default class HealthProfilePreview extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-
+                debugger
                 var obj = data;
                 console.log(obj)
                 self.setState({ healthData: obj });
@@ -97,17 +98,18 @@ export default class HealthProfilePreview extends React.Component {
                     </AppBar>
 
                     <div style={this.styleTestReview.TestReviewModal} >
-
-                        <div style= {this.styleTestReview.titleStyle} >Does patient Sufer From Diabetes ? </div>
-                        <div style= {this.styleTestReview.textStyle}>{this.state.healthData.isSufferFromDiabetes}</div>
-                        <div style= {this.styleTestReview.titleStyle}>Does patient Sufer From Pressure ? </div>
-                        <div style= {this.styleTestReview.textStyle}>{this.state.healthData.isSufferFromPressure}</div>
-                        <div style= {this.styleTestReview.titleStyle}>Do patient take antibiotic ? </div>
-                        <div style= {this.styleTestReview.textStyle}>{this.state.healthData.isTakeAntibiotic}</div>
-                        <div style= {this.styleTestReview.titleStyle}>Do patient take haemophilia ? </div>
-                        <div style= {this.styleTestReview.textStyle}>{this.state.healthData.isSufferFromDiabetes}</div>
-                        <div style= {this.styleTestReview.titleStyle}>Diseases Names : </div>
-                        {/* {this.state.healthData.diseasesNames.map(element => {
+                        <div style={this.styleTestReview.titleStyle} >Does patient Suffer From Diabetes ? </div>
+                        <div style={this.styleTestReview.textStyle}>{this.state.healthData.isSuffreDiabetes == true ? 'Yes' : 'No'}</div>
+                        <div style={this.styleTestReview.titleStyle}>Does patient Suffer From Pressure ? </div>
+                        <div style={this.styleTestReview.textStyle}>{this.state.healthData.isSuffrePressure == true ? 'Yes' : 'No'}</div>
+                        <div style={this.styleTestReview.titleStyle}>Do patient take antibiotic ? </div>
+                        <div style={this.styleTestReview.textStyle}>{this.state.healthData.isSTakeantiBiotic == true ? 'Yes' : 'No'}</div>
+                        <div style={this.styleTestReview.titleStyle}>Do patient take haemophilia ? </div>
+                        <div style={this.styleTestReview.textStyle}>{this.state.healthData.isTakehaemophilia == true ? 'Yes' : 'No'}</div>
+                        {/* {this.state.healthData.dieaseNamesArray.length > 0 ?
+                        <div style= {this.styleTestReview.titleStyle}>Diseases Names : </div>:''}
+                        {this.state.healthData.dieaseNamesArray.map(element => {
+                            debugger
                             return <div>
                                 <span style={this.styleTestReview.subview} >{element}</span>
                             </div>

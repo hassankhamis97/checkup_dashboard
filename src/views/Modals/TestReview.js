@@ -61,7 +61,7 @@ export default class TestReview extends React.Component {
         // this.getData(this);
     }
 
-    
+
 
 
     handleRefuse = () => {
@@ -69,7 +69,7 @@ export default class TestReview extends React.Component {
         //passing empty object will re-render the component
         this.setState({ refuseDialog: true })
     }
-    
+
     handleHealthDialog = () => {
         this.setState({ healthDialog: true })
     }
@@ -201,8 +201,8 @@ export default class TestReview extends React.Component {
                 {this.state.acceptDialog ?
     <AcceptedRequest open={this.state.acceptDialog} reloadPage = {this.reloadPage}  userId={this.props.recievedObj.userId} handleConfirm ={this.handleConfirm}  fromHome={this.props.recievedObj.isFromHome} testId={this.props.recievedObj.testId} handleClose={this.handleRAcceptClose}    ></AcceptedRequest> : ''}
 
-{this.state.healthDialog ?
-                    <HealthProfilePreview open={this.state.healthDialog} userId={this.props.recievedObj.userId}  handleClose={this.handleHealthDialogClose}></HealthProfilePreview> : ''}
+                {this.state.healthDialog ?
+                    <HealthProfilePreview open={this.state.healthDialog} userId={this.props.recievedObj.userId} handleClose={this.handleHealthDialogClose}></HealthProfilePreview> : ''}
 
 
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
@@ -238,7 +238,8 @@ export default class TestReview extends React.Component {
                         <div style={this.styleTestReview.TestData}>
                             <span style={this.styleTestReview.titleStyle}>User Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br>
                             {/* <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br> */}
-
+                            <span style={this.styleTestReview.titleStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>{Math.floor((new Date() - new Date(this.props.recievedObj.birthdate)) / 31557600000)
+                            }</p><br></br>
                             <span style={this.styleTestReview.titleStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest}</p><br></br>
                             <span style={this.styleTestReview.titleStyle}>Request Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>
                             <span style={this.styleTestReview.titleStyle}>Take sample Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>
@@ -251,8 +252,6 @@ export default class TestReview extends React.Component {
                                     <span style={this.styleTestReview.subview} >{element.number}</span>
                                 </div>
                             })}
-                            <span style={this.styleTestReview.titleStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>{Math.floor((new Date()-new Date(this.props.recievedObj.birthdate))/31557600000)
-}</p><br></br>
                         </div>
                         <div style={this.styleTestReview.TestPic}>
                             {this.props.recievedObj.roushettaPaths.length > 0 ?
