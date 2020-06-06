@@ -17,20 +17,40 @@ import AcceptedRequest from './AcceptedRequest'
 import firebase from 'firebase';
 
 export default class TestReview extends React.Component {
+    static fromAcceptRequestPage = false;
+    debugger
+    constructor(props) { 
+        super(props);
+        window.$self = this 
+     
+        console.log(TestReview.fromAcceptRequestPage )
+        console.log( props.open )
+        this.state = {
+            refuseDialog: false,
+            acceptDialog: false,
+            recievedObj: {},
+            data: {},
+            arr : [] ,
+            open : (TestReview.fromAcceptRequestPage == true ? false : true) ,
+           isFullScreen : false ,
+           maximizLable : ""
+        }
+        debugger
+      // props.open = (AcceptedRequest.fromAcceptRequestPage == true ? 'hidden' : 'visable')
+    
+        console.log( this.state.isFullScreen )
+         console.log( this.state.isFullScreen )
+
+     }
 
     Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
-
-    state = {
-        refuseDialog: false,
-        acceptDialog: false,
-        recievedObj: {},
-        data: {},
-        arr : []
-    }
+  
+   
+  
     arr = this.props.recievedObj.roushettaPaths
-
+    
     componentDidMount() {
         // ;
         this.state.recievedObj = this.props.recievedObj;
@@ -38,6 +58,7 @@ export default class TestReview extends React.Component {
         console.log(this.props.recievedObj)
         console.log('*********************************************************************************')
         this.getData(this);
+        
     }
 
     getData = (self) => {
@@ -81,6 +102,14 @@ export default class TestReview extends React.Component {
         this.setState({ acceptDialog: true })
     }
 
+    // handel back 
+    debugger
+    handleConfirm = () => {
+        this.setState({ open: false })
+        window.location.reload();
+       // window.$self.props.reloadPage()
+     //   this.forceUpdate()
+    }
 
     handleRefuseClose = () => {
         //passing empty object will re-render the component
@@ -89,7 +118,24 @@ export default class TestReview extends React.Component {
 
     handleRAcceptClose = () => {
         //passing empty object will re-render the component
-        this.setState({ acceptDialog: false })
+       // this.setState({ acceptDialog: false })
+       window.location.reload();
+    }
+
+    handleMaximize = ()=>{
+        if ( window.$self.state.maximizLable == "Maiximize Images"){
+          window.$self.state.maximizLable = "Minimize Image"
+        this.setState({
+            isFullScreen : true
+        })
+         } else{
+            window.$self.state.maximizLable = "Maiximize Images"
+            this.setState({
+                isFullScreen : false
+            })
+         }
+
+
     }
 
     styleTestReview = {
@@ -106,7 +152,8 @@ export default class TestReview extends React.Component {
             width: '50%'
         },
         ImgTestPic: {
-            width: '100%'
+            height : "-webkit-fill-available"
+            
         },
 
         TestPic: {
@@ -143,15 +190,24 @@ export default class TestReview extends React.Component {
         }
     }
 
-    render() {
-        return (
-            <div style={this.styleTestReview.TestReviewModal}>
-                 {this.state.refuseDialog ?
-                <RefuseRequest testId={this.props.recievedObj.testId} userId={this.props.recievedObj.userId}  open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''}
-                {this.state.acceptDialog ?
-                    <AcceptedRequest open={this.state.acceptDialog} userId={this.props.recievedObj.userId} fromHome={this.state.data.isFromHome} testId={this.props.recievedObj.testId} handleClose={this.handleRAcceptClose}></AcceptedRequest> : ''}
 
-                <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
+  
+    reloadPage = ()=>{
+        window.$name.forceUpdate()
+      }
+    
+
+
+    render() {
+        debugger
+        return (
+            <div style={this.styleTestReview.TestReviewModal}> 
+                 {this.state.refuseDialog ?
+                <RefuseRequest testId={this.props.recievedObj.testId} userId={this.props.recievedObj.userId}  open={this.state.refuseDialog} handleClose={this.handleRefuseClose}></RefuseRequest> : ''} 
+                {this.state.acceptDialog ?
+    <AcceptedRequest open={this.state.acceptDialog} reloadPage = {this.reloadPage}  userId={this.props.recievedObj.userId} handleConfirm ={this.handleConfirm}  fromHome={this.props.recievedObj.isFromHome} testId={this.props.recievedObj.testId} handleClose={this.handleRAcceptClose}    ></AcceptedRequest> : ''}
+
+                <Dialog fullScreen open={this.state.open} onClose={this.props.handleClose}  TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar}>
                         <Toolbar>
                             <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
@@ -170,6 +226,11 @@ export default class TestReview extends React.Component {
                             <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleRAccept /*this.props.handleClose*/} >
                                 Accept
                             </Button>
+
+
+                            <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleMaximize /*this.props.handleClose*/} >
+                                Maximize Images
+                            </Button>
                         </Toolbar>
                     </AppBar>
                     <div style={this.styleTestReview.TestReviewModal}>
@@ -187,12 +248,12 @@ export default class TestReview extends React.Component {
                             {/* <span style={this.styleTestReview.textStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>50</p><br></br> */}
                         </div>
                         <div style={this.styleTestReview.TestPic}>
-                            <AwesomeSlider>
+                            <AwesomeSlider  fillParent = {window.$self.state.isFullScreen} >
                             { this.props.recievedObj.roushettaPaths.map(element => {
                                 // <AcceptedRequest></AcceptedRequest>
                                 
                                return <div>
-                                <img style={this.styleTestReview.ImgTestPic}
+                                <img style={this.styleTestReview.ImgTestPic  }
                                     src = {element}
                                     alt="new"
                                 />
@@ -220,6 +281,8 @@ export default class TestReview extends React.Component {
                         </div>
                     </div>
                 </Dialog>
+
+                
             </div>
         );
     }

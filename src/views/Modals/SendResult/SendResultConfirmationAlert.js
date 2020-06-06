@@ -24,6 +24,7 @@ export default function SendResultConfirmationAlert(props) {
     };
     const handleConfirm = () => {
         props.handleConfirm()
+        //return back 
 
     };
     return (

@@ -17,6 +17,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { database } from '../../firebase';
 
+import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 
 export default class RefuseRequest extends React.Component {
 
@@ -99,14 +100,41 @@ export default class RefuseRequest extends React.Component {
     }
 
     validate = () => {
-        // if (this.state.refuse.youNeedToApplyInstructionTxt !== '' && this.state.refuse.notAvailableTxt !== '' && this.state.refuse.anotherTimeTxt !== '' && this.state.refuse.refuseReason !== '') {
+        this.setState({ openAlert: true })
+     
+
+    }
+
+   
+    handleAlertClose = () => {
+        debugger
+        this.setState({ openAlert: false })
+
+      //  window.$self.setState({ open: false })
+     
+    
+      };
+    
+      handleAlertOpen = () => {
+        debugger
+      // if (this.state.refuse.youNeedToApplyInstructionTxt !== '' && this.state.refuse.notAvailableTxt !== '' && this.state.refuse.anotherTimeTxt !== '' && this.state.refuse.refuseReason !== '') {
         if (this.state.refuse.refuseReason.length > 0 || this.state.refuse.radioRefusion.length > 0) {
             this.updateData()
+            window.$self.setState({ openAlert: false })
+            //goBack()
         } else {
             alert('No Valid')
         }
+      
+        //  this.forceUpdate()
+    
+      };
+    
 
-    }
+
+
+
+
 
     styleTestReview = {
         TestReviewModal: {
@@ -133,7 +161,9 @@ export default class RefuseRequest extends React.Component {
         },
     }
     render() {
+      //  const {goBack} = this.props.navigation;
         return (
+
             <div>
                 <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar} >
@@ -226,6 +256,8 @@ export default class RefuseRequest extends React.Component {
                         </GridItem>
                     </div>
                 </Dialog>
+                <AlertDialogSlide text="  Did You Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
+
             </div>
         );
     }

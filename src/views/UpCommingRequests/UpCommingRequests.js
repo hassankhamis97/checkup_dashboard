@@ -29,11 +29,6 @@ class UpCommingRequests extends React.Component {
 
   //  const classes = useStyles();
   constructor(props) {
-
-
-
-
-    // ;
     super(props);
     window.$name = this //global variable
     // let userRef =  firebase.database().ref('Users');
@@ -402,19 +397,20 @@ class UpCommingRequests extends React.Component {
 
 
   handleClose = () => {
-
+    debugger
     this.setState({ open: false })
 
   };
 
 
   handleAlertClose = () => {
-
+    debugger
     this.setState({ openAlert: false })
 
   };
 
   handleAlertOpen = () => {
+    debugger 
     //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
     this.state.isNew = false
     
@@ -537,6 +533,13 @@ class UpCommingRequests extends React.Component {
 
 
   }
+  debugger
+  reloadPage = ()=>{
+  //  window.$name.setState({open : false})
+  window.$name.location.reload();
+  }
+
+
 
   render() {
     ;
@@ -546,16 +549,16 @@ class UpCommingRequests extends React.Component {
         <AlertDialogSlide text="  Did You Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
 
         {this.state.open ?
-          <TestReview recievedObj={this.state.transferedObj} open={this.state.open} handleClose={this.handleClose}></TestReview>
+          <TestReview recievedObj={this.state.transferedObj} open={this.state.open} reloadPage = {this.reloadPage} handleClose={this.handleClose}></TestReview>
           : ''}
         <GridContainer>
 
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4>Employees Stats</h4>
-                <p>
-                  Up Comminng Patient requests
+                <h4 style={{ textAlign: "center",fontSize: 25  ,fontFamily: 'Josefin Sans'  }}> Requests Status</h4>
+                <p style={{ textAlign: "center" ,fontSize: 20  ,fontFamily: 'Josefin Sans' }}>
+                  UpComming Patient Requests
                  </p>
               </CardHeader>
               <div style={{ textAlign: "center" }}>

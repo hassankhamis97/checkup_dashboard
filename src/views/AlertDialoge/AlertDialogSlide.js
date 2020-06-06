@@ -21,10 +21,12 @@ export default function AlertDialogSlide(props) {
 
   const handleClose = () => {
     // setOpen(false);
+    debugger
     props.handleAlertClose()
   };
-
+   debugger
   return (
+ 
     <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Slide in alert dialog

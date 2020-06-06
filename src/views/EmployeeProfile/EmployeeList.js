@@ -138,8 +138,8 @@ export default class EmployeeList extends React.Component {
       <GridItem xs={12} sm={12} md={8}>
         <Card>
           <CardHeader color="primary">
-            <h4 > Our Employee </h4>
-            <p >
+            <h4 style={{ textAlign: "center",fontSize: 25  ,fontFamily: 'Josefin Sans'  }} > Our Employee </h4>
+            <p style={{ textAlign: "center",fontSize: 20  ,fontFamily: 'Josefin Sans'  }}>
               All Employee In  This Branch
             </p>
           </CardHeader>

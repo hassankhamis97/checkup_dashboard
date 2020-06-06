@@ -15,6 +15,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import GridItem from "components/Grid/GridItem.js";
 import InputLabel from "@material-ui/core/InputLabel";
 
+import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 //dropdown
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -23,12 +24,21 @@ import { database } from '../../firebase';
 import Authentication from 'Authentication';
 // import database from '../../firebase';
 import firebase from 'firebase';
-
+import TestReview from './TestReview';
+import UpCommingRequests from '../UpCommingRequests/UpCommingRequests';
 export default class AcceptedRequest extends React.Component {
+   
     constructor(props) {
+        
         super(props);
+        window.$self = this //global variable
         this.getEmployeeData()
+        debugger
+
+
+        this.handleAlertOpen = this.handleAlertOpen.bind(this)
             this.state = {
+           
                 employeeList : [],
                 test: {
                     testCost: '',
@@ -37,9 +47,13 @@ export default class AcceptedRequest extends React.Component {
                     status: '',
                     generatedCode: '',
                 },
-
-        }
-    
+                isVisable : (props.fromHome === false ?'hidden':'visable') ,
+                openAlert : false ,
+                open : true,
+                upcomming : false ,
+              
+            }
+            
     }
     getEmployeeData = () => {
         
@@ -88,6 +102,7 @@ export default class AcceptedRequest extends React.Component {
             employeeId : this.state.test.employee,
             totalCost: this.state.test.testCost,
             generatedCode: this.state.test.generatedCode
+
         }
         var data = testObj
    
@@ -124,14 +139,80 @@ export default class AcceptedRequest extends React.Component {
     }
 
     validate = () => {
-        
+        debugger
+        this.setState({ openAlert: true })
+       // this.setState({ open: true })
+        // if ( this.state.test.precastions.length > 0 && this.state.test.testCost.length > 0 && this.state.test.generatedCode.length > 0) {
+        //     this.updateData()
+
+        // } else {
+        //     alert('Complete Data')
+        // }
+    }
+
+
+
+
+
+
+
+    handleAlertClose = () => {
+        debugger
+      
+    //    window.$self.state.open = false;
+   //     window.$self.state.upcomming = true
+       window.$self.setState({ openAlert: false })
+                       
+      //  window.$self.setState({ open: false })
+    //  window.$self.props.handleConfirm()
+     
+   
+      };
+    
+      handleAlertOpen = () => {
+        debugger
         if ( this.state.test.precastions.length > 0 && this.state.test.testCost.length > 0 && this.state.test.generatedCode.length > 0) {
             this.updateData()
+     
+            this.setState({ openAlert: false })
+            this.setState({ open: false })
 
+            TestReview.fromAcceptRequestPage = true
+            window.location.replace = "http://localhost:3000/admin/upcomingrequest";
+            
+          //  this.handleConfirm()
         } else {
             alert('Complete Data')
+           
         }
-    }
+    
+      
+        //  this.forceUpdate()
+    
+      };
+    
+
+
+    //    handleConfirm = () => {
+    //     this.props.handleConfirm()
+    //     //return back 
+
+    // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     updateInputValue(evt) {
         this.setState({
@@ -140,9 +221,13 @@ export default class AcceptedRequest extends React.Component {
     }
 
     render() {
+      //  const {goBack} = this.props.navigation;
+        debugger
         return (
+          
             <div>
-                <Dialog fullScreen open={this.props.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
+                  
+                <Dialog fullScreen open={ window.$self.state.open} onClose={this.props.handleClose} TransitionComponent={this.Transition}>
                     <AppBar style={this.styleTestReview.appBar} >
                         <Toolbar>
                             <IconButton edge="start" color="inherit" onClick={this.props.handleClose} aria-label="close">
@@ -157,7 +242,7 @@ export default class AcceptedRequest extends React.Component {
                             </Button>
                         </Toolbar>
                     </AppBar>
-
+                 
                     <div style={this.styleTestReview.TestReviewModal} >
                         <span style={this.styleTestReview.textStyle}>Enter Total Price : </span>
                         <CustomInput
@@ -229,7 +314,8 @@ export default class AcceptedRequest extends React.Component {
                         </GridItem>
 
                         <div>
-                            <FormControl>
+                     
+                            <FormControl  style={{ visibility : window.$self.state.isVisable, color: "purple"}}>
                                 <InputLabel htmlFor="grouped-native-select"
                                     style={{
                                         color: 'black',
@@ -259,8 +345,9 @@ export default class AcceptedRequest extends React.Component {
 
                                 >
                                     <option aria-label="None" value="" />
+                                 
                                     <optgroup label="Employees">
-                                        {this.state.employeeList.map((item,index) => (
+                                        {window.$self.state.employeeList.map((item,index) => (
                                             <option value={item.key}> {item.val().userName} </option>
                                         ))}
                                         {/* <option value={1}> Ali </option>
@@ -274,6 +361,10 @@ export default class AcceptedRequest extends React.Component {
                         </div>
                     </div>
                 </Dialog>
+                <AlertDialogSlide text="  Did You  To Accept This Request ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
+                {/*window.$self.state.upcomming?<UpCommingRequests></UpCommingRequests>:''*/}
+          
+
             </div>
         );
     }

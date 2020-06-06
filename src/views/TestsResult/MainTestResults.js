@@ -413,9 +413,9 @@ class MainTestResults extends React.Component {
                     <GridItem xs={12} sm={12} md={12}>
                         <Card>
                             <CardHeader color="primary">
-                                <h4>Sample Results</h4>
-                                <p>
-                                    Shoo  The Pending  Resluts
+                                <h4 style={{ textAlign: "center",fontSize: 25  ,fontFamily: 'Josefin Sans'  }}>Sample Results</h4>
+                                <p style={{ textAlign: "center",fontSize: 20  ,fontFamily: 'Josefin Sans'  }} >
+                                   Show  Pending  Results
                                 </p>
                             </CardHeader>
 
