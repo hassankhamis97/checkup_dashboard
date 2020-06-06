@@ -448,7 +448,7 @@ class MainTestResults extends React.Component {
                   
                 /> */}
                                     <Button color="white" aria-label="edit" justIcon round>
-                                        <Search />
+                                        <Search  style={{ textAlign: "center"  }}/>
                                     </Button>
                                 </div>
                             </CardBody>

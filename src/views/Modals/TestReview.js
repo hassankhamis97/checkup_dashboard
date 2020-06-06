@@ -237,9 +237,11 @@ export default class TestReview extends React.Component {
                     <div style={this.styleTestReview.TestReviewModal}>
                         <div style={this.styleTestReview.TestData}>
                             <span style={this.styleTestReview.titleStyle}>User Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br>
-                            {/* <span style={this.styleTestReview.textStyle}>Test Name : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.name}</p><br></br> */}
+                            <span style={this.styleTestReview.titleStyle}>Gender : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.gender}</p><br></br> 
                             <span style={this.styleTestReview.titleStyle}>Age : </span><p style={this.styleTestReview.TestDataObject}>{Math.floor((new Date() - new Date(this.props.recievedObj.birthdate)) / 31557600000)
                             }</p><br></br>
+                            <span style={this.styleTestReview.titleStyle}>Inshurance : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.insurance.length>0 ? this.props.recievedObj.insurance.length : "Nothing"}</p><br></br> 
+
                             <span style={this.styleTestReview.titleStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest}</p><br></br>
                             <span style={this.styleTestReview.titleStyle}>Request Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>
                             <span style={this.styleTestReview.titleStyle}>Take sample Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeForTakingSample}</p><br></br>

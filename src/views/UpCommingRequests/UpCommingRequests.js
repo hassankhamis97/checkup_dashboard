@@ -135,6 +135,7 @@ class UpCommingRequests extends React.Component {
         generatedCode :  temp[0][14],
         Address :  temp[0][15],
         userId : temp[0][16], 
+        insurance : temp[0][17],
        }
       // this.state.transferedObj.userName = temp[0][0]
       // this.state.transferedObj.id = temp[0][7]
@@ -163,6 +164,7 @@ class UpCommingRequests extends React.Component {
     debugger
     var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForLabConfirmation','PendingForTakingTheSample'] };
         // 
+        debugger
         fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
             method: 'POST', // or 'PUT'
             headers: {
@@ -170,6 +172,7 @@ class UpCommingRequests extends React.Component {
             },
             body: JSON.stringify(data),
         })
+        
             .then(response => response.json())
             .then(data => {
                 debugger
@@ -208,7 +211,7 @@ class UpCommingRequests extends React.Component {
                             
                             self.state.dataShowList.push(reqObj)
                             var fullObj = [obj.id,user.name, obj.dateRequest, obj.timeRequest,obj.dateForTakingSample, obj.timeForTakingSample, obj.isFromHome, obj.testName,obj.status,
-                                , user.birthdate, user.gender, user.phone,obj.roushettaPaths,obj.generatedCode,obj.Address, obj.userId
+                                , user.birthdate, user.gender, user.phone,obj.roushettaPaths,obj.generatedCode,obj.Address, obj.userId ,user.insurance
                               ]
                               // this.state.transferedObj.testName = 
                   
