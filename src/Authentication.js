@@ -1,10 +1,13 @@
 import firebase from 'firebase';
 // import database from './firebase';
-import {storage} from '../src/firebase';
-
+// import {storage} from '../src/firebase';
+import { firestore, storage } from './firebase';
+import { AppString } from '../src/views/Chat/Const'
 export default class Authentication {
     static loggedUser = "wait";
     static currentUserImage = ''
+    static API_URL = 'http://www.checkuplive.somee.com'
+    // static API_URL = 'http://192.168.1.5:3000'
     constructor() {
         
         Authentication.loggedUser = firebase.auth().currentUser == null ? "wait" : firebase.auth().currentUser
@@ -17,11 +20,30 @@ export default class Authentication {
           
     }
     checkUser(email, password,errorBack) {
-        
+        let self = this
         const auth = firebase.auth()
         auth.signInWithEmailAndPassword(email, password)
             .then(function (response) {
                 console.log(response)
+                debugger
+                firestore.collection(AppString.NODE_USERS).doc(response.user.uid).get().then(result => {
+                    debugger
+                    console.log(result)
+                    var user = result.data()
+                    
+                    if (user.type != 3) {
+                        firebase.auth().signOut().then(function() {
+                            
+                            // respose()
+                          }).catch(function(error) {
+                            // An error happened.
+                          });
+                    }
+                    else{
+                        self.getUser()
+                    }
+                    // self.forceUpdate();
+                });
             })
             .catch(function (error) {
                 // Handle Errors here.
@@ -36,7 +58,7 @@ export default class Authentication {
                 }
                 console.log(error);
             });
-            this.getUser()
+            
         // auth.onAuthStateChanged(firebaseUser => {
         //     console.log(firebaseUser)
         //     console.log(firebase.auth().currentUser)
@@ -47,10 +69,12 @@ export default class Authentication {
     }
 
     getUser(response){
+        let self = this
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 // console.log(firebase.auth().currentUser)
                 Authentication.loggedUser = user
+                
                 if(response){
                     
                     // firebase.auth().verifyIdToken(user.uid).then((claims) => {

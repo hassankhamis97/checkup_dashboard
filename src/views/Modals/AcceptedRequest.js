@@ -106,7 +106,7 @@ export default class AcceptedRequest extends React.Component {
         }
         var data = testObj
    
-   fetch('http://checkup.somee.com/api/AnalysisService/ConfirmAnalysis', {
+   fetch(Authentication.API_URL+'/api/AnalysisService/ConfirmAnalysis', {
        method: 'POST', // or 'PUT'
        headers: {
            'Content-Type': 'application/json',

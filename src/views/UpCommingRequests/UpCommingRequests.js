@@ -25,6 +25,8 @@ import TestReview from '../Modals/TestReview'
 import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
+import Authentication from 'Authentication';
+
 class UpCommingRequests extends React.Component {
 
   //  const classes = useStyles();
@@ -165,7 +167,7 @@ class UpCommingRequests extends React.Component {
     var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForLabConfirmation','PendingForTakingTheSample'] };
         // 
         debugger
-        fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
+        fetch(Authentication.API_URL+'/api/AnalysisService/GetTestsBySpecificLabBranches', {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
@@ -182,9 +184,10 @@ class UpCommingRequests extends React.Component {
 
                     var obj = item
                     let user;
+                    debugger
                     firebase.database().ref('/').child('Users').child(obj.userId)
                         .on("value", snap => {
-                            
+                            debugger
                             user = snap.val();
                             console.log(user)
                             
@@ -430,7 +433,7 @@ class UpCommingRequests extends React.Component {
    }
    var data = testObj
    // 
-   fetch('http://checkup.somee.com/api/AnalysisService/UpdateTakeSampleStatus', {
+   fetch(Authentication.API_URL+'/api/AnalysisService/UpdateTakeSampleStatus', {
        method: 'POST', // or 'PUT'
        headers: {
            'Content-Type': 'application/json',

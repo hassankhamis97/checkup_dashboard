@@ -76,7 +76,7 @@ export default class SendResult extends React.Component {
         // database.ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1').child(this.props.testId).set(this.state.test);
         // var data = {labBranchFireBaseId :'IaTcOwrdXhVBa7qx40FOkW5b94J3',Status : ['PendingForResult']};
 // 
-        fetch('http://checkup.somee.com/api/AnalysisService/GetSpecificTest?testId='+this.props.testId, {
+        fetch(Authentication.API_URL+'/api/AnalysisService/GetSpecificTest?testId='+this.props.testId, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
@@ -188,7 +188,7 @@ export default class SendResult extends React.Component {
         this.state.test.status = 'Done'
         var data = this.state.test;
         // 
-        fetch('http://checkup.somee.com/api/AnalysisService/UpdateAnalysis', {
+        fetch(Authentication.API_URL+'/api/AnalysisService/UpdateAnalysis', {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',

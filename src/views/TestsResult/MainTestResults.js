@@ -13,6 +13,7 @@ import Button from "../../components/CustomButtons/Button.js";
 import firebase, { auth } from 'firebase';
 import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
 import SendResult from "views/Modals/SendResult/SendResult.js";
+import Authentication from 'Authentication';
 
 
 import Search from "@material-ui/icons/Search";
@@ -125,7 +126,7 @@ class MainTestResults extends React.Component {
         
         var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForResult'] };
         // 
-        fetch('http://checkup.somee.com/api/AnalysisService/GetTestsBySpecificLabBranches', {
+        fetch(Authentication.API_URL+'/api/AnalysisService/GetTestsBySpecificLabBranches', {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
@@ -143,7 +144,7 @@ class MainTestResults extends React.Component {
                     let user;
                     firebase.database().ref('/').child('Users').child(obj.userId)
                         .on("value", snap => {
-                            ;
+                            debugger
                             user = snap.val();
                             console.log(user)
 

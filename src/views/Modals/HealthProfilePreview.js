@@ -36,7 +36,7 @@ export default class HealthProfilePreview extends React.Component {
 
     getData = (self) => {
         debugger
-        fetch('http://checkup.somee.com/api/AnalysisService/RetrieveHealthProfile?userId=' + this.props.userId, {
+        fetch(Authentication.API_URL+'/api/AnalysisService/RetrieveHealthProfile?userId=' + this.props.userId, {
             method: 'GET', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',

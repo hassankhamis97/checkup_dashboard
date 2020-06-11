@@ -8,14 +8,14 @@ export default class WelcomeBoard extends Component {
         
         return (
             <div className="viewWelcomeBoard">
-        <span className="textTitleWelcome">{`Welcome, ${
+        {/* <span className="textTitleWelcome">{`Welcome, ${
             this.props.currentUserNickname
             }`}</span>
                 <img
                     className="avatarWelcome"
                     src={Authentication.loggedUser.photoURL}
                     alt="icon avatar"
-                />
+                /> */}
                 <span className="textDesciptionWelcome">
           Let's start talking. Great things might happen.
         </span>

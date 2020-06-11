@@ -18,6 +18,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import { database } from '../../firebase';
 
 import AlertDialogSlide from "../AlertDialoge/AlertDialogSlide";
+import Authentication from 'Authentication';
 
 export default class RefuseRequest extends React.Component {
 
@@ -69,7 +70,7 @@ export default class RefuseRequest extends React.Component {
                 }
                 var data = testObj;
 
-        fetch('http://checkup.somee.com/api/AnalysisService/RefuseAnalysis', {
+        fetch(Authentication.API_URL+'/api/AnalysisService/RefuseAnalysis', {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
