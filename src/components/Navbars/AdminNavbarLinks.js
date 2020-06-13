@@ -23,6 +23,7 @@ import Authentication from '../../Authentication'
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 import { auth } from "firebase";
 import firebase from 'firebase';
+import { firestore } from '../../firebase';
 
 const useStyles = makeStyles(styles);
 
@@ -38,7 +39,15 @@ var styleTestReview = {
   },
 }
 
+
 export default function AdminNavbarLinks() {
+  debugger
+  var name = getLabName()
+  const [labName, setLabName] = React.useState(null);
+  if (name.length > 0) {
+    debugger
+    setLabName(name)
+  }
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
@@ -68,7 +77,7 @@ export default function AdminNavbarLinks() {
   };
   return (
     <div>
-      <span style={styleTestReview.centerTitle}>{Authentication.loggedUser.displayName}</span>
+      <span style={styleTestReview.centerTitle}>{ name/*name.length > 0? setLabName(name):""*/}010</span>
 
       {/* <div className={classes.searchWrapper}>
         <CustomInput
@@ -246,4 +255,17 @@ export default function AdminNavbarLinks() {
       </div>
     </div>
   );
+}
+
+function getLabName() {
+  debugger
+  var labName = ""
+  firestore.collection("users").doc(Authentication.loggedUser.uid).onSnapshot(result => {
+    debugger
+    console.log(result)
+    var user = result.data()
+    labName = user.nickname
+    return labName
+  });
+  return labName
 }
