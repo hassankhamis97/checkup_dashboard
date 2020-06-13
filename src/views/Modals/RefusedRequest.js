@@ -260,7 +260,7 @@ export default class RefuseRequest extends React.Component {
                         </GridItem>
                     </div>
                 </Dialog>
-                <AlertDialogSlide text="  Did You Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
+                <AlertDialogSlide text="  Are You sure not to Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
 
             </div>
         );

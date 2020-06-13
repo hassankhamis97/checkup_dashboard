@@ -359,7 +359,7 @@ export default class AcceptedRequest extends React.Component {
                         </div>
                     </div>
                 </Dialog>
-                <AlertDialogSlide text="  Did You  To Accept This Request ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
+                <AlertDialogSlide text=" Are you sure you want to send your Acceptance Data  ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
                 {/*window.$self.state.upcomming?<UpCommingRequests></UpCommingRequests>:''*/}
           
 

@@ -21,8 +21,22 @@ import Button from "components/CustomButtons/Button.js";
 import Authentication from '../../Authentication'
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
+import { auth } from "firebase";
+import firebase from 'firebase';
 
 const useStyles = makeStyles(styles);
+
+var styleTestReview = {
+
+  centerTitle: {
+
+    margin: "10",
+    // float:"left"
+    display: "inline-block",
+    verticalAlign: "middle",
+
+  },
+}
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
@@ -50,10 +64,12 @@ export default function AdminNavbarLinks() {
   };
   const handleLogout = () => {
     const authentication = new Authentication();
-    authentication.logout(()=>{window.location.assign('http://localhost:3000');})
+    authentication.logout(() => { window.location.assign('http://localhost:3000'); })
   };
   return (
     <div>
+      <span style={styleTestReview.centerTitle}>{Authentication.loggedUser.displayName}</span>
+
       {/* <div className={classes.searchWrapper}>
         <CustomInput
           formControlProps={{
@@ -171,6 +187,7 @@ export default function AdminNavbarLinks() {
           onClick={handleClickProfile}
           className={classes.buttonLink}
         >
+
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
             <p className={classes.linkText}>Profile</p>
@@ -197,6 +214,8 @@ export default function AdminNavbarLinks() {
               }}
             >
               <Paper>
+
+
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     {/* <MenuItem
