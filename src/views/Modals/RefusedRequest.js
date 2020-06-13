@@ -82,9 +82,9 @@ export default class RefuseRequest extends React.Component {
                 
                 console.log('Success:', data);
                 database.ref('/').child('Notification').child(self.props.userId).set({getNotified: database.ref().push().key})
-
+                window.location.reload();
                 // var responseArray = JSON.parse(data)
-                this.props.handleClose();
+                // this.props.handleClose();
 
             })
             .catch((error) => {
@@ -124,7 +124,7 @@ export default class RefuseRequest extends React.Component {
             window.$self.setState({ openAlert: false })
 
             this.setState({ open: false })
-            window.location.reload();
+            // window.location.reload();
             //goBack()
         } else {
             alert('No Valid')

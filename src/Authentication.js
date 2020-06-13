@@ -111,7 +111,44 @@ export default class Authentication {
         //   state[image] = url
         //   this.setState(state)
         }).catch((error) => {
+            console.log(error)
           // Handle any errors
         })
       }
+      getNoOfNewUpcomingRequests(response) {
+        var starCountRef = firebase.database().ref('/').child('Notification').child(Authentication.loggedUser.uid)
+        starCountRef.on('value', function(snapshot) {
+            // updateStarCount(postElement, snapshot.val());
+            fetch(Authentication.API_URL+'/api/AnalysisService/GetNewRequestNotification?branchId=' + Authentication.loggedUser.uid, {
+                method: 'GET', // or 'PUT'
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    debugger
+                    var count = data;
+                    response(count)
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+        
+        // firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).onSnapshot(function (pearedUsersMessages) {
+        //     // Document was found in the cache. If no cached document exists,
+        //     // an error will be returned to the 'catch' block below.
+        //     var totalNoOfUnReadMessage = 0
+        //     console.log(pearedUsersMessages)
+        //     for (let i = 0; i < pearedUsersMessages.docs.length; i++) {
+        //         totalNoOfUnReadMessage += pearedUsersMessages.docs[i].data().noOfUnReadMessage
+        //         // var pearedUsersMessages = await firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).get()
+        //         // console.log(pearedUsersMessages[i])
+        //     }
+        //     response(totalNoOfUnReadMessage)
+        // })
+
+        // var noOfRM = pearObj.data().noOfUnReadMessage
+    }
 }

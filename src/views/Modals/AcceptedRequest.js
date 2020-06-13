@@ -115,7 +115,7 @@ export default class AcceptedRequest extends React.Component {
    })
        .then(response => response.json())
        .then(data => {
-           
+           debugger
            console.log('Success:', data);
            // var responseArray = JSON.parse(data)
            database.ref('/').child('Notification').child(self.props.userId).set({getNotified: database.ref().push().key})
@@ -176,7 +176,7 @@ export default class AcceptedRequest extends React.Component {
      
             this.setState({ openAlert: false })
             this.setState({ open: false })
-            window.location.reload();
+            // window.location.reload();
           //  TestReview.fromAcceptRequestPage = true            
           //  this.handleConfirm()
         } else {

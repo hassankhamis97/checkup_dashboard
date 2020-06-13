@@ -164,6 +164,10 @@ class UpCommingRequests extends React.Component {
     var fromHome = ""
     var btnStatus = ""
     debugger
+    var starCountRef = firebase.database().ref('/').child('Notification').child(Authentication.loggedUser.uid)
+        starCountRef.on('value', function(snapshot) {
+          self.state.dataShowList= []
+          self.state.fullDataList= []
     var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForLabConfirmation','PendingForTakingTheSample'] };
         // 
         debugger
@@ -242,6 +246,7 @@ class UpCommingRequests extends React.Component {
               debugger
                 console.error('Error:', error);
             });
+          })
     // let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
     // ref.orderByChild("status").equalTo("PendingForLabConfirmation").on('value', snapshot => {

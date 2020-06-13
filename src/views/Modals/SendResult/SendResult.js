@@ -159,17 +159,25 @@ export default class SendResult extends React.Component {
             // Upload the file and metadata
         for (let i = 0; i < me.state.uploadedFiles.length; i++) {
             var count = 0
+            var urlCounter = 0
             // var uploadTask = storageRef.child(this.state.uploadedFiles[i].name).put(this.state.uploadedFiles[i]);
             
             var uploadTask = storageRef.child(me.state.uploadedFiles[i].name).put(me.state.uploadedFiles[i]).then(() => {
                 let authentication = new Authentication()
-                authentication.getImage(me, me.state.test.resultFilespaths[i], (url, self) => {
-                    me.state.test.resultFilespaths[count] = url
-                    count++;
-                    if (count == me.state.uploadedFiles.length){
-                        me.saveDataInDB()
+                urlCounter++;
+                if (urlCounter == me.state.uploadedFiles.length){
+                    for (let j = 0; j < urlCounter; j++) {
+                        authentication.getImage(me, me.state.test.resultFilespaths[j], (url, self) => {
+                            me.state.test.resultFilespaths[count] = url
+                            count++;
+                            debugger
+                            if (count == me.state.uploadedFiles.length){
+                                me.saveDataInDB()
+                            }
+                        })
                     }
-                }).bind(this)
+                
+            }
             }).catch((error) => {
             });
         }

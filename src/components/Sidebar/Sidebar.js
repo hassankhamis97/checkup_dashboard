@@ -17,11 +17,13 @@ import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
 import ChatOperations from 'views/Chat/ChatOperations'
+import Authentication from 'Authentication'
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
   // useEffect(callbackFunction, [dependentProps]) => cleanupFunction
 const [noUnReadTotalMessages,setUnReadTotalMessages] = React.useState(0)
+const [noOfNewUpcomingRequests,setNoOfNewUpcomingRequests] = React.useState(0)
   const classes = useStyles();
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
@@ -31,6 +33,11 @@ const [noUnReadTotalMessages,setUnReadTotalMessages] = React.useState(0)
   if(noUnReadTotalMessages == 0){
     var chatOperations = new ChatOperations()
     chatOperations.getUnReadTotalMessages((number)=>{setUnReadTotalMessages(number)})
+  }
+  if(noOfNewUpcomingRequests == 0){
+    debugger
+    var authentication = new Authentication()
+    authentication.getNoOfNewUpcomingRequests((number)=>{setNoOfNewUpcomingRequests(number)})
   }
   // function getTotalNoOfUnReadMessgages() {
   //   
@@ -87,6 +94,9 @@ const [noUnReadTotalMessages,setUnReadTotalMessages] = React.useState(0)
               />
               {prop.name == "Chat" && noUnReadTotalMessages > 0 ?
                 < span class="notificationTotalChat">{noUnReadTotalMessages}</span> : ''
+              }
+              {prop.name == "Upcoming Request" && noOfNewUpcomingRequests > 0 ?
+                < span class="notificationTotalChat">{noOfNewUpcomingRequests}</span> : ''
               }
             </ListItem>
           </NavLink>
