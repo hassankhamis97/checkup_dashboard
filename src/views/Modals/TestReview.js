@@ -230,7 +230,7 @@ debugger
                                 Maximize Images
                                 </Button>
                             <Button autoFocus color="inherit" style={this.styleTestReview.btn} onClick={this.handleHealthDialog /*this.props.handleClose*/} >
-                                Patient Health
+                                Patient Health Profile
                             </Button>
                         </Toolbar>
                     </AppBar>
@@ -247,7 +247,7 @@ debugger
                                     <span style={this.styleTestReview.subview} >{element.number}</span>
                                 </div>
                             })}     
-                            <span style={this.styleTestReview.titleStyle}>Inshurance : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.insurance.length>0 ? this.props.recievedObj.insurance.length : "Nothing"}</p><br></br> 
+                            <span style={this.styleTestReview.titleStyle}>Insurance : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.insurance.length>0 ? this.props.recievedObj.insurance.length : "No Insurance"}</p><br></br> 
 
                             <span style={this.styleTestReview.titleStyle}>Request Date : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.dateRequest} </p><br></br>
                             <span style={this.styleTestReview.titleStyle}>Request Time : </span><p style={this.styleTestReview.TestDataObject}>{this.props.recievedObj.timeRequest}</p><br></br>
