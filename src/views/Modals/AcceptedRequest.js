@@ -59,6 +59,7 @@ export default class AcceptedRequest extends React.Component {
         
         let self = this
         database.ref('/').child('Employees').child(Authentication.loggedUser.uid).on('value', function (employeesArr) {
+            self.state.employeeList = []
             employeesArr.forEach((element) => {
                 self.state.employeeList.push(element)
             })
