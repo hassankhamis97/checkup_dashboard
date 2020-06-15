@@ -170,7 +170,7 @@ export default class SendResult extends React.Component {
                         authentication.getImage(me, me.state.test.resultFilespaths[j], (url, self) => {
                             me.state.test.resultFilespaths[count] = url
                             count++;
-                            debugger
+                            
                             if (count == me.state.uploadedFiles.length){
                                 me.saveDataInDB()
                             }

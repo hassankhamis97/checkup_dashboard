@@ -33,7 +33,7 @@ export default class AcceptedRequest extends React.Component {
         super(props);
         window.$self = this //global variable
         this.getEmployeeData()
-        debugger
+        
 
 
         this.handleAlertOpen = this.handleAlertOpen.bind(this)
@@ -116,7 +116,7 @@ export default class AcceptedRequest extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                debugger
+                
                 console.log('Success:', data);
                 // var responseArray = JSON.parse(data)
                 database.ref('/').child('Notification').child(self.props.userId).set({ getNotified: database.ref().push().key })
@@ -140,7 +140,7 @@ export default class AcceptedRequest extends React.Component {
     }
 
     validate = () => {
-        debugger
+        
         this.setState({ openAlert: true })
         // this.setState({ open: true })
         // if ( this.state.test.precastions.length > 0 && this.state.test.testCost.length > 0 && this.state.test.generatedCode.length > 0) {
@@ -158,7 +158,7 @@ export default class AcceptedRequest extends React.Component {
 
 
     handleAlertClose = () => {
-        debugger
+        
 
         //    window.$self.state.open = false;
         //     window.$self.state.upcomming = true
@@ -171,7 +171,7 @@ export default class AcceptedRequest extends React.Component {
     };
 
     handleAlertOpen = () => {
-        debugger
+        
         if (this.state.test.precastions.length > 0 && this.state.test.testCost.length > 0 && this.state.test.generatedCode.length > 0) {
             this.updateData()
 
@@ -221,7 +221,7 @@ export default class AcceptedRequest extends React.Component {
 
     render() {
         //  const {goBack} = this.props.navigation;
-        debugger
+        
         return (
 
             <div>
@@ -345,7 +345,7 @@ export default class AcceptedRequest extends React.Component {
                                     >
                                         <option aria-label="None" value="" />
 
-                                        <optgroup label="Employees">
+                                        <optgroup label="Technicians">
                                             {window.$self.state.employeeList.map((item, index) => (
                                                 <option value={item.key}> {item.val().userName} </option>
                                             ))}
@@ -356,7 +356,7 @@ export default class AcceptedRequest extends React.Component {
                             : ""}
                     </div>
                 </Dialog>
-                <AlertDialogSlide text=" Are you sure you want to send your Acceptance Data  ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
+                <AlertDialogSlide text=" Are you sure you want to send this response ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
                 {/*window.$self.state.upcomming?<UpCommingRequests></UpCommingRequests>:''*/}
 
 

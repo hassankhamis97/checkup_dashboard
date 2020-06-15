@@ -108,7 +108,7 @@ class UpCommingRequests extends React.Component {
     //  this.setState({transferedObj : obj})
     //debu ; 
     if (obj.status === "PendingForLabConfirmation") {
-      debugger
+      
       let temp = this.state.fullDataList.filter(item => item[0] === obj.id)
       
         // setviewObj({ id: temp.id, userName: temp.name, dateOfBirth:temp.dateOfBirth ,
@@ -163,14 +163,14 @@ class UpCommingRequests extends React.Component {
     let self = this
     var fromHome = ""
     var btnStatus = ""
-    debugger
+    
     var starCountRef = firebase.database().ref('/').child('Notification').child(Authentication.loggedUser.uid)
         starCountRef.on('value', function(snapshot) {
           self.state.dataShowList= []
           self.state.fullDataList= []
     var data = { labBranchFireBaseId: auth().currentUser.uid, Status: ['PendingForLabConfirmation','PendingForTakingTheSample'] };
         // 
-        debugger
+        
         fetch(Authentication.API_URL+'/api/AnalysisService/GetTestsBySpecificLabBranches', {
             method: 'POST', // or 'PUT'
             headers: {
@@ -181,17 +181,17 @@ class UpCommingRequests extends React.Component {
         
             .then(response => response.json())
             .then(data => {
-                debugger
+                
                 console.log('Success:', data);
                 // var responseArray = JSON.parse(data)
                 data.forEach(function (item) {
 
                     var obj = item
                     let user;
-                    debugger
+                    
                     firebase.database().ref('/').child('Users').child(obj.userId)
                         .on("value", snap => {
-                            debugger
+                            
                             user = snap.val();
                             console.log(user)
                             
@@ -243,7 +243,7 @@ class UpCommingRequests extends React.Component {
 
             })
             .catch((error) => {
-              debugger
+              
                 console.error('Error:', error);
             });
           })
@@ -409,20 +409,20 @@ class UpCommingRequests extends React.Component {
 
 
   handleClose = () => {
-    debugger
+    
     this.setState({ open: false })
 
   };
 
 
   handleAlertClose = () => {
-    debugger
+    
     this.setState({ openAlert: false })
 
   };
 
   handleAlertOpen = () => {
-    debugger 
+     
     //  this is the branch ID  --->>>  0G9djW7SzMXGTiXKdGkiYuiTY3g1
     this.state.isNew = false
     
@@ -546,7 +546,7 @@ debugger
 
 
   }
-  debugger
+  
   reloadPage = ()=>{
   //  window.$name.setState({open : false})
   window.$name.location.reload();

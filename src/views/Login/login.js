@@ -19,6 +19,7 @@ import database from '../../firebase';
 import GridItem from "components/Grid/GridItem.js";
 import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 import firebase from 'firebase';
+// import firebase from 'assets/img/';
 // core components
 import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
@@ -41,11 +42,11 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/checkup-23ffe.appspot.com/o/Labs%2FlogoCheckupnew3.png?alt=media&token=4d93adb2-c777-4389-a4b4-b463d3d0a443)',
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundPosition: 'center',
     },
     paper: {

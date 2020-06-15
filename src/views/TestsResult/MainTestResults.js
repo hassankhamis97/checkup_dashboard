@@ -144,7 +144,7 @@ class MainTestResults extends React.Component {
                     let user;
                     firebase.database().ref('/').child('Users').child(obj.userId)
                         .on("value", snap => {
-                            debugger
+                            
                             user = snap.val();
                             console.log(user)
 

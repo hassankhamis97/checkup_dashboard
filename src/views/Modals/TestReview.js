@@ -19,7 +19,7 @@ import firebase from 'firebase';
 
 export default class TestReview extends React.Component {
     static fromAcceptRequestPage = false;
-    debugger
+    
     constructor(props) { 
         super(props);
         window.$self = this 
@@ -36,7 +36,7 @@ export default class TestReview extends React.Component {
            isFullScreen : false ,
            maximizLable : "Maiximize Images"
         }
-        debugger
+        
       // props.open = (AcceptedRequest.fromAcceptRequestPage == true ? 'hidden' : 'visable')
     
         console.log( this.state.isFullScreen )
@@ -85,7 +85,7 @@ export default class TestReview extends React.Component {
     }
 
     // handel back 
-    debugger
+    
     handleConfirm = () => {
         this.setState({ open: false })
         window.location.reload();
@@ -103,7 +103,7 @@ export default class TestReview extends React.Component {
        // this.setState({ acceptDialog: false })
        window.location.reload();
     }
-debugger
+
     handleMaximize = ()=>{
         if ( window.$self.state.maximizLable == "Maiximize Images"){
           window.$self.state.maximizLable = "Minimize Image"
@@ -193,7 +193,7 @@ debugger
 
 
     render() {
-        debugger
+        
         return (
             <div style={this.styleTestReview.TestReviewModal}> 
                  {this.state.refuseDialog ?

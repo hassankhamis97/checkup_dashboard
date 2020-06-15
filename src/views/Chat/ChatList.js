@@ -68,7 +68,7 @@ export default class ChatList extends Component {
         // self.lastElement = self.listUserParent[self.listUserParent.length - 1]
         // firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).orderBy('lastMsgTimeStamp').startAfter(self.lastElement ? self.lastElement : 0).limit(1).onSnapshot(function (chatUserResult) {
         firestore.collection(AppString.NODE_USERCHAT).doc(Authentication.loggedUser.uid).collection(Authentication.loggedUser.uid).orderBy('lastMsgTimeStamp','desc').onSnapshot(function (chatUserResult) {
-                debugger
+                
                 // self.listUserParent = []
                 self.state.noUnReadTotalMessagesList = []
                 self.listUser = []

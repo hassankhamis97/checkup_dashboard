@@ -108,7 +108,7 @@ export default class RefuseRequest extends React.Component {
 
    
     handleAlertClose = () => {
-        debugger
+        
         this.setState({ openAlert: false })
 
       //  window.$self.setState({ open: false })
@@ -117,7 +117,7 @@ export default class RefuseRequest extends React.Component {
       };
     
       handleAlertOpen = () => {
-        debugger
+        
       // if (this.state.refuse.youNeedToApplyInstructionTxt !== '' && this.state.refuse.notAvailableTxt !== '' && this.state.refuse.anotherTimeTxt !== '' && this.state.refuse.refuseReason !== '') {
         if (this.state.refuse.refuseReason.length > 0 || this.state.refuse.radioRefusion.length > 0) {
             this.updateData()
@@ -260,7 +260,7 @@ export default class RefuseRequest extends React.Component {
                         </GridItem>
                     </div>
                 </Dialog>
-                <AlertDialogSlide text="  Are You sure not to Take Sample From The User ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
+                <AlertDialogSlide text="Are You sure you want to refuse this request ?" open={this.state.openAlert} handleAlertOpen={this.handleAlertOpen} handleAlertClose={this.handleAlertClose} />
 
             </div>
         );

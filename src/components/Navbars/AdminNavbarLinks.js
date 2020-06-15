@@ -41,13 +41,40 @@ var styleTestReview = {
 
 
 export default function AdminNavbarLinks() {
-  debugger
-  var name = getLabName()
-  const [labName, setLabName] = React.useState(null);
-  if (name.length > 0) {
+  
+  
+  //  var name = ''
+  const [labName, setLabName] = React.useState('');
+  // const getLabName = () => {
     debugger
-    setLabName(name)
+    if (Authentication.isFirstEnter == true) {
+    firestore.collection("users").doc(Authentication.loggedUser.uid).onSnapshot(result => {
+      debugger
+      // console.log(result)
+      var user = result.data()
+      Authentication.isFirstEnter = false
+      // labName = user.nickname
+      setLabName(user.nickname)
+    });
   }
+  // };
+  // const   => () {
+  //   
+  //   var labName = ""
+  //   firestore.collection("users").doc(Authentication.loggedUser.uid).onSnapshot(result => {
+  //     
+  //     console.log(result)
+  //     var user = result.data()
+  //     labName = user.nickname
+  //     return labName
+  //   });
+  //   return labName
+  // }
+  
+  // if (labName.length > 0) {
+    
+  //   setLabName(labName)
+  // }
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
@@ -76,116 +103,12 @@ export default function AdminNavbarLinks() {
     authentication.logout(() => { window.location.assign('http://localhost:3000'); })
   };
   return (
+    
     <div>
-      <span style={styleTestReview.centerTitle}>{ name/*name.length > 0? setLabName(name):""*/}010</span>
+      {/* {getLabName} */}
+      <span style={styleTestReview.centerTitle}>{ labName.length > 0? labName:""}</span>
 
-      {/* <div className={classes.searchWrapper}>
-        <CustomInput
-          formControlProps={{
-            className: classes.margin + " " + classes.search
-          }}
-          style={{color: 'white'}}
-          inputProps={{
-            placeholder: "Search",
-            inputProps: {
-              "aria-label": "Search"
-            }
-          }}
-        />
-        <Button color="white" aria-label="edit" justIcon round>
-          <Search />
-        </Button>
-      </div>
-      <Button
-        color={window.innerWidth > 959 ? "transparent" : "white"}
-        justIcon={window.innerWidth > 959}
-        simple={!(window.innerWidth > 959)}
-        aria-label="Dashboard"
-        className={classes.buttonLink}
-      >
-        <Dashboard className={classes.icons} />
-        <Hidden mdUp implementation="css">
-          <p className={classes.linkText}>Dashboard</p>
-        </Hidden>
-      </Button> */}
-      {/* <div className={classes.manager}>
-        <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-owns={openNotification ? "notification-menu-list-grow" : null}
-          aria-haspopup="true"
-          onClick={handleClickNotification}
-          className={classes.buttonLink}
-        >
-          <Notifications className={classes.icons} />
-          <span className={classes.notifications}>5</span>
-          <Hidden mdUp implementation="css">
-            <p onClick={handleCloseNotification} className={classes.linkText}>
-              Notification
-            </p>
-          </Hidden>
-        </Button>
-        <Poppers
-          open={Boolean(openNotification)}
-          anchorEl={openNotification}
-          transition
-          disablePortal
-          className={
-            classNames({ [classes.popperClose]: !openNotification }) +
-            " " +
-            classes.popperNav
-          }
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              id="notification-menu-list-grow"
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom"
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleCloseNotification}>
-                  <MenuList role="menu">
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={classes.dropdownItem}
-                    >
-                      Mike John responded to your email
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={classes.dropdownItem}
-                    >
-                      You have 5 new tasks
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={classes.dropdownItem}
-                    >
-                      You{"'"}re now friend with Andrew
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={classes.dropdownItem}
-                    >
-                      Another Notification
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseNotification}
-                      className={classes.dropdownItem}
-                    >
-                      Another One
-                    </MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Poppers>
-      </div> */}
+      
       <div className={classes.manager}>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
@@ -257,15 +180,3 @@ export default function AdminNavbarLinks() {
   );
 }
 
-function getLabName() {
-  debugger
-  var labName = ""
-  firestore.collection("users").doc(Authentication.loggedUser.uid).onSnapshot(result => {
-    debugger
-    console.log(result)
-    var user = result.data()
-    labName = user.nickname
-    return labName
-  });
-  return labName
-}

@@ -35,7 +35,7 @@ export default class HealthProfilePreview extends React.Component {
     }
 
     getData = (self) => {
-        debugger
+        
         fetch(Authentication.API_URL+'/api/AnalysisService/RetrieveHealthProfile?userId=' + this.props.userId, {
             method: 'GET', // or 'PUT'
             headers: {
@@ -44,7 +44,7 @@ export default class HealthProfilePreview extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                debugger
+                
                 var obj = data;
                 console.log(obj)
                 self.setState({ healthData: obj });
@@ -109,7 +109,7 @@ export default class HealthProfilePreview extends React.Component {
                          {this.state.healthData.dieaseNamesArray.length > 0 ?
                         <div style= {this.styleTestReview.titleStyle}>Diseases Names : </div>:''}
                         {this.state.healthData.dieaseNamesArray.map(element => {
-                            debugger
+                            
                             return <div>
                                 <span style={this.styleTestReview.subview , this.styleTestReview.textStyle} >{element}</span>
                             </div>

@@ -339,7 +339,7 @@ class CreateEmployeeDesign extends React.Component {
             displayName: self.state.Employee.userName,
             photoURL: url
         });
-        debugger
+        
         firestore
             .collection('users')
             .doc(userId)
@@ -369,10 +369,10 @@ class CreateEmployeeDesign extends React.Component {
         self.writeUserData(userId);
         self.state.Employee = empObj;
         if (this.props.senderEmpObj) {
-            self.props.showNotification("Employee updated successfully");
+            self.props.showNotification("Technician updated successfully");
             self.props.updateEmployee(false)
         }else{
-        self.props.showNotification("Employee saved successfully");
+        self.props.showNotification("Technician saved successfully");
         }
     }
     render() {
