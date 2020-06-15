@@ -283,7 +283,7 @@ class MainTestResults extends React.Component {
 
     handleAlertClose = () => {
         // setOpen(false);
-         this.state.open = false
+        // this.state.open = false
         this.setState({ openAlert: false })
 
     };
