@@ -6,6 +6,7 @@ import { AppString } from '../src/views/Chat/Const'
 export default class Authentication {
     static loggedUser = "wait";
     static currentUserImage = ''
+    static isFirstEnter = true
     static API_URL = 'http://www.checkuplive.somee.com'
     // static API_URL = 'http://192.168.1.5:3000'
     constructor() {
@@ -25,9 +26,9 @@ export default class Authentication {
         auth.signInWithEmailAndPassword(email, password)
             .then(function (response) {
                 console.log(response)
-                debugger
+                
                 firestore.collection(AppString.NODE_USERS).doc(response.user.uid).get().then(result => {
-                    debugger
+                    
                     console.log(result)
                     var user = result.data()
                     
@@ -74,7 +75,7 @@ export default class Authentication {
             if (user) {
                 // console.log(firebase.auth().currentUser)
                 Authentication.loggedUser = user
-                
+                Authentication.isFirstEnter = true
                 if(response){
                     
                     // firebase.auth().verifyIdToken(user.uid).then((claims) => {
@@ -127,7 +128,7 @@ export default class Authentication {
             })
                 .then(response => response.json())
                 .then(data => {
-                    debugger
+                    
                     var count = data;
                     response(count)
                 })

@@ -57,7 +57,7 @@ const dashboardRoutes = [
   // },
   {
     path: "/getEmployeesInfo",
-    name: "Get Employees Info",
+    name: "Get Technicians Info",
     rtlName: "قائمة الموظفين",
     icon: "content_paste",
     component: EmployeeProfile,
@@ -105,7 +105,7 @@ const dashboardRoutes = [
   // },
   {
     path: "/create-new-employee",
-    name: "Create New Employee",
+    name: "Add New Technicians",
     rtlName: "التطور للاحترافية",
     icon: Unarchive,
     component: CreateNewEmployee,

@@ -35,7 +35,7 @@ const [noOfNewUpcomingRequests,setNoOfNewUpcomingRequests] = React.useState(0)
     chatOperations.getUnReadTotalMessages((number)=>{setUnReadTotalMessages(number)})
   }
   if(noOfNewUpcomingRequests == 0){
-    debugger
+    
     var authentication = new Authentication()
     authentication.getNoOfNewUpcomingRequests((number)=>{setNoOfNewUpcomingRequests(number)})
   }
@@ -114,7 +114,7 @@ var brand = (
       target="_blank"
     >
       <div className={classes.logoImage}>
-        <img src={logo} alt="logo" className={classes.img} />
+        <img src="https://firebasestorage.googleapis.com/v0/b/checkup-23ffe.appspot.com/o/Labs%2FlogoCheckupnew3.png?alt=media&token=4d93adb2-c777-4389-a4b4-b463d3d0a443" alt="logo" className={classes.img} />
       </div>
       {logoText}
     </a>

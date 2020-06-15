@@ -72,7 +72,7 @@ export default class ChatBoard extends Component {
         this.setState({ isLoading: true })
         // this.hashString(this.currentUserId) <=
         // this.hashString(this.currentPeerUser.id)
-        debugger
+        
         if (
            
             this.currentUserId <= this.currentPeerUser.id

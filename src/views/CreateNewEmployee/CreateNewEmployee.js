@@ -53,8 +53,8 @@ export default function CreateNewEmployee() {
         <div>
         <Snackbar
                   place="tc"
-                  color={alertMsg=="Employee saved successfully" ? "success":"danger"}
-                  icon={alertMsg=="Employee saved successfully" ? CheckCircleIcon:CancelIcon}
+                  color={alertMsg=="Technician saved successfully" ? "success":"danger"}
+                  icon={alertMsg=="Technician saved successfully" ? CheckCircleIcon:CancelIcon}
                   message={alertMsg}
                   open={tc}
                   closeNotification={() => setTC(false)}
