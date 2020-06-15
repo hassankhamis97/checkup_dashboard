@@ -245,7 +245,8 @@ class UpCommingRequests extends React.Component {
             .catch((error) => {
               
                 console.error('Error:', error);
-            });
+            });     
+            window.$name.state.searchResult = window.$name.state.dataShowList;
           })
     // let ref = firebase.database().ref('/').child('Tests').child('0G9djW7SzMXGTiXKdGkiYuiTY3g1');
 
