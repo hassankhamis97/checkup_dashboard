@@ -400,7 +400,7 @@ class UpCommingRequests extends React.Component {
     // });
 
 
-
+    this.state.searchResult = window.$name.state.dataShowList;
     this.state.isNew = true;
     console.log('DATA RETRIEVED');
   }
@@ -472,8 +472,9 @@ class UpCommingRequests extends React.Component {
 
 
   ////************************   Search    ***************************** */
-
+debugger
   handleSearch(te) {
+    debugger
     let mySet = new Set()
     window.$name.state.isVisable = 'hidden'
     console.log(te.target.value)
@@ -487,7 +488,7 @@ class UpCommingRequests extends React.Component {
     //   return contact.name.toLocaleLowerCase().indexOf(this.state.search) !== -1;
     // });
 
-
+    debugger
     window.$name.state.temp = []
     window.$name.state.dataShowList = []
     ////************ Search with  Name    */
@@ -501,7 +502,7 @@ class UpCommingRequests extends React.Component {
         window.$name.state.temp.forEach(item => mySet.add(item))
     }
 
-
+    debugger
     ////************ Search with  Code    */
     window.$name.state.temp = []
 
@@ -524,7 +525,7 @@ class UpCommingRequests extends React.Component {
     //     window.$name.state.dataShowList.push(iterator)
     //   }
       
-    
+    debugger
            
       for (let item of mySet) {
         window.$name.state.dataShowList.push(item);
@@ -532,7 +533,7 @@ class UpCommingRequests extends React.Component {
   
 
 
-
+    debugger
     if (window.$name.state.dataShowList.length <= 0 && searchText.length <= 0) {
 
       window.$name.state.dataShowList = window.$name.state.searchResult
